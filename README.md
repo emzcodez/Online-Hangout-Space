@@ -1,6 +1,6 @@
 # Online Hangout Space — Database Mini Project
 
-#By PREMA P KOTUR PES1UG24CS343 and PRARTHANA SHIVAKUMAR PES1UG24CS339
+By PREMA P KOTUR PES1UG24CS343 and PRARTHANA SHIVAKUMAR PES1UG24CS339
 
 A MySQL database for an **Online Hangout Space** application where users can create or join rooms, customize virtual spaces, manage friends, chat, and watch videos together.
 
