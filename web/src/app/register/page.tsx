@@ -63,7 +63,7 @@ export default function RegisterPage() {
           </div>
 
           <p className="text-sm text-white/70">
-            There's always room for one more friend.
+            There is always room for one more friend.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export default function RegisterPage() {
 
           <div className="mb-7">
             <p className="text-sm font-bold text-[#9271d4]">
-              LET'S MAKE IT OFFICIAL!
+              LET US MAKE IT OFFICIAL!
             </p>
             <h2 className="mt-2 text-4xl font-black tracking-tight text-[#29213c]">
               Join the fun! ♡
