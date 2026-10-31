@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^6.0.2",
+    "@prisma/adapter-mariadb": "^7.10.1",
+    "@prisma/client": "^7.10.0",
     "clsx": "^2.1.1",
+    "dotenv": "^18.0.9",
     "lucide-react": "^1.65.0",
     "next": "16.4.3",
     "react": "19.3.0",
@@ -26,7 +29,14 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
+    "prisma": "^7.10.0",
     "tailwindcss": "^4",
     "typescript": "^5.9.3"
+  },
+  "type": "module",
+  "allowScripts": {
+    "prisma@7.10.0": true,
+    "@prisma/engines@7.10.0": true,
+    "unrs-resolver@1.12.2": true
   }
 }

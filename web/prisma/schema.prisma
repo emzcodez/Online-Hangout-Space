@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model chat_messages {
+  message_id   BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  room_id      BigInt   @db.UnsignedBigInt
+  sender_id    BigInt   @db.UnsignedBigInt
+  message_text String   @db.Text
+  sent_at      DateTime @default(now()) @db.Timestamp(0)
+  rooms        rooms    @relation(fields: [room_id], references: [room_id], onDelete: Cascade, map: "fk_chat_messages_room")
+  users        users    @relation(fields: [sender_id], references: [user_id], onDelete: Cascade, map: "fk_chat_messages_sender")
+
+  @@index([room_id, sent_at], map: "idx_chat_messages_room_sent")
+  @@index([sender_id], map: "idx_chat_messages_sender")
+}
+
+model friend_requests {
+  request_id                               BigInt                         @id @default(autoincrement()) @db.UnsignedBigInt
+  sender_id                                BigInt                         @db.UnsignedBigInt
+  receiver_id                              BigInt                         @db.UnsignedBigInt
+  request_status                           friend_requests_request_status @default(pending)
+  users_friend_requests_receiver_idTousers users                          @relation("friend_requests_receiver_idTousers", fields: [receiver_id], references: [user_id], onDelete: Cascade, map: "fk_friend_requests_receiver")
+  users_friend_requests_sender_idTousers   users                          @relation("friend_requests_sender_idTousers", fields: [sender_id], references: [user_id], onDelete: Cascade, map: "fk_friend_requests_sender")
+
+  @@index([receiver_id, request_status], map: "idx_friend_requests_receiver_status")
+  @@index([sender_id], map: "idx_friend_requests_sender")
+}
+
+model friendships {
+  user_id_1                          BigInt   @db.UnsignedBigInt
+  user_id_2                          BigInt   @db.UnsignedBigInt
+  created_at                         DateTime @default(now()) @db.Timestamp(0)
+  users_friendships_user_id_1Tousers users    @relation("friendships_user_id_1Tousers", fields: [user_id_1], references: [user_id], onDelete: Cascade, map: "fk_friendships_user_1")
+  users_friendships_user_id_2Tousers users    @relation("friendships_user_id_2Tousers", fields: [user_id_2], references: [user_id], onDelete: Cascade, map: "fk_friendships_user_2")
+
+  @@id([user_id_1, user_id_2])
+  @@index([user_id_2], map: "idx_friendships_user_2")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model furniture_catalog {
+  furniture_id  BigInt       @id @default(autoincrement()) @db.UnsignedBigInt
+  item_name     String       @db.VarChar(100)
+  item_type     String       @db.VarChar(60)
+  default_price Decimal      @default(0.00) @db.Decimal(10, 2)
+  room_items    room_items[]
+
+  @@index([item_type], map: "idx_furniture_type")
+}
+
+model room_favorites {
+  user_id      BigInt   @db.UnsignedBigInt
+  room_id      BigInt   @db.UnsignedBigInt
+  favorited_at DateTime @default(now()) @db.Timestamp(0)
+  rooms        rooms    @relation(fields: [room_id], references: [room_id], onDelete: Cascade, map: "fk_room_favorites_room")
+  users        users    @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "fk_room_favorites_user")
+
+  @@id([user_id, room_id])
+  @@index([room_id], map: "idx_room_favorites_room")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model room_items {
+  room_item_id      BigInt            @id @default(autoincrement()) @db.UnsignedBigInt
+  room_id           BigInt            @db.UnsignedBigInt
+  furniture_id      BigInt            @db.UnsignedBigInt
+  placed_by         BigInt?           @db.UnsignedBigInt
+  position_x        Decimal           @default(0.00) @db.Decimal(8, 2)
+  position_y        Decimal           @default(0.00) @db.Decimal(8, 2)
+  rotation_deg      Decimal           @default(0.00) @db.Decimal(7, 2)
+  scale_factor      Decimal           @default(1.00) @db.Decimal(5, 2)
+  furniture_catalog furniture_catalog @relation(fields: [furniture_id], references: [furniture_id], map: "fk_room_items_furniture")
+  users             users?            @relation(fields: [placed_by], references: [user_id], map: "fk_room_items_placed_by")
+  rooms             rooms             @relation(fields: [room_id], references: [room_id], onDelete: Cascade, map: "fk_room_items_room")
+
+  @@index([furniture_id], map: "idx_room_items_furniture")
+  @@index([placed_by], map: "idx_room_items_placed_by")
+  @@index([room_id], map: "idx_room_items_room")
+}
+
+model room_members {
+  room_id     BigInt                   @db.UnsignedBigInt
+  user_id     BigInt                   @db.UnsignedBigInt
+  member_role room_members_member_role @default(member)
+  joined_at   DateTime                 @default(now()) @db.Timestamp(0)
+  rooms       rooms                    @relation(fields: [room_id], references: [room_id], onDelete: Cascade, map: "fk_room_members_room")
+  users       users                    @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "fk_room_members_user")
+
+  @@id([room_id, user_id])
+  @@index([user_id], map: "idx_room_members_user")
+}
+
+model rooms {
+  room_id        BigInt           @id @default(autoincrement()) @db.UnsignedBigInt
+  owner_id       BigInt           @db.UnsignedBigInt
+  room_name      String           @db.VarChar(100)
+  description    String?          @db.VarChar(500)
+  is_private     Boolean          @default(false)
+  wallpaper      String?          @db.VarChar(500)
+  created_at     DateTime         @default(now()) @db.Timestamp(0)
+  chat_messages  chat_messages[]
+  room_favorites room_favorites[]
+  room_items     room_items[]
+  room_members   room_members[]
+  users          users            @relation(fields: [owner_id], references: [user_id], onDelete: Cascade, map: "fk_rooms_owner")
+  watch_sessions watch_sessions[]
+
+  @@index([owner_id], map: "idx_rooms_owner")
+  @@index([is_private, created_at], map: "idx_rooms_privacy_created")
+}
+
+model users {
+  user_id                                            BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
+  username                                           String               @unique(map: "uq_users_username") @db.VarChar(50)
+  email                                              String               @unique(map: "uq_users_email") @db.VarChar(255)
+  password_hash                                      String               @db.VarChar(255)
+  display_name                                       String               @db.VarChar(80)
+  avatar_url                                         String?              @db.VarChar(500)
+  status_message                                     String?              @db.VarChar(255)
+  account_status                                     users_account_status @default(active)
+  created_at                                         DateTime             @default(now()) @db.Timestamp(0)
+  chat_messages                                      chat_messages[]
+  friend_requests_friend_requests_receiver_idTousers friend_requests[]    @relation("friend_requests_receiver_idTousers")
+  friend_requests_friend_requests_sender_idTousers   friend_requests[]    @relation("friend_requests_sender_idTousers")
+  friendships_friendships_user_id_1Tousers           friendships[]        @relation("friendships_user_id_1Tousers")
+  friendships_friendships_user_id_2Tousers           friendships[]        @relation("friendships_user_id_2Tousers")
+  room_favorites                                     room_favorites[]
+  room_items                                         room_items[]
+  room_members                                       room_members[]
+  rooms                                              rooms[]
+  watch_sessions                                     watch_sessions[]
+
+  @@index([account_status], map: "idx_users_account_status")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model watch_sessions {
+  session_id                BigInt                         @id @default(autoincrement()) @db.UnsignedBigInt
+  room_id                   BigInt                         @db.UnsignedBigInt
+  started_by                BigInt                         @db.UnsignedBigInt
+  video_title               String                         @db.VarChar(255)
+  playback_position_seconds Decimal                        @default(0.00) @db.Decimal(12, 2)
+  playback_status           watch_sessions_playback_status @default(paused)
+  rooms                     rooms                          @relation(fields: [room_id], references: [room_id], onDelete: Cascade, map: "fk_watch_sessions_room")
+  users                     users                          @relation(fields: [started_by], references: [user_id], onDelete: Cascade, map: "fk_watch_sessions_started_by")
+
+  @@index([room_id], map: "idx_watch_sessions_room")
+  @@index([started_by], map: "idx_watch_sessions_started_by")
+}
+
+enum room_members_member_role {
+  owner
+  moderator
+  member
+}
+
+enum friend_requests_request_status {
+  pending
+  accepted
+  rejected
+  cancelled
+}
+
+enum watch_sessions_playback_status {
+  playing
+  paused
+  ended
+}
+
+enum users_account_status {
+  active
+  suspended
+  deactivated
+}
