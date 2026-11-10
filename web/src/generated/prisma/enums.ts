@@ -37,10 +37,18 @@ export const watch_sessions_playback_status = {
 export type watch_sessions_playback_status = (typeof watch_sessions_playback_status)[keyof typeof watch_sessions_playback_status]
 
 
+export const furniture_catalog_item_type = {
+  furniture: 'furniture',
+  wallpaper: 'wallpaper',
+  decoration: 'decoration'
+} as const
+
+export type furniture_catalog_item_type = (typeof furniture_catalog_item_type)[keyof typeof furniture_catalog_item_type]
+
+
 export const users_account_status = {
   active: 'active',
-  suspended: 'suspended',
-  deactivated: 'deactivated'
+  suspended: 'suspended'
 } as const
 
 export type users_account_status = (typeof users_account_status)[keyof typeof users_account_status]

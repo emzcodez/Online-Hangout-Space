@@ -32,19 +32,19 @@ export type Room_favoritesAvgAggregateOutputType = {
 }
 
 export type Room_favoritesSumAggregateOutputType = {
-  user_id: bigint | null
-  room_id: bigint | null
+  user_id: number | null
+  room_id: number | null
 }
 
 export type Room_favoritesMinAggregateOutputType = {
-  user_id: bigint | null
-  room_id: bigint | null
+  user_id: number | null
+  room_id: number | null
   favorited_at: Date | null
 }
 
 export type Room_favoritesMaxAggregateOutputType = {
-  user_id: bigint | null
-  room_id: bigint | null
+  user_id: number | null
+  room_id: number | null
   favorited_at: Date | null
 }
 
@@ -172,8 +172,8 @@ export type room_favoritesGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type Room_favoritesGroupByOutputType = {
-  user_id: bigint
-  room_id: bigint
+  user_id: number
+  room_id: number
   favorited_at: Date
   _count: Room_favoritesCountAggregateOutputType | null
   _avg: Room_favoritesAvgAggregateOutputType | null
@@ -201,19 +201,19 @@ export type room_favoritesWhereInput = {
   AND?: Prisma.room_favoritesWhereInput | Prisma.room_favoritesWhereInput[]
   OR?: Prisma.room_favoritesWhereInput[]
   NOT?: Prisma.room_favoritesWhereInput | Prisma.room_favoritesWhereInput[]
-  user_id?: Prisma.BigIntFilter<"room_favorites"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"room_favorites"> | bigint | number
+  user_id?: Prisma.IntFilter<"room_favorites"> | number
+  room_id?: Prisma.IntFilter<"room_favorites"> | number
   favorited_at?: Prisma.DateTimeFilter<"room_favorites"> | Date | string
-  rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
 }
 
 export type room_favoritesOrderByWithRelationInput = {
   user_id?: Prisma.SortOrder
   room_id?: Prisma.SortOrder
   favorited_at?: Prisma.SortOrder
-  rooms?: Prisma.roomsOrderByWithRelationInput
   users?: Prisma.usersOrderByWithRelationInput
+  rooms?: Prisma.roomsOrderByWithRelationInput
 }
 
 export type room_favoritesWhereUniqueInput = Prisma.AtLeast<{
@@ -221,11 +221,11 @@ export type room_favoritesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.room_favoritesWhereInput | Prisma.room_favoritesWhereInput[]
   OR?: Prisma.room_favoritesWhereInput[]
   NOT?: Prisma.room_favoritesWhereInput | Prisma.room_favoritesWhereInput[]
-  user_id?: Prisma.BigIntFilter<"room_favorites"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"room_favorites"> | bigint | number
+  user_id?: Prisma.IntFilter<"room_favorites"> | number
+  room_id?: Prisma.IntFilter<"room_favorites"> | number
   favorited_at?: Prisma.DateTimeFilter<"room_favorites"> | Date | string
-  rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
 }, "user_id_room_id">
 
 export type room_favoritesOrderByWithAggregationInput = {
@@ -243,38 +243,38 @@ export type room_favoritesScalarWhereWithAggregatesInput = {
   AND?: Prisma.room_favoritesScalarWhereWithAggregatesInput | Prisma.room_favoritesScalarWhereWithAggregatesInput[]
   OR?: Prisma.room_favoritesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.room_favoritesScalarWhereWithAggregatesInput | Prisma.room_favoritesScalarWhereWithAggregatesInput[]
-  user_id?: Prisma.BigIntWithAggregatesFilter<"room_favorites"> | bigint | number
-  room_id?: Prisma.BigIntWithAggregatesFilter<"room_favorites"> | bigint | number
+  user_id?: Prisma.IntWithAggregatesFilter<"room_favorites"> | number
+  room_id?: Prisma.IntWithAggregatesFilter<"room_favorites"> | number
   favorited_at?: Prisma.DateTimeWithAggregatesFilter<"room_favorites"> | Date | string
 }
 
 export type room_favoritesCreateInput = {
   favorited_at?: Date | string
-  rooms: Prisma.roomsCreateNestedOneWithoutRoom_favoritesInput
   users: Prisma.usersCreateNestedOneWithoutRoom_favoritesInput
+  rooms: Prisma.roomsCreateNestedOneWithoutRoom_favoritesInput
 }
 
 export type room_favoritesUncheckedCreateInput = {
-  user_id: bigint | number
-  room_id: bigint | number
+  user_id: number
+  room_id: number
   favorited_at?: Date | string
 }
 
 export type room_favoritesUpdateInput = {
   favorited_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  rooms?: Prisma.roomsUpdateOneRequiredWithoutRoom_favoritesNestedInput
   users?: Prisma.usersUpdateOneRequiredWithoutRoom_favoritesNestedInput
+  rooms?: Prisma.roomsUpdateOneRequiredWithoutRoom_favoritesNestedInput
 }
 
 export type room_favoritesUncheckedUpdateInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   favorited_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_favoritesCreateManyInput = {
-  user_id: bigint | number
-  room_id: bigint | number
+  user_id: number
+  room_id: number
   favorited_at?: Date | string
 }
 
@@ -283,14 +283,14 @@ export type room_favoritesUpdateManyMutationInput = {
 }
 
 export type room_favoritesUncheckedUpdateManyInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   favorited_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_favoritesUser_idRoom_idCompoundUniqueInput = {
-  user_id: bigint | number
-  room_id: bigint | number
+  user_id: number
+  room_id: number
 }
 
 export type room_favoritesCountOrderByAggregateInput = {
@@ -421,7 +421,7 @@ export type room_favoritesCreateWithoutRoomsInput = {
 }
 
 export type room_favoritesUncheckedCreateWithoutRoomsInput = {
-  user_id: bigint | number
+  user_id: number
   favorited_at?: Date | string
 }
 
@@ -455,8 +455,8 @@ export type room_favoritesScalarWhereInput = {
   AND?: Prisma.room_favoritesScalarWhereInput | Prisma.room_favoritesScalarWhereInput[]
   OR?: Prisma.room_favoritesScalarWhereInput[]
   NOT?: Prisma.room_favoritesScalarWhereInput | Prisma.room_favoritesScalarWhereInput[]
-  user_id?: Prisma.BigIntFilter<"room_favorites"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"room_favorites"> | bigint | number
+  user_id?: Prisma.IntFilter<"room_favorites"> | number
+  room_id?: Prisma.IntFilter<"room_favorites"> | number
   favorited_at?: Prisma.DateTimeFilter<"room_favorites"> | Date | string
 }
 
@@ -466,7 +466,7 @@ export type room_favoritesCreateWithoutUsersInput = {
 }
 
 export type room_favoritesUncheckedCreateWithoutUsersInput = {
-  room_id: bigint | number
+  room_id: number
   favorited_at?: Date | string
 }
 
@@ -497,7 +497,7 @@ export type room_favoritesUpdateManyWithWhereWithoutUsersInput = {
 }
 
 export type room_favoritesCreateManyRoomsInput = {
-  user_id: bigint | number
+  user_id: number
   favorited_at?: Date | string
 }
 
@@ -507,17 +507,17 @@ export type room_favoritesUpdateWithoutRoomsInput = {
 }
 
 export type room_favoritesUncheckedUpdateWithoutRoomsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   favorited_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_favoritesUncheckedUpdateManyWithoutRoomsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   favorited_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_favoritesCreateManyUsersInput = {
-  room_id: bigint | number
+  room_id: number
   favorited_at?: Date | string
 }
 
@@ -527,12 +527,12 @@ export type room_favoritesUpdateWithoutUsersInput = {
 }
 
 export type room_favoritesUncheckedUpdateWithoutUsersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   favorited_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_favoritesUncheckedUpdateManyWithoutUsersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   favorited_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -542,8 +542,8 @@ export type room_favoritesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   user_id?: boolean
   room_id?: boolean
   favorited_at?: boolean
-  rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["room_favorites"]>
 
 
@@ -556,19 +556,19 @@ export type room_favoritesSelectScalar = {
 
 export type room_favoritesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"user_id" | "room_id" | "favorited_at", ExtArgs["result"]["room_favorites"]>
 export type room_favoritesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
 }
 
 export type $room_favoritesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "room_favorites"
   objects: {
-    rooms: Prisma.$roomsPayload<ExtArgs>
     users: Prisma.$usersPayload<ExtArgs>
+    rooms: Prisma.$roomsPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    user_id: bigint
-    room_id: bigint
+    user_id: number
+    room_id: number
     favorited_at: Date
   }, ExtArgs["result"]["room_favorites"]>
   composites: {}
@@ -910,8 +910,8 @@ readonly fields: room_favoritesFieldRefs;
  */
 export interface Prisma__room_favoritesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  rooms<T extends Prisma.roomsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.roomsDefaultArgs<ExtArgs>>): Prisma.Prisma__roomsClient<runtime.Types.Result.GetResult<Prisma.$roomsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   users<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  rooms<T extends Prisma.roomsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.roomsDefaultArgs<ExtArgs>>): Prisma.Prisma__roomsClient<runtime.Types.Result.GetResult<Prisma.$roomsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -941,8 +941,8 @@ export interface Prisma__room_favoritesClient<T, Null = never, ExtArgs extends r
  * Fields of the room_favorites model
  */
 export interface room_favoritesFieldRefs {
-  readonly user_id: Prisma.FieldRef<"room_favorites", 'BigInt'>
-  readonly room_id: Prisma.FieldRef<"room_favorites", 'BigInt'>
+  readonly user_id: Prisma.FieldRef<"room_favorites", 'Int'>
+  readonly room_id: Prisma.FieldRef<"room_favorites", 'Int'>
   readonly favorited_at: Prisma.FieldRef<"room_favorites", 'DateTime'>
 }
     

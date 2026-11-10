@@ -32,26 +32,28 @@ export type RoomsAvgAggregateOutputType = {
 }
 
 export type RoomsSumAggregateOutputType = {
-  room_id: bigint | null
-  owner_id: bigint | null
+  room_id: number | null
+  owner_id: number | null
 }
 
 export type RoomsMinAggregateOutputType = {
-  room_id: bigint | null
-  owner_id: bigint | null
+  room_id: number | null
+  owner_id: number | null
   room_name: string | null
   description: string | null
   is_private: boolean | null
+  room_password_hash: string | null
   wallpaper: string | null
   created_at: Date | null
 }
 
 export type RoomsMaxAggregateOutputType = {
-  room_id: bigint | null
-  owner_id: bigint | null
+  room_id: number | null
+  owner_id: number | null
   room_name: string | null
   description: string | null
   is_private: boolean | null
+  room_password_hash: string | null
   wallpaper: string | null
   created_at: Date | null
 }
@@ -62,6 +64,7 @@ export type RoomsCountAggregateOutputType = {
   room_name: number
   description: number
   is_private: number
+  room_password_hash: number
   wallpaper: number
   created_at: number
   _all: number
@@ -84,6 +87,7 @@ export type RoomsMinAggregateInputType = {
   room_name?: true
   description?: true
   is_private?: true
+  room_password_hash?: true
   wallpaper?: true
   created_at?: true
 }
@@ -94,6 +98,7 @@ export type RoomsMaxAggregateInputType = {
   room_name?: true
   description?: true
   is_private?: true
+  room_password_hash?: true
   wallpaper?: true
   created_at?: true
 }
@@ -104,6 +109,7 @@ export type RoomsCountAggregateInputType = {
   room_name?: true
   description?: true
   is_private?: true
+  room_password_hash?: true
   wallpaper?: true
   created_at?: true
   _all?: true
@@ -196,12 +202,13 @@ export type roomsGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 export type RoomsGroupByOutputType = {
-  room_id: bigint
-  owner_id: bigint
+  room_id: number
+  owner_id: number
   room_name: string
   description: string | null
   is_private: boolean
-  wallpaper: string | null
+  room_password_hash: string | null
+  wallpaper: string
   created_at: Date
   _count: RoomsCountAggregateOutputType | null
   _avg: RoomsAvgAggregateOutputType | null
@@ -229,12 +236,13 @@ export type roomsWhereInput = {
   AND?: Prisma.roomsWhereInput | Prisma.roomsWhereInput[]
   OR?: Prisma.roomsWhereInput[]
   NOT?: Prisma.roomsWhereInput | Prisma.roomsWhereInput[]
-  room_id?: Prisma.BigIntFilter<"rooms"> | bigint | number
-  owner_id?: Prisma.BigIntFilter<"rooms"> | bigint | number
+  room_id?: Prisma.IntFilter<"rooms"> | number
+  owner_id?: Prisma.IntFilter<"rooms"> | number
   room_name?: Prisma.StringFilter<"rooms"> | string
   description?: Prisma.StringNullableFilter<"rooms"> | string | null
   is_private?: Prisma.BoolFilter<"rooms"> | boolean
-  wallpaper?: Prisma.StringNullableFilter<"rooms"> | string | null
+  room_password_hash?: Prisma.StringNullableFilter<"rooms"> | string | null
+  wallpaper?: Prisma.StringFilter<"rooms"> | string
   created_at?: Prisma.DateTimeFilter<"rooms"> | Date | string
   chat_messages?: Prisma.Chat_messagesListRelationFilter
   room_favorites?: Prisma.Room_favoritesListRelationFilter
@@ -250,7 +258,8 @@ export type roomsOrderByWithRelationInput = {
   room_name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   is_private?: Prisma.SortOrder
-  wallpaper?: Prisma.SortOrderInput | Prisma.SortOrder
+  room_password_hash?: Prisma.SortOrderInput | Prisma.SortOrder
+  wallpaper?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   chat_messages?: Prisma.chat_messagesOrderByRelationAggregateInput
   room_favorites?: Prisma.room_favoritesOrderByRelationAggregateInput
@@ -262,15 +271,16 @@ export type roomsOrderByWithRelationInput = {
 }
 
 export type roomsWhereUniqueInput = Prisma.AtLeast<{
-  room_id?: bigint | number
+  room_id?: number
   AND?: Prisma.roomsWhereInput | Prisma.roomsWhereInput[]
   OR?: Prisma.roomsWhereInput[]
   NOT?: Prisma.roomsWhereInput | Prisma.roomsWhereInput[]
-  owner_id?: Prisma.BigIntFilter<"rooms"> | bigint | number
+  owner_id?: Prisma.IntFilter<"rooms"> | number
   room_name?: Prisma.StringFilter<"rooms"> | string
   description?: Prisma.StringNullableFilter<"rooms"> | string | null
   is_private?: Prisma.BoolFilter<"rooms"> | boolean
-  wallpaper?: Prisma.StringNullableFilter<"rooms"> | string | null
+  room_password_hash?: Prisma.StringNullableFilter<"rooms"> | string | null
+  wallpaper?: Prisma.StringFilter<"rooms"> | string
   created_at?: Prisma.DateTimeFilter<"rooms"> | Date | string
   chat_messages?: Prisma.Chat_messagesListRelationFilter
   room_favorites?: Prisma.Room_favoritesListRelationFilter
@@ -286,7 +296,8 @@ export type roomsOrderByWithAggregationInput = {
   room_name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   is_private?: Prisma.SortOrder
-  wallpaper?: Prisma.SortOrderInput | Prisma.SortOrder
+  room_password_hash?: Prisma.SortOrderInput | Prisma.SortOrder
+  wallpaper?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   _count?: Prisma.roomsCountOrderByAggregateInput
   _avg?: Prisma.roomsAvgOrderByAggregateInput
@@ -299,21 +310,22 @@ export type roomsScalarWhereWithAggregatesInput = {
   AND?: Prisma.roomsScalarWhereWithAggregatesInput | Prisma.roomsScalarWhereWithAggregatesInput[]
   OR?: Prisma.roomsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.roomsScalarWhereWithAggregatesInput | Prisma.roomsScalarWhereWithAggregatesInput[]
-  room_id?: Prisma.BigIntWithAggregatesFilter<"rooms"> | bigint | number
-  owner_id?: Prisma.BigIntWithAggregatesFilter<"rooms"> | bigint | number
+  room_id?: Prisma.IntWithAggregatesFilter<"rooms"> | number
+  owner_id?: Prisma.IntWithAggregatesFilter<"rooms"> | number
   room_name?: Prisma.StringWithAggregatesFilter<"rooms"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"rooms"> | string | null
   is_private?: Prisma.BoolWithAggregatesFilter<"rooms"> | boolean
-  wallpaper?: Prisma.StringNullableWithAggregatesFilter<"rooms"> | string | null
+  room_password_hash?: Prisma.StringNullableWithAggregatesFilter<"rooms"> | string | null
+  wallpaper?: Prisma.StringWithAggregatesFilter<"rooms"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"rooms"> | Date | string
 }
 
 export type roomsCreateInput = {
-  room_id?: bigint | number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutRoomsInput
@@ -324,12 +336,13 @@ export type roomsCreateInput = {
 }
 
 export type roomsUncheckedCreateInput = {
-  room_id?: bigint | number
-  owner_id: bigint | number
+  room_id?: number
+  owner_id: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutRoomsInput
@@ -339,11 +352,11 @@ export type roomsUncheckedCreateInput = {
 }
 
 export type roomsUpdateInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutRoomsNestedInput
@@ -354,12 +367,13 @@ export type roomsUpdateInput = {
 }
 
 export type roomsUncheckedUpdateInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  owner_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  owner_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutRoomsNestedInput
@@ -369,31 +383,33 @@ export type roomsUncheckedUpdateInput = {
 }
 
 export type roomsCreateManyInput = {
-  room_id?: bigint | number
-  owner_id: bigint | number
+  room_id?: number
+  owner_id: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
 }
 
 export type roomsUpdateManyMutationInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type roomsUncheckedUpdateManyInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  owner_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  owner_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -414,6 +430,7 @@ export type roomsCountOrderByAggregateInput = {
   room_name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   is_private?: Prisma.SortOrder
+  room_password_hash?: Prisma.SortOrder
   wallpaper?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -429,6 +446,7 @@ export type roomsMaxOrderByAggregateInput = {
   room_name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   is_private?: Prisma.SortOrder
+  room_password_hash?: Prisma.SortOrder
   wallpaper?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -439,6 +457,7 @@ export type roomsMinOrderByAggregateInput = {
   room_name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   is_private?: Prisma.SortOrder
+  room_password_hash?: Prisma.SortOrder
   wallpaper?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
@@ -514,14 +533,6 @@ export type roomsUpdateOneRequiredWithoutRoom_membersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.roomsUpdateToOneWithWhereWithoutRoom_membersInput, Prisma.roomsUpdateWithoutRoom_membersInput>, Prisma.roomsUncheckedUpdateWithoutRoom_membersInput>
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type roomsCreateNestedManyWithoutUsersInput = {
   create?: Prisma.XOR<Prisma.roomsCreateWithoutUsersInput, Prisma.roomsUncheckedCreateWithoutUsersInput> | Prisma.roomsCreateWithoutUsersInput[] | Prisma.roomsUncheckedCreateWithoutUsersInput[]
   connectOrCreate?: Prisma.roomsCreateOrConnectWithoutUsersInput | Prisma.roomsCreateOrConnectWithoutUsersInput[]
@@ -579,11 +590,11 @@ export type roomsUpdateOneRequiredWithoutWatch_sessionsNestedInput = {
 }
 
 export type roomsCreateWithoutChat_messagesInput = {
-  room_id?: bigint | number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutRoomsInput
   room_items?: Prisma.room_itemsCreateNestedManyWithoutRoomsInput
@@ -593,12 +604,13 @@ export type roomsCreateWithoutChat_messagesInput = {
 }
 
 export type roomsUncheckedCreateWithoutChat_messagesInput = {
-  room_id?: bigint | number
-  owner_id: bigint | number
+  room_id?: number
+  owner_id: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutRoomsInput
   room_items?: Prisma.room_itemsUncheckedCreateNestedManyWithoutRoomsInput
@@ -623,11 +635,11 @@ export type roomsUpdateToOneWithWhereWithoutChat_messagesInput = {
 }
 
 export type roomsUpdateWithoutChat_messagesInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutRoomsNestedInput
   room_items?: Prisma.room_itemsUpdateManyWithoutRoomsNestedInput
@@ -637,12 +649,13 @@ export type roomsUpdateWithoutChat_messagesInput = {
 }
 
 export type roomsUncheckedUpdateWithoutChat_messagesInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  owner_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  owner_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutRoomsNestedInput
   room_items?: Prisma.room_itemsUncheckedUpdateManyWithoutRoomsNestedInput
@@ -651,11 +664,11 @@ export type roomsUncheckedUpdateWithoutChat_messagesInput = {
 }
 
 export type roomsCreateWithoutRoom_favoritesInput = {
-  room_id?: bigint | number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutRoomsInput
   room_items?: Prisma.room_itemsCreateNestedManyWithoutRoomsInput
@@ -665,12 +678,13 @@ export type roomsCreateWithoutRoom_favoritesInput = {
 }
 
 export type roomsUncheckedCreateWithoutRoom_favoritesInput = {
-  room_id?: bigint | number
-  owner_id: bigint | number
+  room_id?: number
+  owner_id: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutRoomsInput
   room_items?: Prisma.room_itemsUncheckedCreateNestedManyWithoutRoomsInput
@@ -695,11 +709,11 @@ export type roomsUpdateToOneWithWhereWithoutRoom_favoritesInput = {
 }
 
 export type roomsUpdateWithoutRoom_favoritesInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutRoomsNestedInput
   room_items?: Prisma.room_itemsUpdateManyWithoutRoomsNestedInput
@@ -709,12 +723,13 @@ export type roomsUpdateWithoutRoom_favoritesInput = {
 }
 
 export type roomsUncheckedUpdateWithoutRoom_favoritesInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  owner_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  owner_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutRoomsNestedInput
   room_items?: Prisma.room_itemsUncheckedUpdateManyWithoutRoomsNestedInput
@@ -723,11 +738,11 @@ export type roomsUncheckedUpdateWithoutRoom_favoritesInput = {
 }
 
 export type roomsCreateWithoutRoom_itemsInput = {
-  room_id?: bigint | number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutRoomsInput
@@ -737,12 +752,13 @@ export type roomsCreateWithoutRoom_itemsInput = {
 }
 
 export type roomsUncheckedCreateWithoutRoom_itemsInput = {
-  room_id?: bigint | number
-  owner_id: bigint | number
+  room_id?: number
+  owner_id: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutRoomsInput
@@ -767,11 +783,11 @@ export type roomsUpdateToOneWithWhereWithoutRoom_itemsInput = {
 }
 
 export type roomsUpdateWithoutRoom_itemsInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutRoomsNestedInput
@@ -781,12 +797,13 @@ export type roomsUpdateWithoutRoom_itemsInput = {
 }
 
 export type roomsUncheckedUpdateWithoutRoom_itemsInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  owner_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  owner_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutRoomsNestedInput
@@ -795,11 +812,11 @@ export type roomsUncheckedUpdateWithoutRoom_itemsInput = {
 }
 
 export type roomsCreateWithoutRoom_membersInput = {
-  room_id?: bigint | number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutRoomsInput
@@ -809,12 +826,13 @@ export type roomsCreateWithoutRoom_membersInput = {
 }
 
 export type roomsUncheckedCreateWithoutRoom_membersInput = {
-  room_id?: bigint | number
-  owner_id: bigint | number
+  room_id?: number
+  owner_id: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutRoomsInput
@@ -839,11 +857,11 @@ export type roomsUpdateToOneWithWhereWithoutRoom_membersInput = {
 }
 
 export type roomsUpdateWithoutRoom_membersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutRoomsNestedInput
@@ -853,12 +871,13 @@ export type roomsUpdateWithoutRoom_membersInput = {
 }
 
 export type roomsUncheckedUpdateWithoutRoom_membersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  owner_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  owner_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutRoomsNestedInput
@@ -867,11 +886,11 @@ export type roomsUncheckedUpdateWithoutRoom_membersInput = {
 }
 
 export type roomsCreateWithoutUsersInput = {
-  room_id?: bigint | number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutRoomsInput
@@ -881,11 +900,12 @@ export type roomsCreateWithoutUsersInput = {
 }
 
 export type roomsUncheckedCreateWithoutUsersInput = {
-  room_id?: bigint | number
+  room_id?: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutRoomsInput
@@ -924,21 +944,22 @@ export type roomsScalarWhereInput = {
   AND?: Prisma.roomsScalarWhereInput | Prisma.roomsScalarWhereInput[]
   OR?: Prisma.roomsScalarWhereInput[]
   NOT?: Prisma.roomsScalarWhereInput | Prisma.roomsScalarWhereInput[]
-  room_id?: Prisma.BigIntFilter<"rooms"> | bigint | number
-  owner_id?: Prisma.BigIntFilter<"rooms"> | bigint | number
+  room_id?: Prisma.IntFilter<"rooms"> | number
+  owner_id?: Prisma.IntFilter<"rooms"> | number
   room_name?: Prisma.StringFilter<"rooms"> | string
   description?: Prisma.StringNullableFilter<"rooms"> | string | null
   is_private?: Prisma.BoolFilter<"rooms"> | boolean
-  wallpaper?: Prisma.StringNullableFilter<"rooms"> | string | null
+  room_password_hash?: Prisma.StringNullableFilter<"rooms"> | string | null
+  wallpaper?: Prisma.StringFilter<"rooms"> | string
   created_at?: Prisma.DateTimeFilter<"rooms"> | Date | string
 }
 
 export type roomsCreateWithoutWatch_sessionsInput = {
-  room_id?: bigint | number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutRoomsInput
@@ -948,12 +969,13 @@ export type roomsCreateWithoutWatch_sessionsInput = {
 }
 
 export type roomsUncheckedCreateWithoutWatch_sessionsInput = {
-  room_id?: bigint | number
-  owner_id: bigint | number
+  room_id?: number
+  owner_id: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutRoomsInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutRoomsInput
@@ -978,11 +1000,11 @@ export type roomsUpdateToOneWithWhereWithoutWatch_sessionsInput = {
 }
 
 export type roomsUpdateWithoutWatch_sessionsInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutRoomsNestedInput
@@ -992,12 +1014,13 @@ export type roomsUpdateWithoutWatch_sessionsInput = {
 }
 
 export type roomsUncheckedUpdateWithoutWatch_sessionsInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  owner_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  owner_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutRoomsNestedInput
@@ -1006,20 +1029,21 @@ export type roomsUncheckedUpdateWithoutWatch_sessionsInput = {
 }
 
 export type roomsCreateManyUsersInput = {
-  room_id?: bigint | number
+  room_id?: number
   room_name: string
   description?: string | null
   is_private?: boolean
-  wallpaper?: string | null
+  room_password_hash?: string | null
+  wallpaper?: string
   created_at?: Date | string
 }
 
 export type roomsUpdateWithoutUsersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutRoomsNestedInput
@@ -1029,11 +1053,12 @@ export type roomsUpdateWithoutUsersInput = {
 }
 
 export type roomsUncheckedUpdateWithoutUsersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutRoomsNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutRoomsNestedInput
@@ -1043,11 +1068,12 @@ export type roomsUncheckedUpdateWithoutUsersInput = {
 }
 
 export type roomsUncheckedUpdateManyWithoutUsersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   room_name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_private?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  wallpaper?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  room_password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wallpaper?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1124,6 +1150,7 @@ export type roomsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   room_name?: boolean
   description?: boolean
   is_private?: boolean
+  room_password_hash?: boolean
   wallpaper?: boolean
   created_at?: boolean
   chat_messages?: boolean | Prisma.rooms$chat_messagesArgs<ExtArgs>
@@ -1143,11 +1170,12 @@ export type roomsSelectScalar = {
   room_name?: boolean
   description?: boolean
   is_private?: boolean
+  room_password_hash?: boolean
   wallpaper?: boolean
   created_at?: boolean
 }
 
-export type roomsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"room_id" | "owner_id" | "room_name" | "description" | "is_private" | "wallpaper" | "created_at", ExtArgs["result"]["rooms"]>
+export type roomsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"room_id" | "owner_id" | "room_name" | "description" | "is_private" | "room_password_hash" | "wallpaper" | "created_at", ExtArgs["result"]["rooms"]>
 export type roomsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chat_messages?: boolean | Prisma.rooms$chat_messagesArgs<ExtArgs>
   room_favorites?: boolean | Prisma.rooms$room_favoritesArgs<ExtArgs>
@@ -1169,12 +1197,13 @@ export type $roomsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     watch_sessions: Prisma.$watch_sessionsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    room_id: bigint
-    owner_id: bigint
+    room_id: number
+    owner_id: number
     room_name: string
     description: string | null
     is_private: boolean
-    wallpaper: string | null
+    room_password_hash: string | null
+    wallpaper: string
     created_at: Date
   }, ExtArgs["result"]["rooms"]>
   composites: {}
@@ -1551,11 +1580,12 @@ export interface Prisma__roomsClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the rooms model
  */
 export interface roomsFieldRefs {
-  readonly room_id: Prisma.FieldRef<"rooms", 'BigInt'>
-  readonly owner_id: Prisma.FieldRef<"rooms", 'BigInt'>
+  readonly room_id: Prisma.FieldRef<"rooms", 'Int'>
+  readonly owner_id: Prisma.FieldRef<"rooms", 'Int'>
   readonly room_name: Prisma.FieldRef<"rooms", 'String'>
   readonly description: Prisma.FieldRef<"rooms", 'String'>
   readonly is_private: Prisma.FieldRef<"rooms", 'Boolean'>
+  readonly room_password_hash: Prisma.FieldRef<"rooms", 'String'>
   readonly wallpaper: Prisma.FieldRef<"rooms", 'String'>
   readonly created_at: Prisma.FieldRef<"rooms", 'DateTime'>
 }

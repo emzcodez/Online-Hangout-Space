@@ -33,41 +33,43 @@ export type Room_itemsAvgAggregateOutputType = {
   placed_by: number | null
   position_x: runtime.Decimal | null
   position_y: runtime.Decimal | null
-  rotation_deg: runtime.Decimal | null
+  rotation_deg: number | null
   scale_factor: runtime.Decimal | null
 }
 
 export type Room_itemsSumAggregateOutputType = {
-  room_item_id: bigint | null
-  room_id: bigint | null
-  furniture_id: bigint | null
-  placed_by: bigint | null
+  room_item_id: number | null
+  room_id: number | null
+  furniture_id: number | null
+  placed_by: number | null
   position_x: runtime.Decimal | null
   position_y: runtime.Decimal | null
-  rotation_deg: runtime.Decimal | null
+  rotation_deg: number | null
   scale_factor: runtime.Decimal | null
 }
 
 export type Room_itemsMinAggregateOutputType = {
-  room_item_id: bigint | null
-  room_id: bigint | null
-  furniture_id: bigint | null
-  placed_by: bigint | null
+  room_item_id: number | null
+  room_id: number | null
+  furniture_id: number | null
+  placed_by: number | null
   position_x: runtime.Decimal | null
   position_y: runtime.Decimal | null
-  rotation_deg: runtime.Decimal | null
+  rotation_deg: number | null
   scale_factor: runtime.Decimal | null
+  placed_at: Date | null
 }
 
 export type Room_itemsMaxAggregateOutputType = {
-  room_item_id: bigint | null
-  room_id: bigint | null
-  furniture_id: bigint | null
-  placed_by: bigint | null
+  room_item_id: number | null
+  room_id: number | null
+  furniture_id: number | null
+  placed_by: number | null
   position_x: runtime.Decimal | null
   position_y: runtime.Decimal | null
-  rotation_deg: runtime.Decimal | null
+  rotation_deg: number | null
   scale_factor: runtime.Decimal | null
+  placed_at: Date | null
 }
 
 export type Room_itemsCountAggregateOutputType = {
@@ -79,6 +81,7 @@ export type Room_itemsCountAggregateOutputType = {
   position_y: number
   rotation_deg: number
   scale_factor: number
+  placed_at: number
   _all: number
 }
 
@@ -114,6 +117,7 @@ export type Room_itemsMinAggregateInputType = {
   position_y?: true
   rotation_deg?: true
   scale_factor?: true
+  placed_at?: true
 }
 
 export type Room_itemsMaxAggregateInputType = {
@@ -125,6 +129,7 @@ export type Room_itemsMaxAggregateInputType = {
   position_y?: true
   rotation_deg?: true
   scale_factor?: true
+  placed_at?: true
 }
 
 export type Room_itemsCountAggregateInputType = {
@@ -136,6 +141,7 @@ export type Room_itemsCountAggregateInputType = {
   position_y?: true
   rotation_deg?: true
   scale_factor?: true
+  placed_at?: true
   _all?: true
 }
 
@@ -226,14 +232,15 @@ export type room_itemsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 export type Room_itemsGroupByOutputType = {
-  room_item_id: bigint
-  room_id: bigint
-  furniture_id: bigint
-  placed_by: bigint | null
+  room_item_id: number
+  room_id: number
+  furniture_id: number
+  placed_by: number
   position_x: runtime.Decimal
   position_y: runtime.Decimal
-  rotation_deg: runtime.Decimal
+  rotation_deg: number
   scale_factor: runtime.Decimal
+  placed_at: Date
   _count: Room_itemsCountAggregateOutputType | null
   _avg: Room_itemsAvgAggregateOutputType | null
   _sum: Room_itemsSumAggregateOutputType | null
@@ -260,59 +267,63 @@ export type room_itemsWhereInput = {
   AND?: Prisma.room_itemsWhereInput | Prisma.room_itemsWhereInput[]
   OR?: Prisma.room_itemsWhereInput[]
   NOT?: Prisma.room_itemsWhereInput | Prisma.room_itemsWhereInput[]
-  room_item_id?: Prisma.BigIntFilter<"room_items"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"room_items"> | bigint | number
-  furniture_id?: Prisma.BigIntFilter<"room_items"> | bigint | number
-  placed_by?: Prisma.BigIntNullableFilter<"room_items"> | bigint | number | null
+  room_item_id?: Prisma.IntFilter<"room_items"> | number
+  room_id?: Prisma.IntFilter<"room_items"> | number
+  furniture_id?: Prisma.IntFilter<"room_items"> | number
+  placed_by?: Prisma.IntFilter<"room_items"> | number
   position_x?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFilter<"room_items"> | number
   scale_factor?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  furniture_catalog?: Prisma.XOR<Prisma.Furniture_catalogScalarRelationFilter, Prisma.furniture_catalogWhereInput>
-  users?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.usersWhereInput> | null
+  placed_at?: Prisma.DateTimeFilter<"room_items"> | Date | string
   rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
+  furniture_catalog?: Prisma.XOR<Prisma.Furniture_catalogScalarRelationFilter, Prisma.furniture_catalogWhereInput>
+  users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
 }
 
 export type room_itemsOrderByWithRelationInput = {
   room_item_id?: Prisma.SortOrder
   room_id?: Prisma.SortOrder
   furniture_id?: Prisma.SortOrder
-  placed_by?: Prisma.SortOrderInput | Prisma.SortOrder
+  placed_by?: Prisma.SortOrder
   position_x?: Prisma.SortOrder
   position_y?: Prisma.SortOrder
   rotation_deg?: Prisma.SortOrder
   scale_factor?: Prisma.SortOrder
+  placed_at?: Prisma.SortOrder
+  rooms?: Prisma.roomsOrderByWithRelationInput
   furniture_catalog?: Prisma.furniture_catalogOrderByWithRelationInput
   users?: Prisma.usersOrderByWithRelationInput
-  rooms?: Prisma.roomsOrderByWithRelationInput
 }
 
 export type room_itemsWhereUniqueInput = Prisma.AtLeast<{
-  room_item_id?: bigint | number
+  room_item_id?: number
   AND?: Prisma.room_itemsWhereInput | Prisma.room_itemsWhereInput[]
   OR?: Prisma.room_itemsWhereInput[]
   NOT?: Prisma.room_itemsWhereInput | Prisma.room_itemsWhereInput[]
-  room_id?: Prisma.BigIntFilter<"room_items"> | bigint | number
-  furniture_id?: Prisma.BigIntFilter<"room_items"> | bigint | number
-  placed_by?: Prisma.BigIntNullableFilter<"room_items"> | bigint | number | null
+  room_id?: Prisma.IntFilter<"room_items"> | number
+  furniture_id?: Prisma.IntFilter<"room_items"> | number
+  placed_by?: Prisma.IntFilter<"room_items"> | number
   position_x?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFilter<"room_items"> | number
   scale_factor?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  furniture_catalog?: Prisma.XOR<Prisma.Furniture_catalogScalarRelationFilter, Prisma.furniture_catalogWhereInput>
-  users?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.usersWhereInput> | null
+  placed_at?: Prisma.DateTimeFilter<"room_items"> | Date | string
   rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
+  furniture_catalog?: Prisma.XOR<Prisma.Furniture_catalogScalarRelationFilter, Prisma.furniture_catalogWhereInput>
+  users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
 }, "room_item_id">
 
 export type room_itemsOrderByWithAggregationInput = {
   room_item_id?: Prisma.SortOrder
   room_id?: Prisma.SortOrder
   furniture_id?: Prisma.SortOrder
-  placed_by?: Prisma.SortOrderInput | Prisma.SortOrder
+  placed_by?: Prisma.SortOrder
   position_x?: Prisma.SortOrder
   position_y?: Prisma.SortOrder
   rotation_deg?: Prisma.SortOrder
   scale_factor?: Prisma.SortOrder
+  placed_at?: Prisma.SortOrder
   _count?: Prisma.room_itemsCountOrderByAggregateInput
   _avg?: Prisma.room_itemsAvgOrderByAggregateInput
   _max?: Prisma.room_itemsMaxOrderByAggregateInput
@@ -324,88 +335,93 @@ export type room_itemsScalarWhereWithAggregatesInput = {
   AND?: Prisma.room_itemsScalarWhereWithAggregatesInput | Prisma.room_itemsScalarWhereWithAggregatesInput[]
   OR?: Prisma.room_itemsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.room_itemsScalarWhereWithAggregatesInput | Prisma.room_itemsScalarWhereWithAggregatesInput[]
-  room_item_id?: Prisma.BigIntWithAggregatesFilter<"room_items"> | bigint | number
-  room_id?: Prisma.BigIntWithAggregatesFilter<"room_items"> | bigint | number
-  furniture_id?: Prisma.BigIntWithAggregatesFilter<"room_items"> | bigint | number
-  placed_by?: Prisma.BigIntNullableWithAggregatesFilter<"room_items"> | bigint | number | null
+  room_item_id?: Prisma.IntWithAggregatesFilter<"room_items"> | number
+  room_id?: Prisma.IntWithAggregatesFilter<"room_items"> | number
+  furniture_id?: Prisma.IntWithAggregatesFilter<"room_items"> | number
+  placed_by?: Prisma.IntWithAggregatesFilter<"room_items"> | number
   position_x?: Prisma.DecimalWithAggregatesFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalWithAggregatesFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalWithAggregatesFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntWithAggregatesFilter<"room_items"> | number
   scale_factor?: Prisma.DecimalWithAggregatesFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeWithAggregatesFilter<"room_items"> | Date | string
 }
 
 export type room_itemsCreateInput = {
-  room_item_id?: bigint | number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  furniture_catalog: Prisma.furniture_catalogCreateNestedOneWithoutRoom_itemsInput
-  users?: Prisma.usersCreateNestedOneWithoutRoom_itemsInput
+  placed_at?: Date | string
   rooms: Prisma.roomsCreateNestedOneWithoutRoom_itemsInput
+  furniture_catalog: Prisma.furniture_catalogCreateNestedOneWithoutRoom_itemsInput
+  users: Prisma.usersCreateNestedOneWithoutRoom_itemsInput
 }
 
 export type room_itemsUncheckedCreateInput = {
-  room_item_id?: bigint | number
-  room_id: bigint | number
-  furniture_id: bigint | number
-  placed_by?: bigint | number | null
+  room_item_id?: number
+  room_id: number
+  furniture_id: number
+  placed_by: number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
 }
 
 export type room_itemsUpdateInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  furniture_catalog?: Prisma.furniture_catalogUpdateOneRequiredWithoutRoom_itemsNestedInput
-  users?: Prisma.usersUpdateOneWithoutRoom_itemsNestedInput
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rooms?: Prisma.roomsUpdateOneRequiredWithoutRoom_itemsNestedInput
+  furniture_catalog?: Prisma.furniture_catalogUpdateOneRequiredWithoutRoom_itemsNestedInput
+  users?: Prisma.usersUpdateOneRequiredWithoutRoom_itemsNestedInput
 }
 
 export type room_itemsUncheckedUpdateInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  placed_by?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  room_item_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
+  placed_by?: Prisma.IntFieldUpdateOperationsInput | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_itemsCreateManyInput = {
-  room_item_id?: bigint | number
-  room_id: bigint | number
-  furniture_id: bigint | number
-  placed_by?: bigint | number | null
+  room_item_id?: number
+  room_id: number
+  furniture_id: number
+  placed_by: number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
 }
 
 export type room_itemsUpdateManyMutationInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_itemsUncheckedUpdateManyInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  placed_by?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  room_item_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
+  placed_by?: Prisma.IntFieldUpdateOperationsInput | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type Room_itemsListRelationFilter = {
@@ -427,6 +443,7 @@ export type room_itemsCountOrderByAggregateInput = {
   position_y?: Prisma.SortOrder
   rotation_deg?: Prisma.SortOrder
   scale_factor?: Prisma.SortOrder
+  placed_at?: Prisma.SortOrder
 }
 
 export type room_itemsAvgOrderByAggregateInput = {
@@ -449,6 +466,7 @@ export type room_itemsMaxOrderByAggregateInput = {
   position_y?: Prisma.SortOrder
   rotation_deg?: Prisma.SortOrder
   scale_factor?: Prisma.SortOrder
+  placed_at?: Prisma.SortOrder
 }
 
 export type room_itemsMinOrderByAggregateInput = {
@@ -460,6 +478,7 @@ export type room_itemsMinOrderByAggregateInput = {
   position_y?: Prisma.SortOrder
   rotation_deg?: Prisma.SortOrder
   scale_factor?: Prisma.SortOrder
+  placed_at?: Prisma.SortOrder
 }
 
 export type room_itemsSumOrderByAggregateInput = {
@@ -513,14 +532,6 @@ export type room_itemsUncheckedUpdateManyWithoutFurniture_catalogNestedInput = {
   update?: Prisma.room_itemsUpdateWithWhereUniqueWithoutFurniture_catalogInput | Prisma.room_itemsUpdateWithWhereUniqueWithoutFurniture_catalogInput[]
   updateMany?: Prisma.room_itemsUpdateManyWithWhereWithoutFurniture_catalogInput | Prisma.room_itemsUpdateManyWithWhereWithoutFurniture_catalogInput[]
   deleteMany?: Prisma.room_itemsScalarWhereInput | Prisma.room_itemsScalarWhereInput[]
-}
-
-export type NullableBigIntFieldUpdateOperationsInput = {
-  set?: bigint | number | null
-  increment?: bigint | number
-  decrement?: bigint | number
-  multiply?: bigint | number
-  divide?: bigint | number
 }
 
 export type room_itemsCreateNestedManyWithoutRoomsInput = {
@@ -608,23 +619,24 @@ export type room_itemsUncheckedUpdateManyWithoutUsersNestedInput = {
 }
 
 export type room_itemsCreateWithoutFurniture_catalogInput = {
-  room_item_id?: bigint | number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  users?: Prisma.usersCreateNestedOneWithoutRoom_itemsInput
+  placed_at?: Date | string
   rooms: Prisma.roomsCreateNestedOneWithoutRoom_itemsInput
+  users: Prisma.usersCreateNestedOneWithoutRoom_itemsInput
 }
 
 export type room_itemsUncheckedCreateWithoutFurniture_catalogInput = {
-  room_item_id?: bigint | number
-  room_id: bigint | number
-  placed_by?: bigint | number | null
+  room_item_id?: number
+  room_id: number
+  placed_by: number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
 }
 
 export type room_itemsCreateOrConnectWithoutFurniture_catalogInput = {
@@ -657,34 +669,36 @@ export type room_itemsScalarWhereInput = {
   AND?: Prisma.room_itemsScalarWhereInput | Prisma.room_itemsScalarWhereInput[]
   OR?: Prisma.room_itemsScalarWhereInput[]
   NOT?: Prisma.room_itemsScalarWhereInput | Prisma.room_itemsScalarWhereInput[]
-  room_item_id?: Prisma.BigIntFilter<"room_items"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"room_items"> | bigint | number
-  furniture_id?: Prisma.BigIntFilter<"room_items"> | bigint | number
-  placed_by?: Prisma.BigIntNullableFilter<"room_items"> | bigint | number | null
+  room_item_id?: Prisma.IntFilter<"room_items"> | number
+  room_id?: Prisma.IntFilter<"room_items"> | number
+  furniture_id?: Prisma.IntFilter<"room_items"> | number
+  placed_by?: Prisma.IntFilter<"room_items"> | number
   position_x?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFilter<"room_items"> | number
   scale_factor?: Prisma.DecimalFilter<"room_items"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFilter<"room_items"> | Date | string
 }
 
 export type room_itemsCreateWithoutRoomsInput = {
-  room_item_id?: bigint | number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
   furniture_catalog: Prisma.furniture_catalogCreateNestedOneWithoutRoom_itemsInput
-  users?: Prisma.usersCreateNestedOneWithoutRoom_itemsInput
+  users: Prisma.usersCreateNestedOneWithoutRoom_itemsInput
 }
 
 export type room_itemsUncheckedCreateWithoutRoomsInput = {
-  room_item_id?: bigint | number
-  furniture_id: bigint | number
-  placed_by?: bigint | number | null
+  room_item_id?: number
+  furniture_id: number
+  placed_by: number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
 }
 
 export type room_itemsCreateOrConnectWithoutRoomsInput = {
@@ -714,23 +728,24 @@ export type room_itemsUpdateManyWithWhereWithoutRoomsInput = {
 }
 
 export type room_itemsCreateWithoutUsersInput = {
-  room_item_id?: bigint | number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  furniture_catalog: Prisma.furniture_catalogCreateNestedOneWithoutRoom_itemsInput
+  placed_at?: Date | string
   rooms: Prisma.roomsCreateNestedOneWithoutRoom_itemsInput
+  furniture_catalog: Prisma.furniture_catalogCreateNestedOneWithoutRoom_itemsInput
 }
 
 export type room_itemsUncheckedCreateWithoutUsersInput = {
-  room_item_id?: bigint | number
-  room_id: bigint | number
-  furniture_id: bigint | number
+  room_item_id?: number
+  room_id: number
+  furniture_id: number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
 }
 
 export type room_itemsCreateOrConnectWithoutUsersInput = {
@@ -760,123 +775,132 @@ export type room_itemsUpdateManyWithWhereWithoutUsersInput = {
 }
 
 export type room_itemsCreateManyFurniture_catalogInput = {
-  room_item_id?: bigint | number
-  room_id: bigint | number
-  placed_by?: bigint | number | null
+  room_item_id?: number
+  room_id: number
+  placed_by: number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
 }
 
 export type room_itemsUpdateWithoutFurniture_catalogInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  users?: Prisma.usersUpdateOneWithoutRoom_itemsNestedInput
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rooms?: Prisma.roomsUpdateOneRequiredWithoutRoom_itemsNestedInput
+  users?: Prisma.usersUpdateOneRequiredWithoutRoom_itemsNestedInput
 }
 
 export type room_itemsUncheckedUpdateWithoutFurniture_catalogInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  placed_by?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  room_item_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  placed_by?: Prisma.IntFieldUpdateOperationsInput | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_itemsUncheckedUpdateManyWithoutFurniture_catalogInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  placed_by?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  room_item_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  placed_by?: Prisma.IntFieldUpdateOperationsInput | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_itemsCreateManyRoomsInput = {
-  room_item_id?: bigint | number
-  furniture_id: bigint | number
-  placed_by?: bigint | number | null
+  room_item_id?: number
+  furniture_id: number
+  placed_by: number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
 }
 
 export type room_itemsUpdateWithoutRoomsInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   furniture_catalog?: Prisma.furniture_catalogUpdateOneRequiredWithoutRoom_itemsNestedInput
-  users?: Prisma.usersUpdateOneWithoutRoom_itemsNestedInput
+  users?: Prisma.usersUpdateOneRequiredWithoutRoom_itemsNestedInput
 }
 
 export type room_itemsUncheckedUpdateWithoutRoomsInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  placed_by?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  room_item_id?: Prisma.IntFieldUpdateOperationsInput | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
+  placed_by?: Prisma.IntFieldUpdateOperationsInput | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_itemsUncheckedUpdateManyWithoutRoomsInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  placed_by?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  room_item_id?: Prisma.IntFieldUpdateOperationsInput | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
+  placed_by?: Prisma.IntFieldUpdateOperationsInput | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_itemsCreateManyUsersInput = {
-  room_item_id?: bigint | number
-  room_id: bigint | number
-  furniture_id: bigint | number
+  room_item_id?: number
+  room_id: number
+  furniture_id: number
   position_x?: runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: number
   scale_factor?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Date | string
 }
 
 export type room_itemsUpdateWithoutUsersInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  furniture_catalog?: Prisma.furniture_catalogUpdateOneRequiredWithoutRoom_itemsNestedInput
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rooms?: Prisma.roomsUpdateOneRequiredWithoutRoom_itemsNestedInput
+  furniture_catalog?: Prisma.furniture_catalogUpdateOneRequiredWithoutRoom_itemsNestedInput
 }
 
 export type room_itemsUncheckedUpdateWithoutUsersInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_item_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_itemsUncheckedUpdateManyWithoutUsersInput = {
-  room_item_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_item_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
   position_x?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   position_y?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  rotation_deg?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  rotation_deg?: Prisma.IntFieldUpdateOperationsInput | number
   scale_factor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  placed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -890,9 +914,10 @@ export type room_itemsSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   position_y?: boolean
   rotation_deg?: boolean
   scale_factor?: boolean
-  furniture_catalog?: boolean | Prisma.furniture_catalogDefaultArgs<ExtArgs>
-  users?: boolean | Prisma.room_items$usersArgs<ExtArgs>
+  placed_at?: boolean
   rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
+  furniture_catalog?: boolean | Prisma.furniture_catalogDefaultArgs<ExtArgs>
+  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["room_items"]>
 
 
@@ -906,31 +931,33 @@ export type room_itemsSelectScalar = {
   position_y?: boolean
   rotation_deg?: boolean
   scale_factor?: boolean
+  placed_at?: boolean
 }
 
-export type room_itemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"room_item_id" | "room_id" | "furniture_id" | "placed_by" | "position_x" | "position_y" | "rotation_deg" | "scale_factor", ExtArgs["result"]["room_items"]>
+export type room_itemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"room_item_id" | "room_id" | "furniture_id" | "placed_by" | "position_x" | "position_y" | "rotation_deg" | "scale_factor" | "placed_at", ExtArgs["result"]["room_items"]>
 export type room_itemsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  furniture_catalog?: boolean | Prisma.furniture_catalogDefaultArgs<ExtArgs>
-  users?: boolean | Prisma.room_items$usersArgs<ExtArgs>
   rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
+  furniture_catalog?: boolean | Prisma.furniture_catalogDefaultArgs<ExtArgs>
+  users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }
 
 export type $room_itemsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "room_items"
   objects: {
-    furniture_catalog: Prisma.$furniture_catalogPayload<ExtArgs>
-    users: Prisma.$usersPayload<ExtArgs> | null
     rooms: Prisma.$roomsPayload<ExtArgs>
+    furniture_catalog: Prisma.$furniture_catalogPayload<ExtArgs>
+    users: Prisma.$usersPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    room_item_id: bigint
-    room_id: bigint
-    furniture_id: bigint
-    placed_by: bigint | null
+    room_item_id: number
+    room_id: number
+    furniture_id: number
+    placed_by: number
     position_x: runtime.Decimal
     position_y: runtime.Decimal
-    rotation_deg: runtime.Decimal
+    rotation_deg: number
     scale_factor: runtime.Decimal
+    placed_at: Date
   }, ExtArgs["result"]["room_items"]>
   composites: {}
 }
@@ -1271,9 +1298,9 @@ readonly fields: room_itemsFieldRefs;
  */
 export interface Prisma__room_itemsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  furniture_catalog<T extends Prisma.furniture_catalogDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.furniture_catalogDefaultArgs<ExtArgs>>): Prisma.Prisma__furniture_catalogClient<runtime.Types.Result.GetResult<Prisma.$furniture_catalogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  users<T extends Prisma.room_items$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.room_items$usersArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   rooms<T extends Prisma.roomsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.roomsDefaultArgs<ExtArgs>>): Prisma.Prisma__roomsClient<runtime.Types.Result.GetResult<Prisma.$roomsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  furniture_catalog<T extends Prisma.furniture_catalogDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.furniture_catalogDefaultArgs<ExtArgs>>): Prisma.Prisma__furniture_catalogClient<runtime.Types.Result.GetResult<Prisma.$furniture_catalogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  users<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1303,14 +1330,15 @@ export interface Prisma__room_itemsClient<T, Null = never, ExtArgs extends runti
  * Fields of the room_items model
  */
 export interface room_itemsFieldRefs {
-  readonly room_item_id: Prisma.FieldRef<"room_items", 'BigInt'>
-  readonly room_id: Prisma.FieldRef<"room_items", 'BigInt'>
-  readonly furniture_id: Prisma.FieldRef<"room_items", 'BigInt'>
-  readonly placed_by: Prisma.FieldRef<"room_items", 'BigInt'>
+  readonly room_item_id: Prisma.FieldRef<"room_items", 'Int'>
+  readonly room_id: Prisma.FieldRef<"room_items", 'Int'>
+  readonly furniture_id: Prisma.FieldRef<"room_items", 'Int'>
+  readonly placed_by: Prisma.FieldRef<"room_items", 'Int'>
   readonly position_x: Prisma.FieldRef<"room_items", 'Decimal'>
   readonly position_y: Prisma.FieldRef<"room_items", 'Decimal'>
-  readonly rotation_deg: Prisma.FieldRef<"room_items", 'Decimal'>
+  readonly rotation_deg: Prisma.FieldRef<"room_items", 'Int'>
   readonly scale_factor: Prisma.FieldRef<"room_items", 'Decimal'>
+  readonly placed_at: Prisma.FieldRef<"room_items", 'DateTime'>
 }
     
 
@@ -1656,25 +1684,6 @@ export type room_itemsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many room_items to delete.
    */
   limit?: number
-}
-
-/**
- * room_items.users
- */
-export type room_items$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the users
-   */
-  select?: Prisma.usersSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the users
-   */
-  omit?: Prisma.usersOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.usersInclude<ExtArgs> | null
-  where?: Prisma.usersWhereInput
 }
 
 /**

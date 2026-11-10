@@ -30,32 +30,36 @@ export type Watch_sessionsAvgAggregateOutputType = {
   session_id: number | null
   room_id: number | null
   started_by: number | null
-  playback_position_seconds: runtime.Decimal | null
+  playback_position_seconds: number | null
 }
 
 export type Watch_sessionsSumAggregateOutputType = {
-  session_id: bigint | null
-  room_id: bigint | null
-  started_by: bigint | null
-  playback_position_seconds: runtime.Decimal | null
+  session_id: number | null
+  room_id: number | null
+  started_by: number | null
+  playback_position_seconds: number | null
 }
 
 export type Watch_sessionsMinAggregateOutputType = {
-  session_id: bigint | null
-  room_id: bigint | null
-  started_by: bigint | null
+  session_id: number | null
+  room_id: number | null
+  started_by: number | null
   video_title: string | null
-  playback_position_seconds: runtime.Decimal | null
+  video_url: string | null
+  playback_position_seconds: number | null
   playback_status: $Enums.watch_sessions_playback_status | null
+  started_at: Date | null
 }
 
 export type Watch_sessionsMaxAggregateOutputType = {
-  session_id: bigint | null
-  room_id: bigint | null
-  started_by: bigint | null
+  session_id: number | null
+  room_id: number | null
+  started_by: number | null
   video_title: string | null
-  playback_position_seconds: runtime.Decimal | null
+  video_url: string | null
+  playback_position_seconds: number | null
   playback_status: $Enums.watch_sessions_playback_status | null
+  started_at: Date | null
 }
 
 export type Watch_sessionsCountAggregateOutputType = {
@@ -63,8 +67,10 @@ export type Watch_sessionsCountAggregateOutputType = {
   room_id: number
   started_by: number
   video_title: number
+  video_url: number
   playback_position_seconds: number
   playback_status: number
+  started_at: number
   _all: number
 }
 
@@ -88,8 +94,10 @@ export type Watch_sessionsMinAggregateInputType = {
   room_id?: true
   started_by?: true
   video_title?: true
+  video_url?: true
   playback_position_seconds?: true
   playback_status?: true
+  started_at?: true
 }
 
 export type Watch_sessionsMaxAggregateInputType = {
@@ -97,8 +105,10 @@ export type Watch_sessionsMaxAggregateInputType = {
   room_id?: true
   started_by?: true
   video_title?: true
+  video_url?: true
   playback_position_seconds?: true
   playback_status?: true
+  started_at?: true
 }
 
 export type Watch_sessionsCountAggregateInputType = {
@@ -106,8 +116,10 @@ export type Watch_sessionsCountAggregateInputType = {
   room_id?: true
   started_by?: true
   video_title?: true
+  video_url?: true
   playback_position_seconds?: true
   playback_status?: true
+  started_at?: true
   _all?: true
 }
 
@@ -198,12 +210,14 @@ export type watch_sessionsGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type Watch_sessionsGroupByOutputType = {
-  session_id: bigint
-  room_id: bigint
-  started_by: bigint
+  session_id: number
+  room_id: number
+  started_by: number
   video_title: string
-  playback_position_seconds: runtime.Decimal
+  video_url: string
+  playback_position_seconds: number
   playback_status: $Enums.watch_sessions_playback_status
+  started_at: Date
   _count: Watch_sessionsCountAggregateOutputType | null
   _avg: Watch_sessionsAvgAggregateOutputType | null
   _sum: Watch_sessionsSumAggregateOutputType | null
@@ -230,12 +244,14 @@ export type watch_sessionsWhereInput = {
   AND?: Prisma.watch_sessionsWhereInput | Prisma.watch_sessionsWhereInput[]
   OR?: Prisma.watch_sessionsWhereInput[]
   NOT?: Prisma.watch_sessionsWhereInput | Prisma.watch_sessionsWhereInput[]
-  session_id?: Prisma.BigIntFilter<"watch_sessions"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"watch_sessions"> | bigint | number
-  started_by?: Prisma.BigIntFilter<"watch_sessions"> | bigint | number
+  session_id?: Prisma.IntFilter<"watch_sessions"> | number
+  room_id?: Prisma.IntFilter<"watch_sessions"> | number
+  started_by?: Prisma.IntFilter<"watch_sessions"> | number
   video_title?: Prisma.StringFilter<"watch_sessions"> | string
-  playback_position_seconds?: Prisma.DecimalFilter<"watch_sessions"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFilter<"watch_sessions"> | string
+  playback_position_seconds?: Prisma.IntFilter<"watch_sessions"> | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFilter<"watch_sessions"> | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFilter<"watch_sessions"> | Date | string
   rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
 }
@@ -245,23 +261,27 @@ export type watch_sessionsOrderByWithRelationInput = {
   room_id?: Prisma.SortOrder
   started_by?: Prisma.SortOrder
   video_title?: Prisma.SortOrder
+  video_url?: Prisma.SortOrder
   playback_position_seconds?: Prisma.SortOrder
   playback_status?: Prisma.SortOrder
+  started_at?: Prisma.SortOrder
   rooms?: Prisma.roomsOrderByWithRelationInput
   users?: Prisma.usersOrderByWithRelationInput
   _relevance?: Prisma.watch_sessionsOrderByRelevanceInput
 }
 
 export type watch_sessionsWhereUniqueInput = Prisma.AtLeast<{
-  session_id?: bigint | number
+  session_id?: number
   AND?: Prisma.watch_sessionsWhereInput | Prisma.watch_sessionsWhereInput[]
   OR?: Prisma.watch_sessionsWhereInput[]
   NOT?: Prisma.watch_sessionsWhereInput | Prisma.watch_sessionsWhereInput[]
-  room_id?: Prisma.BigIntFilter<"watch_sessions"> | bigint | number
-  started_by?: Prisma.BigIntFilter<"watch_sessions"> | bigint | number
+  room_id?: Prisma.IntFilter<"watch_sessions"> | number
+  started_by?: Prisma.IntFilter<"watch_sessions"> | number
   video_title?: Prisma.StringFilter<"watch_sessions"> | string
-  playback_position_seconds?: Prisma.DecimalFilter<"watch_sessions"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFilter<"watch_sessions"> | string
+  playback_position_seconds?: Prisma.IntFilter<"watch_sessions"> | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFilter<"watch_sessions"> | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFilter<"watch_sessions"> | Date | string
   rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
 }, "session_id">
@@ -271,8 +291,10 @@ export type watch_sessionsOrderByWithAggregationInput = {
   room_id?: Prisma.SortOrder
   started_by?: Prisma.SortOrder
   video_title?: Prisma.SortOrder
+  video_url?: Prisma.SortOrder
   playback_position_seconds?: Prisma.SortOrder
   playback_status?: Prisma.SortOrder
+  started_at?: Prisma.SortOrder
   _count?: Prisma.watch_sessionsCountOrderByAggregateInput
   _avg?: Prisma.watch_sessionsAvgOrderByAggregateInput
   _max?: Prisma.watch_sessionsMaxOrderByAggregateInput
@@ -284,73 +306,86 @@ export type watch_sessionsScalarWhereWithAggregatesInput = {
   AND?: Prisma.watch_sessionsScalarWhereWithAggregatesInput | Prisma.watch_sessionsScalarWhereWithAggregatesInput[]
   OR?: Prisma.watch_sessionsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.watch_sessionsScalarWhereWithAggregatesInput | Prisma.watch_sessionsScalarWhereWithAggregatesInput[]
-  session_id?: Prisma.BigIntWithAggregatesFilter<"watch_sessions"> | bigint | number
-  room_id?: Prisma.BigIntWithAggregatesFilter<"watch_sessions"> | bigint | number
-  started_by?: Prisma.BigIntWithAggregatesFilter<"watch_sessions"> | bigint | number
+  session_id?: Prisma.IntWithAggregatesFilter<"watch_sessions"> | number
+  room_id?: Prisma.IntWithAggregatesFilter<"watch_sessions"> | number
+  started_by?: Prisma.IntWithAggregatesFilter<"watch_sessions"> | number
   video_title?: Prisma.StringWithAggregatesFilter<"watch_sessions"> | string
-  playback_position_seconds?: Prisma.DecimalWithAggregatesFilter<"watch_sessions"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringWithAggregatesFilter<"watch_sessions"> | string
+  playback_position_seconds?: Prisma.IntWithAggregatesFilter<"watch_sessions"> | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusWithAggregatesFilter<"watch_sessions"> | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeWithAggregatesFilter<"watch_sessions"> | Date | string
 }
 
 export type watch_sessionsCreateInput = {
-  session_id?: bigint | number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
   rooms: Prisma.roomsCreateNestedOneWithoutWatch_sessionsInput
   users: Prisma.usersCreateNestedOneWithoutWatch_sessionsInput
 }
 
 export type watch_sessionsUncheckedCreateInput = {
-  session_id?: bigint | number
-  room_id: bigint | number
-  started_by: bigint | number
+  session_id?: number
+  room_id: number
+  started_by: number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
 }
 
 export type watch_sessionsUpdateInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rooms?: Prisma.roomsUpdateOneRequiredWithoutWatch_sessionsNestedInput
   users?: Prisma.usersUpdateOneRequiredWithoutWatch_sessionsNestedInput
 }
 
 export type watch_sessionsUncheckedUpdateInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  started_by?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  session_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  started_by?: Prisma.IntFieldUpdateOperationsInput | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type watch_sessionsCreateManyInput = {
-  session_id?: bigint | number
-  room_id: bigint | number
-  started_by: bigint | number
+  session_id?: number
+  room_id: number
+  started_by: number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
 }
 
 export type watch_sessionsUpdateManyMutationInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type watch_sessionsUncheckedUpdateManyInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  started_by?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  session_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  started_by?: Prisma.IntFieldUpdateOperationsInput | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type Watch_sessionsListRelationFilter = {
@@ -374,8 +409,10 @@ export type watch_sessionsCountOrderByAggregateInput = {
   room_id?: Prisma.SortOrder
   started_by?: Prisma.SortOrder
   video_title?: Prisma.SortOrder
+  video_url?: Prisma.SortOrder
   playback_position_seconds?: Prisma.SortOrder
   playback_status?: Prisma.SortOrder
+  started_at?: Prisma.SortOrder
 }
 
 export type watch_sessionsAvgOrderByAggregateInput = {
@@ -390,8 +427,10 @@ export type watch_sessionsMaxOrderByAggregateInput = {
   room_id?: Prisma.SortOrder
   started_by?: Prisma.SortOrder
   video_title?: Prisma.SortOrder
+  video_url?: Prisma.SortOrder
   playback_position_seconds?: Prisma.SortOrder
   playback_status?: Prisma.SortOrder
+  started_at?: Prisma.SortOrder
 }
 
 export type watch_sessionsMinOrderByAggregateInput = {
@@ -399,8 +438,10 @@ export type watch_sessionsMinOrderByAggregateInput = {
   room_id?: Prisma.SortOrder
   started_by?: Prisma.SortOrder
   video_title?: Prisma.SortOrder
+  video_url?: Prisma.SortOrder
   playback_position_seconds?: Prisma.SortOrder
   playback_status?: Prisma.SortOrder
+  started_at?: Prisma.SortOrder
 }
 
 export type watch_sessionsSumOrderByAggregateInput = {
@@ -499,19 +540,22 @@ export type Enumwatch_sessions_playback_statusFieldUpdateOperationsInput = {
 }
 
 export type watch_sessionsCreateWithoutRoomsInput = {
-  session_id?: bigint | number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
   users: Prisma.usersCreateNestedOneWithoutWatch_sessionsInput
 }
 
 export type watch_sessionsUncheckedCreateWithoutRoomsInput = {
-  session_id?: bigint | number
-  started_by: bigint | number
+  session_id?: number
+  started_by: number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
 }
 
 export type watch_sessionsCreateOrConnectWithoutRoomsInput = {
@@ -544,28 +588,33 @@ export type watch_sessionsScalarWhereInput = {
   AND?: Prisma.watch_sessionsScalarWhereInput | Prisma.watch_sessionsScalarWhereInput[]
   OR?: Prisma.watch_sessionsScalarWhereInput[]
   NOT?: Prisma.watch_sessionsScalarWhereInput | Prisma.watch_sessionsScalarWhereInput[]
-  session_id?: Prisma.BigIntFilter<"watch_sessions"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"watch_sessions"> | bigint | number
-  started_by?: Prisma.BigIntFilter<"watch_sessions"> | bigint | number
+  session_id?: Prisma.IntFilter<"watch_sessions"> | number
+  room_id?: Prisma.IntFilter<"watch_sessions"> | number
+  started_by?: Prisma.IntFilter<"watch_sessions"> | number
   video_title?: Prisma.StringFilter<"watch_sessions"> | string
-  playback_position_seconds?: Prisma.DecimalFilter<"watch_sessions"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFilter<"watch_sessions"> | string
+  playback_position_seconds?: Prisma.IntFilter<"watch_sessions"> | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFilter<"watch_sessions"> | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFilter<"watch_sessions"> | Date | string
 }
 
 export type watch_sessionsCreateWithoutUsersInput = {
-  session_id?: bigint | number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
   rooms: Prisma.roomsCreateNestedOneWithoutWatch_sessionsInput
 }
 
 export type watch_sessionsUncheckedCreateWithoutUsersInput = {
-  session_id?: bigint | number
-  room_id: bigint | number
+  session_id?: number
+  room_id: number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
 }
 
 export type watch_sessionsCreateOrConnectWithoutUsersInput = {
@@ -595,67 +644,81 @@ export type watch_sessionsUpdateManyWithWhereWithoutUsersInput = {
 }
 
 export type watch_sessionsCreateManyRoomsInput = {
-  session_id?: bigint | number
-  started_by: bigint | number
+  session_id?: number
+  started_by: number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
 }
 
 export type watch_sessionsUpdateWithoutRoomsInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.usersUpdateOneRequiredWithoutWatch_sessionsNestedInput
 }
 
 export type watch_sessionsUncheckedUpdateWithoutRoomsInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  started_by?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  session_id?: Prisma.IntFieldUpdateOperationsInput | number
+  started_by?: Prisma.IntFieldUpdateOperationsInput | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type watch_sessionsUncheckedUpdateManyWithoutRoomsInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  started_by?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  session_id?: Prisma.IntFieldUpdateOperationsInput | number
+  started_by?: Prisma.IntFieldUpdateOperationsInput | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type watch_sessionsCreateManyUsersInput = {
-  session_id?: bigint | number
-  room_id: bigint | number
+  session_id?: number
+  room_id: number
   video_title: string
-  playback_position_seconds?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url: string
+  playback_position_seconds?: number
   playback_status?: $Enums.watch_sessions_playback_status
+  started_at?: Date | string
 }
 
 export type watch_sessionsUpdateWithoutUsersInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rooms?: Prisma.roomsUpdateOneRequiredWithoutWatch_sessionsNestedInput
 }
 
 export type watch_sessionsUncheckedUpdateWithoutUsersInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  session_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type watch_sessionsUncheckedUpdateManyWithoutUsersInput = {
-  session_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  session_id?: Prisma.IntFieldUpdateOperationsInput | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   video_title?: Prisma.StringFieldUpdateOperationsInput | string
-  playback_position_seconds?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  video_url?: Prisma.StringFieldUpdateOperationsInput | string
+  playback_position_seconds?: Prisma.IntFieldUpdateOperationsInput | number
   playback_status?: Prisma.Enumwatch_sessions_playback_statusFieldUpdateOperationsInput | $Enums.watch_sessions_playback_status
+  started_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -665,8 +728,10 @@ export type watch_sessionsSelect<ExtArgs extends runtime.Types.Extensions.Intern
   room_id?: boolean
   started_by?: boolean
   video_title?: boolean
+  video_url?: boolean
   playback_position_seconds?: boolean
   playback_status?: boolean
+  started_at?: boolean
   rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["watch_sessions"]>
@@ -678,11 +743,13 @@ export type watch_sessionsSelectScalar = {
   room_id?: boolean
   started_by?: boolean
   video_title?: boolean
+  video_url?: boolean
   playback_position_seconds?: boolean
   playback_status?: boolean
+  started_at?: boolean
 }
 
-export type watch_sessionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"session_id" | "room_id" | "started_by" | "video_title" | "playback_position_seconds" | "playback_status", ExtArgs["result"]["watch_sessions"]>
+export type watch_sessionsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"session_id" | "room_id" | "started_by" | "video_title" | "video_url" | "playback_position_seconds" | "playback_status" | "started_at", ExtArgs["result"]["watch_sessions"]>
 export type watch_sessionsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
@@ -695,12 +762,14 @@ export type $watch_sessionsPayload<ExtArgs extends runtime.Types.Extensions.Inte
     users: Prisma.$usersPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    session_id: bigint
-    room_id: bigint
-    started_by: bigint
+    session_id: number
+    room_id: number
+    started_by: number
     video_title: string
-    playback_position_seconds: runtime.Decimal
+    video_url: string
+    playback_position_seconds: number
     playback_status: $Enums.watch_sessions_playback_status
+    started_at: Date
   }, ExtArgs["result"]["watch_sessions"]>
   composites: {}
 }
@@ -1072,12 +1141,14 @@ export interface Prisma__watch_sessionsClient<T, Null = never, ExtArgs extends r
  * Fields of the watch_sessions model
  */
 export interface watch_sessionsFieldRefs {
-  readonly session_id: Prisma.FieldRef<"watch_sessions", 'BigInt'>
-  readonly room_id: Prisma.FieldRef<"watch_sessions", 'BigInt'>
-  readonly started_by: Prisma.FieldRef<"watch_sessions", 'BigInt'>
+  readonly session_id: Prisma.FieldRef<"watch_sessions", 'Int'>
+  readonly room_id: Prisma.FieldRef<"watch_sessions", 'Int'>
+  readonly started_by: Prisma.FieldRef<"watch_sessions", 'Int'>
   readonly video_title: Prisma.FieldRef<"watch_sessions", 'String'>
-  readonly playback_position_seconds: Prisma.FieldRef<"watch_sessions", 'Decimal'>
+  readonly video_url: Prisma.FieldRef<"watch_sessions", 'String'>
+  readonly playback_position_seconds: Prisma.FieldRef<"watch_sessions", 'Int'>
   readonly playback_status: Prisma.FieldRef<"watch_sessions", 'watch_sessions_playback_status'>
+  readonly started_at: Prisma.FieldRef<"watch_sessions", 'DateTime'>
 }
     
 

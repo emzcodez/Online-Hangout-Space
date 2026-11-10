@@ -32,20 +32,20 @@ export type Room_membersAvgAggregateOutputType = {
 }
 
 export type Room_membersSumAggregateOutputType = {
-  room_id: bigint | null
-  user_id: bigint | null
+  room_id: number | null
+  user_id: number | null
 }
 
 export type Room_membersMinAggregateOutputType = {
-  room_id: bigint | null
-  user_id: bigint | null
+  room_id: number | null
+  user_id: number | null
   member_role: $Enums.room_members_member_role | null
   joined_at: Date | null
 }
 
 export type Room_membersMaxAggregateOutputType = {
-  room_id: bigint | null
-  user_id: bigint | null
+  room_id: number | null
+  user_id: number | null
   member_role: $Enums.room_members_member_role | null
   joined_at: Date | null
 }
@@ -178,8 +178,8 @@ export type room_membersGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 export type Room_membersGroupByOutputType = {
-  room_id: bigint
-  user_id: bigint
+  room_id: number
+  user_id: number
   member_role: $Enums.room_members_member_role
   joined_at: Date
   _count: Room_membersCountAggregateOutputType | null
@@ -208,8 +208,8 @@ export type room_membersWhereInput = {
   AND?: Prisma.room_membersWhereInput | Prisma.room_membersWhereInput[]
   OR?: Prisma.room_membersWhereInput[]
   NOT?: Prisma.room_membersWhereInput | Prisma.room_membersWhereInput[]
-  room_id?: Prisma.BigIntFilter<"room_members"> | bigint | number
-  user_id?: Prisma.BigIntFilter<"room_members"> | bigint | number
+  room_id?: Prisma.IntFilter<"room_members"> | number
+  user_id?: Prisma.IntFilter<"room_members"> | number
   member_role?: Prisma.Enumroom_members_member_roleFilter<"room_members"> | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFilter<"room_members"> | Date | string
   rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
@@ -230,8 +230,8 @@ export type room_membersWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.room_membersWhereInput | Prisma.room_membersWhereInput[]
   OR?: Prisma.room_membersWhereInput[]
   NOT?: Prisma.room_membersWhereInput | Prisma.room_membersWhereInput[]
-  room_id?: Prisma.BigIntFilter<"room_members"> | bigint | number
-  user_id?: Prisma.BigIntFilter<"room_members"> | bigint | number
+  room_id?: Prisma.IntFilter<"room_members"> | number
+  user_id?: Prisma.IntFilter<"room_members"> | number
   member_role?: Prisma.Enumroom_members_member_roleFilter<"room_members"> | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFilter<"room_members"> | Date | string
   rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
@@ -254,8 +254,8 @@ export type room_membersScalarWhereWithAggregatesInput = {
   AND?: Prisma.room_membersScalarWhereWithAggregatesInput | Prisma.room_membersScalarWhereWithAggregatesInput[]
   OR?: Prisma.room_membersScalarWhereWithAggregatesInput[]
   NOT?: Prisma.room_membersScalarWhereWithAggregatesInput | Prisma.room_membersScalarWhereWithAggregatesInput[]
-  room_id?: Prisma.BigIntWithAggregatesFilter<"room_members"> | bigint | number
-  user_id?: Prisma.BigIntWithAggregatesFilter<"room_members"> | bigint | number
+  room_id?: Prisma.IntWithAggregatesFilter<"room_members"> | number
+  user_id?: Prisma.IntWithAggregatesFilter<"room_members"> | number
   member_role?: Prisma.Enumroom_members_member_roleWithAggregatesFilter<"room_members"> | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeWithAggregatesFilter<"room_members"> | Date | string
 }
@@ -268,8 +268,8 @@ export type room_membersCreateInput = {
 }
 
 export type room_membersUncheckedCreateInput = {
-  room_id: bigint | number
-  user_id: bigint | number
+  room_id: number
+  user_id: number
   member_role?: $Enums.room_members_member_role
   joined_at?: Date | string
 }
@@ -282,15 +282,15 @@ export type room_membersUpdateInput = {
 }
 
 export type room_membersUncheckedUpdateInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   member_role?: Prisma.Enumroom_members_member_roleFieldUpdateOperationsInput | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_membersCreateManyInput = {
-  room_id: bigint | number
-  user_id: bigint | number
+  room_id: number
+  user_id: number
   member_role?: $Enums.room_members_member_role
   joined_at?: Date | string
 }
@@ -301,15 +301,15 @@ export type room_membersUpdateManyMutationInput = {
 }
 
 export type room_membersUncheckedUpdateManyInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   member_role?: Prisma.Enumroom_members_member_roleFieldUpdateOperationsInput | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_membersRoom_idUser_idCompoundUniqueInput = {
-  room_id: bigint | number
-  user_id: bigint | number
+  room_id: number
+  user_id: number
 }
 
 export type room_membersCountOrderByAggregateInput = {
@@ -448,7 +448,7 @@ export type room_membersCreateWithoutRoomsInput = {
 }
 
 export type room_membersUncheckedCreateWithoutRoomsInput = {
-  user_id: bigint | number
+  user_id: number
   member_role?: $Enums.room_members_member_role
   joined_at?: Date | string
 }
@@ -483,8 +483,8 @@ export type room_membersScalarWhereInput = {
   AND?: Prisma.room_membersScalarWhereInput | Prisma.room_membersScalarWhereInput[]
   OR?: Prisma.room_membersScalarWhereInput[]
   NOT?: Prisma.room_membersScalarWhereInput | Prisma.room_membersScalarWhereInput[]
-  room_id?: Prisma.BigIntFilter<"room_members"> | bigint | number
-  user_id?: Prisma.BigIntFilter<"room_members"> | bigint | number
+  room_id?: Prisma.IntFilter<"room_members"> | number
+  user_id?: Prisma.IntFilter<"room_members"> | number
   member_role?: Prisma.Enumroom_members_member_roleFilter<"room_members"> | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFilter<"room_members"> | Date | string
 }
@@ -496,7 +496,7 @@ export type room_membersCreateWithoutUsersInput = {
 }
 
 export type room_membersUncheckedCreateWithoutUsersInput = {
-  room_id: bigint | number
+  room_id: number
   member_role?: $Enums.room_members_member_role
   joined_at?: Date | string
 }
@@ -528,7 +528,7 @@ export type room_membersUpdateManyWithWhereWithoutUsersInput = {
 }
 
 export type room_membersCreateManyRoomsInput = {
-  user_id: bigint | number
+  user_id: number
   member_role?: $Enums.room_members_member_role
   joined_at?: Date | string
 }
@@ -540,19 +540,19 @@ export type room_membersUpdateWithoutRoomsInput = {
 }
 
 export type room_membersUncheckedUpdateWithoutRoomsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   member_role?: Prisma.Enumroom_members_member_roleFieldUpdateOperationsInput | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_membersUncheckedUpdateManyWithoutRoomsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   member_role?: Prisma.Enumroom_members_member_roleFieldUpdateOperationsInput | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_membersCreateManyUsersInput = {
-  room_id: bigint | number
+  room_id: number
   member_role?: $Enums.room_members_member_role
   joined_at?: Date | string
 }
@@ -564,13 +564,13 @@ export type room_membersUpdateWithoutUsersInput = {
 }
 
 export type room_membersUncheckedUpdateWithoutUsersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   member_role?: Prisma.Enumroom_members_member_roleFieldUpdateOperationsInput | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type room_membersUncheckedUpdateManyWithoutUsersInput = {
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   member_role?: Prisma.Enumroom_members_member_roleFieldUpdateOperationsInput | $Enums.room_members_member_role
   joined_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -608,8 +608,8 @@ export type $room_membersPayload<ExtArgs extends runtime.Types.Extensions.Intern
     users: Prisma.$usersPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    room_id: bigint
-    user_id: bigint
+    room_id: number
+    user_id: number
     member_role: $Enums.room_members_member_role
     joined_at: Date
   }, ExtArgs["result"]["room_members"]>
@@ -983,8 +983,8 @@ export interface Prisma__room_membersClient<T, Null = never, ExtArgs extends run
  * Fields of the room_members model
  */
 export interface room_membersFieldRefs {
-  readonly room_id: Prisma.FieldRef<"room_members", 'BigInt'>
-  readonly user_id: Prisma.FieldRef<"room_members", 'BigInt'>
+  readonly room_id: Prisma.FieldRef<"room_members", 'Int'>
+  readonly user_id: Prisma.FieldRef<"room_members", 'Int'>
   readonly member_role: Prisma.FieldRef<"room_members", 'room_members_member_role'>
   readonly joined_at: Prisma.FieldRef<"room_members", 'DateTime'>
 }

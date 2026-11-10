@@ -1130,7 +1130,8 @@ export const Chat_messagesScalarFieldEnum = {
   room_id: 'room_id',
   sender_id: 'sender_id',
   message_text: 'message_text',
-  sent_at: 'sent_at'
+  sent_at: 'sent_at',
+  is_deleted: 'is_deleted'
 } as const
 
 export type Chat_messagesScalarFieldEnum = (typeof Chat_messagesScalarFieldEnum)[keyof typeof Chat_messagesScalarFieldEnum]
@@ -1140,7 +1141,9 @@ export const Friend_requestsScalarFieldEnum = {
   request_id: 'request_id',
   sender_id: 'sender_id',
   receiver_id: 'receiver_id',
-  request_status: 'request_status'
+  request_status: 'request_status',
+  sent_at: 'sent_at',
+  responded_at: 'responded_at'
 } as const
 
 export type Friend_requestsScalarFieldEnum = (typeof Friend_requestsScalarFieldEnum)[keyof typeof Friend_requestsScalarFieldEnum]
@@ -1159,6 +1162,7 @@ export const Furniture_catalogScalarFieldEnum = {
   furniture_id: 'furniture_id',
   item_name: 'item_name',
   item_type: 'item_type',
+  asset_url: 'asset_url',
   default_price: 'default_price'
 } as const
 
@@ -1182,7 +1186,8 @@ export const Room_itemsScalarFieldEnum = {
   position_x: 'position_x',
   position_y: 'position_y',
   rotation_deg: 'rotation_deg',
-  scale_factor: 'scale_factor'
+  scale_factor: 'scale_factor',
+  placed_at: 'placed_at'
 } as const
 
 export type Room_itemsScalarFieldEnum = (typeof Room_itemsScalarFieldEnum)[keyof typeof Room_itemsScalarFieldEnum]
@@ -1204,6 +1209,7 @@ export const RoomsScalarFieldEnum = {
   room_name: 'room_name',
   description: 'description',
   is_private: 'is_private',
+  room_password_hash: 'room_password_hash',
   wallpaper: 'wallpaper',
   created_at: 'created_at'
 } as const
@@ -1219,8 +1225,8 @@ export const UsersScalarFieldEnum = {
   display_name: 'display_name',
   avatar_url: 'avatar_url',
   status_message: 'status_message',
-  account_status: 'account_status',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  account_status: 'account_status'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
@@ -1231,8 +1237,10 @@ export const Watch_sessionsScalarFieldEnum = {
   room_id: 'room_id',
   started_by: 'started_by',
   video_title: 'video_title',
+  video_url: 'video_url',
   playback_position_seconds: 'playback_position_seconds',
-  playback_status: 'playback_status'
+  playback_status: 'playback_status',
+  started_at: 'started_at'
 } as const
 
 export type Watch_sessionsScalarFieldEnum = (typeof Watch_sessionsScalarFieldEnum)[keyof typeof Watch_sessionsScalarFieldEnum]
@@ -1253,14 +1261,6 @@ export const chat_messagesOrderByRelevanceFieldEnum = {
 export type chat_messagesOrderByRelevanceFieldEnum = (typeof chat_messagesOrderByRelevanceFieldEnum)[keyof typeof chat_messagesOrderByRelevanceFieldEnum]
 
 
-export const furniture_catalogOrderByRelevanceFieldEnum = {
-  item_name: 'item_name',
-  item_type: 'item_type'
-} as const
-
-export type furniture_catalogOrderByRelevanceFieldEnum = (typeof furniture_catalogOrderByRelevanceFieldEnum)[keyof typeof furniture_catalogOrderByRelevanceFieldEnum]
-
-
 export const NullsOrder = {
   first: 'first',
   last: 'last'
@@ -1269,9 +1269,18 @@ export const NullsOrder = {
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
+export const furniture_catalogOrderByRelevanceFieldEnum = {
+  item_name: 'item_name',
+  asset_url: 'asset_url'
+} as const
+
+export type furniture_catalogOrderByRelevanceFieldEnum = (typeof furniture_catalogOrderByRelevanceFieldEnum)[keyof typeof furniture_catalogOrderByRelevanceFieldEnum]
+
+
 export const roomsOrderByRelevanceFieldEnum = {
   room_name: 'room_name',
   description: 'description',
+  room_password_hash: 'room_password_hash',
   wallpaper: 'wallpaper'
 } as const
 
@@ -1291,7 +1300,8 @@ export type usersOrderByRelevanceFieldEnum = (typeof usersOrderByRelevanceFieldE
 
 
 export const watch_sessionsOrderByRelevanceFieldEnum = {
-  video_title: 'video_title'
+  video_title: 'video_title',
+  video_url: 'video_url'
 } as const
 
 export type watch_sessionsOrderByRelevanceFieldEnum = (typeof watch_sessionsOrderByRelevanceFieldEnum)[keyof typeof watch_sessionsOrderByRelevanceFieldEnum]
@@ -1311,6 +1321,13 @@ export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
  * Reference to a field of type 'String'
  */
 export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -1325,9 +1342,23 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'friend_requests_request_status'
  */
 export type Enumfriend_requests_request_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'friend_requests_request_status'>
+    
+
+
+/**
+ * Reference to a field of type 'furniture_catalog_item_type'
+ */
+export type Enumfurniture_catalog_item_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'furniture_catalog_item_type'>
     
 
 
@@ -1346,13 +1377,6 @@ export type Enumroom_members_member_roleFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'users_account_status'
  */
 export type Enumusers_account_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'users_account_status'>
@@ -1363,13 +1387,6 @@ export type Enumusers_account_statusFieldRefInput<$PrismaModel> = FieldRefInputT
  * Reference to a field of type 'watch_sessions_playback_status'
  */
 export type Enumwatch_sessions_playback_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'watch_sessions_playback_status'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 

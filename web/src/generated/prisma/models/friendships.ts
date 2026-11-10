@@ -32,19 +32,19 @@ export type FriendshipsAvgAggregateOutputType = {
 }
 
 export type FriendshipsSumAggregateOutputType = {
-  user_id_1: bigint | null
-  user_id_2: bigint | null
+  user_id_1: number | null
+  user_id_2: number | null
 }
 
 export type FriendshipsMinAggregateOutputType = {
-  user_id_1: bigint | null
-  user_id_2: bigint | null
+  user_id_1: number | null
+  user_id_2: number | null
   created_at: Date | null
 }
 
 export type FriendshipsMaxAggregateOutputType = {
-  user_id_1: bigint | null
-  user_id_2: bigint | null
+  user_id_1: number | null
+  user_id_2: number | null
   created_at: Date | null
 }
 
@@ -172,8 +172,8 @@ export type friendshipsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 export type FriendshipsGroupByOutputType = {
-  user_id_1: bigint
-  user_id_2: bigint
+  user_id_1: number
+  user_id_2: number
   created_at: Date
   _count: FriendshipsCountAggregateOutputType | null
   _avg: FriendshipsAvgAggregateOutputType | null
@@ -201,8 +201,8 @@ export type friendshipsWhereInput = {
   AND?: Prisma.friendshipsWhereInput | Prisma.friendshipsWhereInput[]
   OR?: Prisma.friendshipsWhereInput[]
   NOT?: Prisma.friendshipsWhereInput | Prisma.friendshipsWhereInput[]
-  user_id_1?: Prisma.BigIntFilter<"friendships"> | bigint | number
-  user_id_2?: Prisma.BigIntFilter<"friendships"> | bigint | number
+  user_id_1?: Prisma.IntFilter<"friendships"> | number
+  user_id_2?: Prisma.IntFilter<"friendships"> | number
   created_at?: Prisma.DateTimeFilter<"friendships"> | Date | string
   users_friendships_user_id_1Tousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   users_friendships_user_id_2Tousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
@@ -221,8 +221,8 @@ export type friendshipsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.friendshipsWhereInput | Prisma.friendshipsWhereInput[]
   OR?: Prisma.friendshipsWhereInput[]
   NOT?: Prisma.friendshipsWhereInput | Prisma.friendshipsWhereInput[]
-  user_id_1?: Prisma.BigIntFilter<"friendships"> | bigint | number
-  user_id_2?: Prisma.BigIntFilter<"friendships"> | bigint | number
+  user_id_1?: Prisma.IntFilter<"friendships"> | number
+  user_id_2?: Prisma.IntFilter<"friendships"> | number
   created_at?: Prisma.DateTimeFilter<"friendships"> | Date | string
   users_friendships_user_id_1Tousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   users_friendships_user_id_2Tousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
@@ -243,8 +243,8 @@ export type friendshipsScalarWhereWithAggregatesInput = {
   AND?: Prisma.friendshipsScalarWhereWithAggregatesInput | Prisma.friendshipsScalarWhereWithAggregatesInput[]
   OR?: Prisma.friendshipsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.friendshipsScalarWhereWithAggregatesInput | Prisma.friendshipsScalarWhereWithAggregatesInput[]
-  user_id_1?: Prisma.BigIntWithAggregatesFilter<"friendships"> | bigint | number
-  user_id_2?: Prisma.BigIntWithAggregatesFilter<"friendships"> | bigint | number
+  user_id_1?: Prisma.IntWithAggregatesFilter<"friendships"> | number
+  user_id_2?: Prisma.IntWithAggregatesFilter<"friendships"> | number
   created_at?: Prisma.DateTimeWithAggregatesFilter<"friendships"> | Date | string
 }
 
@@ -255,8 +255,8 @@ export type friendshipsCreateInput = {
 }
 
 export type friendshipsUncheckedCreateInput = {
-  user_id_1: bigint | number
-  user_id_2: bigint | number
+  user_id_1: number
+  user_id_2: number
   created_at?: Date | string
 }
 
@@ -267,14 +267,14 @@ export type friendshipsUpdateInput = {
 }
 
 export type friendshipsUncheckedUpdateInput = {
-  user_id_1?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  user_id_2?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id_1?: Prisma.IntFieldUpdateOperationsInput | number
+  user_id_2?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type friendshipsCreateManyInput = {
-  user_id_1: bigint | number
-  user_id_2: bigint | number
+  user_id_1: number
+  user_id_2: number
   created_at?: Date | string
 }
 
@@ -283,14 +283,14 @@ export type friendshipsUpdateManyMutationInput = {
 }
 
 export type friendshipsUncheckedUpdateManyInput = {
-  user_id_1?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  user_id_2?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id_1?: Prisma.IntFieldUpdateOperationsInput | number
+  user_id_2?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type friendshipsUser_id_1User_id_2CompoundUniqueInput = {
-  user_id_1: bigint | number
-  user_id_2: bigint | number
+  user_id_1: number
+  user_id_2: number
 }
 
 export type friendshipsCountOrderByAggregateInput = {
@@ -421,7 +421,7 @@ export type friendshipsCreateWithoutUsers_friendships_user_id_1TousersInput = {
 }
 
 export type friendshipsUncheckedCreateWithoutUsers_friendships_user_id_1TousersInput = {
-  user_id_2: bigint | number
+  user_id_2: number
   created_at?: Date | string
 }
 
@@ -441,7 +441,7 @@ export type friendshipsCreateWithoutUsers_friendships_user_id_2TousersInput = {
 }
 
 export type friendshipsUncheckedCreateWithoutUsers_friendships_user_id_2TousersInput = {
-  user_id_1: bigint | number
+  user_id_1: number
   created_at?: Date | string
 }
 
@@ -475,8 +475,8 @@ export type friendshipsScalarWhereInput = {
   AND?: Prisma.friendshipsScalarWhereInput | Prisma.friendshipsScalarWhereInput[]
   OR?: Prisma.friendshipsScalarWhereInput[]
   NOT?: Prisma.friendshipsScalarWhereInput | Prisma.friendshipsScalarWhereInput[]
-  user_id_1?: Prisma.BigIntFilter<"friendships"> | bigint | number
-  user_id_2?: Prisma.BigIntFilter<"friendships"> | bigint | number
+  user_id_1?: Prisma.IntFilter<"friendships"> | number
+  user_id_2?: Prisma.IntFilter<"friendships"> | number
   created_at?: Prisma.DateTimeFilter<"friendships"> | Date | string
 }
 
@@ -497,12 +497,12 @@ export type friendshipsUpdateManyWithWhereWithoutUsers_friendships_user_id_2Tous
 }
 
 export type friendshipsCreateManyUsers_friendships_user_id_1TousersInput = {
-  user_id_2: bigint | number
+  user_id_2: number
   created_at?: Date | string
 }
 
 export type friendshipsCreateManyUsers_friendships_user_id_2TousersInput = {
-  user_id_1: bigint | number
+  user_id_1: number
   created_at?: Date | string
 }
 
@@ -512,12 +512,12 @@ export type friendshipsUpdateWithoutUsers_friendships_user_id_1TousersInput = {
 }
 
 export type friendshipsUncheckedUpdateWithoutUsers_friendships_user_id_1TousersInput = {
-  user_id_2?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id_2?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersInput = {
-  user_id_2?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id_2?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -527,12 +527,12 @@ export type friendshipsUpdateWithoutUsers_friendships_user_id_2TousersInput = {
 }
 
 export type friendshipsUncheckedUpdateWithoutUsers_friendships_user_id_2TousersInput = {
-  user_id_1?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id_1?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersInput = {
-  user_id_1?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id_1?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -567,8 +567,8 @@ export type $friendshipsPayload<ExtArgs extends runtime.Types.Extensions.Interna
     users_friendships_user_id_2Tousers: Prisma.$usersPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    user_id_1: bigint
-    user_id_2: bigint
+    user_id_1: number
+    user_id_2: number
     created_at: Date
   }, ExtArgs["result"]["friendships"]>
   composites: {}
@@ -941,8 +941,8 @@ export interface Prisma__friendshipsClient<T, Null = never, ExtArgs extends runt
  * Fields of the friendships model
  */
 export interface friendshipsFieldRefs {
-  readonly user_id_1: Prisma.FieldRef<"friendships", 'BigInt'>
-  readonly user_id_2: Prisma.FieldRef<"friendships", 'BigInt'>
+  readonly user_id_1: Prisma.FieldRef<"friendships", 'Int'>
+  readonly user_id_2: Prisma.FieldRef<"friendships", 'Int'>
   readonly created_at: Prisma.FieldRef<"friendships", 'DateTime'>
 }
     
