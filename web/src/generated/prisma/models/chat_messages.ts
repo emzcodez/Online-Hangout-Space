@@ -34,24 +34,26 @@ export type Chat_messagesAvgAggregateOutputType = {
 
 export type Chat_messagesSumAggregateOutputType = {
   message_id: bigint | null
-  room_id: bigint | null
-  sender_id: bigint | null
+  room_id: number | null
+  sender_id: number | null
 }
 
 export type Chat_messagesMinAggregateOutputType = {
   message_id: bigint | null
-  room_id: bigint | null
-  sender_id: bigint | null
+  room_id: number | null
+  sender_id: number | null
   message_text: string | null
   sent_at: Date | null
+  is_deleted: boolean | null
 }
 
 export type Chat_messagesMaxAggregateOutputType = {
   message_id: bigint | null
-  room_id: bigint | null
-  sender_id: bigint | null
+  room_id: number | null
+  sender_id: number | null
   message_text: string | null
   sent_at: Date | null
+  is_deleted: boolean | null
 }
 
 export type Chat_messagesCountAggregateOutputType = {
@@ -60,6 +62,7 @@ export type Chat_messagesCountAggregateOutputType = {
   sender_id: number
   message_text: number
   sent_at: number
+  is_deleted: number
   _all: number
 }
 
@@ -82,6 +85,7 @@ export type Chat_messagesMinAggregateInputType = {
   sender_id?: true
   message_text?: true
   sent_at?: true
+  is_deleted?: true
 }
 
 export type Chat_messagesMaxAggregateInputType = {
@@ -90,6 +94,7 @@ export type Chat_messagesMaxAggregateInputType = {
   sender_id?: true
   message_text?: true
   sent_at?: true
+  is_deleted?: true
 }
 
 export type Chat_messagesCountAggregateInputType = {
@@ -98,6 +103,7 @@ export type Chat_messagesCountAggregateInputType = {
   sender_id?: true
   message_text?: true
   sent_at?: true
+  is_deleted?: true
   _all?: true
 }
 
@@ -189,10 +195,11 @@ export type chat_messagesGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type Chat_messagesGroupByOutputType = {
   message_id: bigint
-  room_id: bigint
-  sender_id: bigint
+  room_id: number
+  sender_id: number
   message_text: string
   sent_at: Date
+  is_deleted: boolean
   _count: Chat_messagesCountAggregateOutputType | null
   _avg: Chat_messagesAvgAggregateOutputType | null
   _sum: Chat_messagesSumAggregateOutputType | null
@@ -220,10 +227,11 @@ export type chat_messagesWhereInput = {
   OR?: Prisma.chat_messagesWhereInput[]
   NOT?: Prisma.chat_messagesWhereInput | Prisma.chat_messagesWhereInput[]
   message_id?: Prisma.BigIntFilter<"chat_messages"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"chat_messages"> | bigint | number
-  sender_id?: Prisma.BigIntFilter<"chat_messages"> | bigint | number
+  room_id?: Prisma.IntFilter<"chat_messages"> | number
+  sender_id?: Prisma.IntFilter<"chat_messages"> | number
   message_text?: Prisma.StringFilter<"chat_messages"> | string
   sent_at?: Prisma.DateTimeFilter<"chat_messages"> | Date | string
+  is_deleted?: Prisma.BoolFilter<"chat_messages"> | boolean
   rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
 }
@@ -234,6 +242,7 @@ export type chat_messagesOrderByWithRelationInput = {
   sender_id?: Prisma.SortOrder
   message_text?: Prisma.SortOrder
   sent_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
   rooms?: Prisma.roomsOrderByWithRelationInput
   users?: Prisma.usersOrderByWithRelationInput
   _relevance?: Prisma.chat_messagesOrderByRelevanceInput
@@ -244,10 +253,11 @@ export type chat_messagesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.chat_messagesWhereInput | Prisma.chat_messagesWhereInput[]
   OR?: Prisma.chat_messagesWhereInput[]
   NOT?: Prisma.chat_messagesWhereInput | Prisma.chat_messagesWhereInput[]
-  room_id?: Prisma.BigIntFilter<"chat_messages"> | bigint | number
-  sender_id?: Prisma.BigIntFilter<"chat_messages"> | bigint | number
+  room_id?: Prisma.IntFilter<"chat_messages"> | number
+  sender_id?: Prisma.IntFilter<"chat_messages"> | number
   message_text?: Prisma.StringFilter<"chat_messages"> | string
   sent_at?: Prisma.DateTimeFilter<"chat_messages"> | Date | string
+  is_deleted?: Prisma.BoolFilter<"chat_messages"> | boolean
   rooms?: Prisma.XOR<Prisma.RoomsScalarRelationFilter, Prisma.roomsWhereInput>
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
 }, "message_id">
@@ -258,6 +268,7 @@ export type chat_messagesOrderByWithAggregationInput = {
   sender_id?: Prisma.SortOrder
   message_text?: Prisma.SortOrder
   sent_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
   _count?: Prisma.chat_messagesCountOrderByAggregateInput
   _avg?: Prisma.chat_messagesAvgOrderByAggregateInput
   _max?: Prisma.chat_messagesMaxOrderByAggregateInput
@@ -270,64 +281,72 @@ export type chat_messagesScalarWhereWithAggregatesInput = {
   OR?: Prisma.chat_messagesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.chat_messagesScalarWhereWithAggregatesInput | Prisma.chat_messagesScalarWhereWithAggregatesInput[]
   message_id?: Prisma.BigIntWithAggregatesFilter<"chat_messages"> | bigint | number
-  room_id?: Prisma.BigIntWithAggregatesFilter<"chat_messages"> | bigint | number
-  sender_id?: Prisma.BigIntWithAggregatesFilter<"chat_messages"> | bigint | number
+  room_id?: Prisma.IntWithAggregatesFilter<"chat_messages"> | number
+  sender_id?: Prisma.IntWithAggregatesFilter<"chat_messages"> | number
   message_text?: Prisma.StringWithAggregatesFilter<"chat_messages"> | string
   sent_at?: Prisma.DateTimeWithAggregatesFilter<"chat_messages"> | Date | string
+  is_deleted?: Prisma.BoolWithAggregatesFilter<"chat_messages"> | boolean
 }
 
 export type chat_messagesCreateInput = {
   message_id?: bigint | number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
   rooms: Prisma.roomsCreateNestedOneWithoutChat_messagesInput
   users: Prisma.usersCreateNestedOneWithoutChat_messagesInput
 }
 
 export type chat_messagesUncheckedCreateInput = {
   message_id?: bigint | number
-  room_id: bigint | number
-  sender_id: bigint | number
+  room_id: number
+  sender_id: number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
 }
 
 export type chat_messagesUpdateInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rooms?: Prisma.roomsUpdateOneRequiredWithoutChat_messagesNestedInput
   users?: Prisma.usersUpdateOneRequiredWithoutChat_messagesNestedInput
 }
 
 export type chat_messagesUncheckedUpdateInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  sender_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  sender_id?: Prisma.IntFieldUpdateOperationsInput | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type chat_messagesCreateManyInput = {
   message_id?: bigint | number
-  room_id: bigint | number
-  sender_id: bigint | number
+  room_id: number
+  sender_id: number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
 }
 
 export type chat_messagesUpdateManyMutationInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type chat_messagesUncheckedUpdateManyInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  sender_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
+  sender_id?: Prisma.IntFieldUpdateOperationsInput | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type chat_messagesOrderByRelevanceInput = {
@@ -342,6 +361,7 @@ export type chat_messagesCountOrderByAggregateInput = {
   sender_id?: Prisma.SortOrder
   message_text?: Prisma.SortOrder
   sent_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
 }
 
 export type chat_messagesAvgOrderByAggregateInput = {
@@ -356,6 +376,7 @@ export type chat_messagesMaxOrderByAggregateInput = {
   sender_id?: Prisma.SortOrder
   message_text?: Prisma.SortOrder
   sent_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
 }
 
 export type chat_messagesMinOrderByAggregateInput = {
@@ -364,6 +385,7 @@ export type chat_messagesMinOrderByAggregateInput = {
   sender_id?: Prisma.SortOrder
   message_text?: Prisma.SortOrder
   sent_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
 }
 
 export type chat_messagesSumOrderByAggregateInput = {
@@ -396,6 +418,18 @@ export type StringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type chat_messagesCreateNestedManyWithoutRoomsInput = {
@@ -486,14 +520,16 @@ export type chat_messagesCreateWithoutRoomsInput = {
   message_id?: bigint | number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
   users: Prisma.usersCreateNestedOneWithoutChat_messagesInput
 }
 
 export type chat_messagesUncheckedCreateWithoutRoomsInput = {
   message_id?: bigint | number
-  sender_id: bigint | number
+  sender_id: number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
 }
 
 export type chat_messagesCreateOrConnectWithoutRoomsInput = {
@@ -527,24 +563,27 @@ export type chat_messagesScalarWhereInput = {
   OR?: Prisma.chat_messagesScalarWhereInput[]
   NOT?: Prisma.chat_messagesScalarWhereInput | Prisma.chat_messagesScalarWhereInput[]
   message_id?: Prisma.BigIntFilter<"chat_messages"> | bigint | number
-  room_id?: Prisma.BigIntFilter<"chat_messages"> | bigint | number
-  sender_id?: Prisma.BigIntFilter<"chat_messages"> | bigint | number
+  room_id?: Prisma.IntFilter<"chat_messages"> | number
+  sender_id?: Prisma.IntFilter<"chat_messages"> | number
   message_text?: Prisma.StringFilter<"chat_messages"> | string
   sent_at?: Prisma.DateTimeFilter<"chat_messages"> | Date | string
+  is_deleted?: Prisma.BoolFilter<"chat_messages"> | boolean
 }
 
 export type chat_messagesCreateWithoutUsersInput = {
   message_id?: bigint | number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
   rooms: Prisma.roomsCreateNestedOneWithoutChat_messagesInput
 }
 
 export type chat_messagesUncheckedCreateWithoutUsersInput = {
   message_id?: bigint | number
-  room_id: bigint | number
+  room_id: number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
 }
 
 export type chat_messagesCreateOrConnectWithoutUsersInput = {
@@ -575,58 +614,66 @@ export type chat_messagesUpdateManyWithWhereWithoutUsersInput = {
 
 export type chat_messagesCreateManyRoomsInput = {
   message_id?: bigint | number
-  sender_id: bigint | number
+  sender_id: number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
 }
 
 export type chat_messagesUpdateWithoutRoomsInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.usersUpdateOneRequiredWithoutChat_messagesNestedInput
 }
 
 export type chat_messagesUncheckedUpdateWithoutRoomsInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  sender_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  sender_id?: Prisma.IntFieldUpdateOperationsInput | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type chat_messagesUncheckedUpdateManyWithoutRoomsInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  sender_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  sender_id?: Prisma.IntFieldUpdateOperationsInput | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type chat_messagesCreateManyUsersInput = {
   message_id?: bigint | number
-  room_id: bigint | number
+  room_id: number
   message_text: string
   sent_at?: Date | string
+  is_deleted?: boolean
 }
 
 export type chat_messagesUpdateWithoutUsersInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   rooms?: Prisma.roomsUpdateOneRequiredWithoutChat_messagesNestedInput
 }
 
 export type chat_messagesUncheckedUpdateWithoutUsersInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type chat_messagesUncheckedUpdateManyWithoutUsersInput = {
   message_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  room_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  room_id?: Prisma.IntFieldUpdateOperationsInput | number
   message_text?: Prisma.StringFieldUpdateOperationsInput | string
   sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -637,6 +684,7 @@ export type chat_messagesSelect<ExtArgs extends runtime.Types.Extensions.Interna
   sender_id?: boolean
   message_text?: boolean
   sent_at?: boolean
+  is_deleted?: boolean
   rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["chat_messages"]>
@@ -649,9 +697,10 @@ export type chat_messagesSelectScalar = {
   sender_id?: boolean
   message_text?: boolean
   sent_at?: boolean
+  is_deleted?: boolean
 }
 
-export type chat_messagesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"message_id" | "room_id" | "sender_id" | "message_text" | "sent_at", ExtArgs["result"]["chat_messages"]>
+export type chat_messagesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"message_id" | "room_id" | "sender_id" | "message_text" | "sent_at" | "is_deleted", ExtArgs["result"]["chat_messages"]>
 export type chat_messagesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rooms?: boolean | Prisma.roomsDefaultArgs<ExtArgs>
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
@@ -665,10 +714,11 @@ export type $chat_messagesPayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     message_id: bigint
-    room_id: bigint
-    sender_id: bigint
+    room_id: number
+    sender_id: number
     message_text: string
     sent_at: Date
+    is_deleted: boolean
   }, ExtArgs["result"]["chat_messages"]>
   composites: {}
 }
@@ -1041,10 +1091,11 @@ export interface Prisma__chat_messagesClient<T, Null = never, ExtArgs extends ru
  */
 export interface chat_messagesFieldRefs {
   readonly message_id: Prisma.FieldRef<"chat_messages", 'BigInt'>
-  readonly room_id: Prisma.FieldRef<"chat_messages", 'BigInt'>
-  readonly sender_id: Prisma.FieldRef<"chat_messages", 'BigInt'>
+  readonly room_id: Prisma.FieldRef<"chat_messages", 'Int'>
+  readonly sender_id: Prisma.FieldRef<"chat_messages", 'Int'>
   readonly message_text: Prisma.FieldRef<"chat_messages", 'String'>
   readonly sent_at: Prisma.FieldRef<"chat_messages", 'DateTime'>
+  readonly is_deleted: Prisma.FieldRef<"chat_messages", 'Boolean'>
 }
     
 

@@ -2,6 +2,16 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Authentication secret
+
+Authentication requires an `AUTH_SECRET` value with at least 32 characters in `web/.env`. Generate a private value with:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+```
+
+Keep this value private and do not commit `.env`.
+
 First, run the development server:
 
 ```bash

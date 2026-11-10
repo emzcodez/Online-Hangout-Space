@@ -31,31 +31,31 @@ export type UsersAvgAggregateOutputType = {
 }
 
 export type UsersSumAggregateOutputType = {
-  user_id: bigint | null
+  user_id: number | null
 }
 
 export type UsersMinAggregateOutputType = {
-  user_id: bigint | null
+  user_id: number | null
   username: string | null
   email: string | null
   password_hash: string | null
   display_name: string | null
   avatar_url: string | null
   status_message: string | null
-  account_status: $Enums.users_account_status | null
   created_at: Date | null
+  account_status: $Enums.users_account_status | null
 }
 
 export type UsersMaxAggregateOutputType = {
-  user_id: bigint | null
+  user_id: number | null
   username: string | null
   email: string | null
   password_hash: string | null
   display_name: string | null
   avatar_url: string | null
   status_message: string | null
-  account_status: $Enums.users_account_status | null
   created_at: Date | null
+  account_status: $Enums.users_account_status | null
 }
 
 export type UsersCountAggregateOutputType = {
@@ -66,8 +66,8 @@ export type UsersCountAggregateOutputType = {
   display_name: number
   avatar_url: number
   status_message: number
-  account_status: number
   created_at: number
+  account_status: number
   _all: number
 }
 
@@ -88,8 +88,8 @@ export type UsersMinAggregateInputType = {
   display_name?: true
   avatar_url?: true
   status_message?: true
-  account_status?: true
   created_at?: true
+  account_status?: true
 }
 
 export type UsersMaxAggregateInputType = {
@@ -100,8 +100,8 @@ export type UsersMaxAggregateInputType = {
   display_name?: true
   avatar_url?: true
   status_message?: true
-  account_status?: true
   created_at?: true
+  account_status?: true
 }
 
 export type UsersCountAggregateInputType = {
@@ -112,8 +112,8 @@ export type UsersCountAggregateInputType = {
   display_name?: true
   avatar_url?: true
   status_message?: true
-  account_status?: true
   created_at?: true
+  account_status?: true
   _all?: true
 }
 
@@ -204,15 +204,15 @@ export type usersGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 export type UsersGroupByOutputType = {
-  user_id: bigint
+  user_id: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url: string | null
   status_message: string | null
-  account_status: $Enums.users_account_status
   created_at: Date
+  account_status: $Enums.users_account_status
   _count: UsersCountAggregateOutputType | null
   _avg: UsersAvgAggregateOutputType | null
   _sum: UsersSumAggregateOutputType | null
@@ -239,18 +239,18 @@ export type usersWhereInput = {
   AND?: Prisma.usersWhereInput | Prisma.usersWhereInput[]
   OR?: Prisma.usersWhereInput[]
   NOT?: Prisma.usersWhereInput | Prisma.usersWhereInput[]
-  user_id?: Prisma.BigIntFilter<"users"> | bigint | number
+  user_id?: Prisma.IntFilter<"users"> | number
   username?: Prisma.StringFilter<"users"> | string
   email?: Prisma.StringFilter<"users"> | string
   password_hash?: Prisma.StringFilter<"users"> | string
   display_name?: Prisma.StringFilter<"users"> | string
   avatar_url?: Prisma.StringNullableFilter<"users"> | string | null
   status_message?: Prisma.StringNullableFilter<"users"> | string | null
-  account_status?: Prisma.Enumusers_account_statusFilter<"users"> | $Enums.users_account_status
   created_at?: Prisma.DateTimeFilter<"users"> | Date | string
+  account_status?: Prisma.Enumusers_account_statusFilter<"users"> | $Enums.users_account_status
   chat_messages?: Prisma.Chat_messagesListRelationFilter
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.Friend_requestsListRelationFilter
   friend_requests_friend_requests_sender_idTousers?: Prisma.Friend_requestsListRelationFilter
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.Friend_requestsListRelationFilter
   friendships_friendships_user_id_1Tousers?: Prisma.FriendshipsListRelationFilter
   friendships_friendships_user_id_2Tousers?: Prisma.FriendshipsListRelationFilter
   room_favorites?: Prisma.Room_favoritesListRelationFilter
@@ -268,11 +268,11 @@ export type usersOrderByWithRelationInput = {
   display_name?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
   status_message?: Prisma.SortOrderInput | Prisma.SortOrder
-  account_status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  account_status?: Prisma.SortOrder
   chat_messages?: Prisma.chat_messagesOrderByRelationAggregateInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsOrderByRelationAggregateInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsOrderByRelationAggregateInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsOrderByRelationAggregateInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsOrderByRelationAggregateInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsOrderByRelationAggregateInput
   room_favorites?: Prisma.room_favoritesOrderByRelationAggregateInput
@@ -284,7 +284,7 @@ export type usersOrderByWithRelationInput = {
 }
 
 export type usersWhereUniqueInput = Prisma.AtLeast<{
-  user_id?: bigint | number
+  user_id?: number
   username?: string
   email?: string
   AND?: Prisma.usersWhereInput | Prisma.usersWhereInput[]
@@ -294,11 +294,11 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   display_name?: Prisma.StringFilter<"users"> | string
   avatar_url?: Prisma.StringNullableFilter<"users"> | string | null
   status_message?: Prisma.StringNullableFilter<"users"> | string | null
-  account_status?: Prisma.Enumusers_account_statusFilter<"users"> | $Enums.users_account_status
   created_at?: Prisma.DateTimeFilter<"users"> | Date | string
+  account_status?: Prisma.Enumusers_account_statusFilter<"users"> | $Enums.users_account_status
   chat_messages?: Prisma.Chat_messagesListRelationFilter
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.Friend_requestsListRelationFilter
   friend_requests_friend_requests_sender_idTousers?: Prisma.Friend_requestsListRelationFilter
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.Friend_requestsListRelationFilter
   friendships_friendships_user_id_1Tousers?: Prisma.FriendshipsListRelationFilter
   friendships_friendships_user_id_2Tousers?: Prisma.FriendshipsListRelationFilter
   room_favorites?: Prisma.Room_favoritesListRelationFilter
@@ -316,8 +316,8 @@ export type usersOrderByWithAggregationInput = {
   display_name?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
   status_message?: Prisma.SortOrderInput | Prisma.SortOrder
-  account_status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  account_status?: Prisma.SortOrder
   _count?: Prisma.usersCountOrderByAggregateInput
   _avg?: Prisma.usersAvgOrderByAggregateInput
   _max?: Prisma.usersMaxOrderByAggregateInput
@@ -329,30 +329,29 @@ export type usersScalarWhereWithAggregatesInput = {
   AND?: Prisma.usersScalarWhereWithAggregatesInput | Prisma.usersScalarWhereWithAggregatesInput[]
   OR?: Prisma.usersScalarWhereWithAggregatesInput[]
   NOT?: Prisma.usersScalarWhereWithAggregatesInput | Prisma.usersScalarWhereWithAggregatesInput[]
-  user_id?: Prisma.BigIntWithAggregatesFilter<"users"> | bigint | number
+  user_id?: Prisma.IntWithAggregatesFilter<"users"> | number
   username?: Prisma.StringWithAggregatesFilter<"users"> | string
   email?: Prisma.StringWithAggregatesFilter<"users"> | string
   password_hash?: Prisma.StringWithAggregatesFilter<"users"> | string
   display_name?: Prisma.StringWithAggregatesFilter<"users"> | string
   avatar_url?: Prisma.StringNullableWithAggregatesFilter<"users"> | string | null
   status_message?: Prisma.StringNullableWithAggregatesFilter<"users"> | string | null
-  account_status?: Prisma.Enumusers_account_statusWithAggregatesFilter<"users"> | $Enums.users_account_status
   created_at?: Prisma.DateTimeWithAggregatesFilter<"users"> | Date | string
+  account_status?: Prisma.Enumusers_account_statusWithAggregatesFilter<"users"> | $Enums.users_account_status
 }
 
 export type usersCreateInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
@@ -363,18 +362,18 @@ export type usersCreateInput = {
 }
 
 export type usersUncheckedCreateInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
@@ -385,18 +384,17 @@ export type usersUncheckedCreateInput = {
 }
 
 export type usersUpdateInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
@@ -407,18 +405,18 @@ export type usersUpdateInput = {
 }
 
 export type usersUncheckedUpdateInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
@@ -429,49 +427,43 @@ export type usersUncheckedUpdateInput = {
 }
 
 export type usersCreateManyInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
 }
 
 export type usersUpdateManyMutationInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
 }
 
 export type usersUncheckedUpdateManyInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
 }
 
 export type UsersScalarRelationFilter = {
   is?: Prisma.usersWhereInput
   isNot?: Prisma.usersWhereInput
-}
-
-export type UsersNullableScalarRelationFilter = {
-  is?: Prisma.usersWhereInput | null
-  isNot?: Prisma.usersWhereInput | null
 }
 
 export type usersOrderByRelevanceInput = {
@@ -488,8 +480,8 @@ export type usersCountOrderByAggregateInput = {
   display_name?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
   status_message?: Prisma.SortOrder
-  account_status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  account_status?: Prisma.SortOrder
 }
 
 export type usersAvgOrderByAggregateInput = {
@@ -504,8 +496,8 @@ export type usersMaxOrderByAggregateInput = {
   display_name?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
   status_message?: Prisma.SortOrder
-  account_status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  account_status?: Prisma.SortOrder
 }
 
 export type usersMinOrderByAggregateInput = {
@@ -516,8 +508,8 @@ export type usersMinOrderByAggregateInput = {
   display_name?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrder
   status_message?: Prisma.SortOrder
-  account_status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  account_status?: Prisma.SortOrder
 }
 
 export type usersSumOrderByAggregateInput = {
@@ -538,24 +530,16 @@ export type usersUpdateOneRequiredWithoutChat_messagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutChat_messagesInput, Prisma.usersUpdateWithoutChat_messagesInput>, Prisma.usersUncheckedUpdateWithoutChat_messagesInput>
 }
 
-export type usersCreateNestedOneWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutFriend_requests_friend_requests_receiver_idTousersInput
-  connect?: Prisma.usersWhereUniqueInput
-}
-
 export type usersCreateNestedOneWithoutFriend_requests_friend_requests_sender_idTousersInput = {
   create?: Prisma.XOR<Prisma.usersCreateWithoutFriend_requests_friend_requests_sender_idTousersInput, Prisma.usersUncheckedCreateWithoutFriend_requests_friend_requests_sender_idTousersInput>
   connectOrCreate?: Prisma.usersCreateOrConnectWithoutFriend_requests_friend_requests_sender_idTousersInput
   connect?: Prisma.usersWhereUniqueInput
 }
 
-export type usersUpdateOneRequiredWithoutFriend_requests_friend_requests_receiver_idTousersNestedInput = {
+export type usersCreateNestedOneWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
   create?: Prisma.XOR<Prisma.usersCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
   connectOrCreate?: Prisma.usersCreateOrConnectWithoutFriend_requests_friend_requests_receiver_idTousersInput
-  upsert?: Prisma.usersUpsertWithoutFriend_requests_friend_requests_receiver_idTousersInput
   connect?: Prisma.usersWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput>, Prisma.usersUncheckedUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
 }
 
 export type usersUpdateOneRequiredWithoutFriend_requests_friend_requests_sender_idTousersNestedInput = {
@@ -564,6 +548,14 @@ export type usersUpdateOneRequiredWithoutFriend_requests_friend_requests_sender_
   upsert?: Prisma.usersUpsertWithoutFriend_requests_friend_requests_sender_idTousersInput
   connect?: Prisma.usersWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutFriend_requests_friend_requests_sender_idTousersInput, Prisma.usersUpdateWithoutFriend_requests_friend_requests_sender_idTousersInput>, Prisma.usersUncheckedUpdateWithoutFriend_requests_friend_requests_sender_idTousersInput>
+}
+
+export type usersUpdateOneRequiredWithoutFriend_requests_friend_requests_receiver_idTousersNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutFriend_requests_friend_requests_receiver_idTousersInput
+  upsert?: Prisma.usersUpsertWithoutFriend_requests_friend_requests_receiver_idTousersInput
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput>, Prisma.usersUncheckedUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
 }
 
 export type usersCreateNestedOneWithoutFriendships_friendships_user_id_1TousersInput = {
@@ -614,12 +606,10 @@ export type usersCreateNestedOneWithoutRoom_itemsInput = {
   connect?: Prisma.usersWhereUniqueInput
 }
 
-export type usersUpdateOneWithoutRoom_itemsNestedInput = {
+export type usersUpdateOneRequiredWithoutRoom_itemsNestedInput = {
   create?: Prisma.XOR<Prisma.usersCreateWithoutRoom_itemsInput, Prisma.usersUncheckedCreateWithoutRoom_itemsInput>
   connectOrCreate?: Prisma.usersCreateOrConnectWithoutRoom_itemsInput
   upsert?: Prisma.usersUpsertWithoutRoom_itemsInput
-  disconnect?: Prisma.usersWhereInput | boolean
-  delete?: Prisma.usersWhereInput | boolean
   connect?: Prisma.usersWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutRoom_itemsInput, Prisma.usersUpdateWithoutRoom_itemsInput>, Prisma.usersUncheckedUpdateWithoutRoom_itemsInput>
 }
@@ -671,17 +661,16 @@ export type usersUpdateOneRequiredWithoutWatch_sessionsNestedInput = {
 }
 
 export type usersCreateWithoutChat_messagesInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
+  account_status?: $Enums.users_account_status
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
@@ -692,17 +681,17 @@ export type usersCreateWithoutChat_messagesInput = {
 }
 
 export type usersUncheckedCreateWithoutChat_messagesInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
+  account_status?: $Enums.users_account_status
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
@@ -729,17 +718,16 @@ export type usersUpdateToOneWithWhereWithoutChat_messagesInput = {
 }
 
 export type usersUpdateWithoutChat_messagesInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
@@ -750,17 +738,17 @@ export type usersUpdateWithoutChat_messagesInput = {
 }
 
 export type usersUncheckedUpdateWithoutChat_messagesInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
@@ -770,63 +758,15 @@ export type usersUncheckedUpdateWithoutChat_messagesInput = {
   watch_sessions?: Prisma.watch_sessionsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
-export type usersCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
-  user_id?: bigint | number
-  username: string
-  email: string
-  password_hash: string
-  display_name: string
-  avatar_url?: string | null
-  status_message?: string | null
-  account_status?: $Enums.users_account_status
-  created_at?: Date | string
-  chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
-  friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
-  friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
-  room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
-  room_items?: Prisma.room_itemsCreateNestedManyWithoutUsersInput
-  room_members?: Prisma.room_membersCreateNestedManyWithoutUsersInput
-  rooms?: Prisma.roomsCreateNestedManyWithoutUsersInput
-  watch_sessions?: Prisma.watch_sessionsCreateNestedManyWithoutUsersInput
-}
-
-export type usersUncheckedCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
-  user_id?: bigint | number
-  username: string
-  email: string
-  password_hash: string
-  display_name: string
-  avatar_url?: string | null
-  status_message?: string | null
-  account_status?: $Enums.users_account_status
-  created_at?: Date | string
-  chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
-  friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
-  friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
-  room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
-  room_items?: Prisma.room_itemsUncheckedCreateNestedManyWithoutUsersInput
-  room_members?: Prisma.room_membersUncheckedCreateNestedManyWithoutUsersInput
-  rooms?: Prisma.roomsUncheckedCreateNestedManyWithoutUsersInput
-  watch_sessions?: Prisma.watch_sessionsUncheckedCreateNestedManyWithoutUsersInput
-}
-
-export type usersCreateOrConnectWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
-  where: Prisma.usersWhereUniqueInput
-  create: Prisma.XOR<Prisma.usersCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
-}
-
 export type usersCreateWithoutFriend_requests_friend_requests_sender_idTousersInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
   friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
@@ -839,15 +779,15 @@ export type usersCreateWithoutFriend_requests_friend_requests_sender_idTousersIn
 }
 
 export type usersUncheckedCreateWithoutFriend_requests_friend_requests_sender_idTousersInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
   friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
@@ -864,57 +804,50 @@ export type usersCreateOrConnectWithoutFriend_requests_friend_requests_sender_id
   create: Prisma.XOR<Prisma.usersCreateWithoutFriend_requests_friend_requests_sender_idTousersInput, Prisma.usersUncheckedCreateWithoutFriend_requests_friend_requests_sender_idTousersInput>
 }
 
-export type usersUpsertWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
-  update: Prisma.XOR<Prisma.usersUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
+export type usersCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
+  username: string
+  email: string
+  password_hash: string
+  display_name: string
+  avatar_url?: string | null
+  status_message?: string | null
+  created_at?: Date | string
+  account_status?: $Enums.users_account_status
+  chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
+  friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
+  friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
+  room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
+  room_items?: Prisma.room_itemsCreateNestedManyWithoutUsersInput
+  room_members?: Prisma.room_membersCreateNestedManyWithoutUsersInput
+  rooms?: Prisma.roomsCreateNestedManyWithoutUsersInput
+  watch_sessions?: Prisma.watch_sessionsCreateNestedManyWithoutUsersInput
+}
+
+export type usersUncheckedCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
+  user_id?: number
+  username: string
+  email: string
+  password_hash: string
+  display_name: string
+  avatar_url?: string | null
+  status_message?: string | null
+  created_at?: Date | string
+  account_status?: $Enums.users_account_status
+  chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
+  friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
+  friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
+  room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
+  room_items?: Prisma.room_itemsUncheckedCreateNestedManyWithoutUsersInput
+  room_members?: Prisma.room_membersUncheckedCreateNestedManyWithoutUsersInput
+  rooms?: Prisma.roomsUncheckedCreateNestedManyWithoutUsersInput
+  watch_sessions?: Prisma.watch_sessionsUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type usersCreateOrConnectWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
+  where: Prisma.usersWhereUniqueInput
   create: Prisma.XOR<Prisma.usersCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
-  where?: Prisma.usersWhereInput
-}
-
-export type usersUpdateToOneWithWhereWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
-  where?: Prisma.usersWhereInput
-  data: Prisma.XOR<Prisma.usersUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
-}
-
-export type usersUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
-  display_name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
-  friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
-  friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
-  room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
-  room_items?: Prisma.room_itemsUpdateManyWithoutUsersNestedInput
-  room_members?: Prisma.room_membersUpdateManyWithoutUsersNestedInput
-  rooms?: Prisma.roomsUpdateManyWithoutUsersNestedInput
-  watch_sessions?: Prisma.watch_sessionsUpdateManyWithoutUsersNestedInput
-}
-
-export type usersUncheckedUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
-  display_name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
-  friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
-  friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
-  room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
-  room_items?: Prisma.room_itemsUncheckedUpdateManyWithoutUsersNestedInput
-  room_members?: Prisma.room_membersUncheckedUpdateManyWithoutUsersNestedInput
-  rooms?: Prisma.roomsUncheckedUpdateManyWithoutUsersNestedInput
-  watch_sessions?: Prisma.watch_sessionsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUpsertWithoutFriend_requests_friend_requests_sender_idTousersInput = {
@@ -929,15 +862,14 @@ export type usersUpdateToOneWithWhereWithoutFriend_requests_friend_requests_send
 }
 
 export type usersUpdateWithoutFriend_requests_friend_requests_sender_idTousersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
   friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
@@ -950,15 +882,15 @@ export type usersUpdateWithoutFriend_requests_friend_requests_sender_idTousersIn
 }
 
 export type usersUncheckedUpdateWithoutFriend_requests_friend_requests_sender_idTousersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
   friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
@@ -970,19 +902,70 @@ export type usersUncheckedUpdateWithoutFriend_requests_friend_requests_sender_id
   watch_sessions?: Prisma.watch_sessionsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
+export type usersUpsertWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedCreateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput, Prisma.usersUncheckedUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput>
+}
+
+export type usersUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
+  chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
+  friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
+  friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
+  room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
+  room_items?: Prisma.room_itemsUpdateManyWithoutUsersNestedInput
+  room_members?: Prisma.room_membersUpdateManyWithoutUsersNestedInput
+  rooms?: Prisma.roomsUpdateManyWithoutUsersNestedInput
+  watch_sessions?: Prisma.watch_sessionsUpdateManyWithoutUsersNestedInput
+}
+
+export type usersUncheckedUpdateWithoutFriend_requests_friend_requests_receiver_idTousersInput = {
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  display_name?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
+  chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
+  friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
+  friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
+  room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
+  room_items?: Prisma.room_itemsUncheckedUpdateManyWithoutUsersNestedInput
+  room_members?: Prisma.room_membersUncheckedUpdateManyWithoutUsersNestedInput
+  rooms?: Prisma.roomsUncheckedUpdateManyWithoutUsersNestedInput
+  watch_sessions?: Prisma.watch_sessionsUncheckedUpdateManyWithoutUsersNestedInput
+}
+
 export type usersCreateWithoutFriendships_friendships_user_id_1TousersInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
   room_items?: Prisma.room_itemsCreateNestedManyWithoutUsersInput
@@ -992,18 +975,18 @@ export type usersCreateWithoutFriendships_friendships_user_id_1TousersInput = {
 }
 
 export type usersUncheckedCreateWithoutFriendships_friendships_user_id_1TousersInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
   room_items?: Prisma.room_itemsUncheckedCreateNestedManyWithoutUsersInput
@@ -1018,18 +1001,17 @@ export type usersCreateOrConnectWithoutFriendships_friendships_user_id_1TousersI
 }
 
 export type usersCreateWithoutFriendships_friendships_user_id_2TousersInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
   room_items?: Prisma.room_itemsCreateNestedManyWithoutUsersInput
@@ -1039,18 +1021,18 @@ export type usersCreateWithoutFriendships_friendships_user_id_2TousersInput = {
 }
 
 export type usersUncheckedCreateWithoutFriendships_friendships_user_id_2TousersInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
   room_items?: Prisma.room_itemsUncheckedCreateNestedManyWithoutUsersInput
@@ -1076,18 +1058,17 @@ export type usersUpdateToOneWithWhereWithoutFriendships_friendships_user_id_1Tou
 }
 
 export type usersUpdateWithoutFriendships_friendships_user_id_1TousersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
   room_items?: Prisma.room_itemsUpdateManyWithoutUsersNestedInput
@@ -1097,18 +1078,18 @@ export type usersUpdateWithoutFriendships_friendships_user_id_1TousersInput = {
 }
 
 export type usersUncheckedUpdateWithoutFriendships_friendships_user_id_1TousersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
   room_items?: Prisma.room_itemsUncheckedUpdateManyWithoutUsersNestedInput
@@ -1129,18 +1110,17 @@ export type usersUpdateToOneWithWhereWithoutFriendships_friendships_user_id_2Tou
 }
 
 export type usersUpdateWithoutFriendships_friendships_user_id_2TousersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
   room_items?: Prisma.room_itemsUpdateManyWithoutUsersNestedInput
@@ -1150,18 +1130,18 @@ export type usersUpdateWithoutFriendships_friendships_user_id_2TousersInput = {
 }
 
 export type usersUncheckedUpdateWithoutFriendships_friendships_user_id_2TousersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
   room_items?: Prisma.room_itemsUncheckedUpdateManyWithoutUsersNestedInput
@@ -1171,18 +1151,17 @@ export type usersUncheckedUpdateWithoutFriendships_friendships_user_id_2TousersI
 }
 
 export type usersCreateWithoutRoom_favoritesInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_items?: Prisma.room_itemsCreateNestedManyWithoutUsersInput
@@ -1192,18 +1171,18 @@ export type usersCreateWithoutRoom_favoritesInput = {
 }
 
 export type usersUncheckedCreateWithoutRoom_favoritesInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_items?: Prisma.room_itemsUncheckedCreateNestedManyWithoutUsersInput
@@ -1229,18 +1208,17 @@ export type usersUpdateToOneWithWhereWithoutRoom_favoritesInput = {
 }
 
 export type usersUpdateWithoutRoom_favoritesInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_items?: Prisma.room_itemsUpdateManyWithoutUsersNestedInput
@@ -1250,18 +1228,18 @@ export type usersUpdateWithoutRoom_favoritesInput = {
 }
 
 export type usersUncheckedUpdateWithoutRoom_favoritesInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_items?: Prisma.room_itemsUncheckedUpdateManyWithoutUsersNestedInput
@@ -1271,18 +1249,17 @@ export type usersUncheckedUpdateWithoutRoom_favoritesInput = {
 }
 
 export type usersCreateWithoutRoom_itemsInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
@@ -1292,18 +1269,18 @@ export type usersCreateWithoutRoom_itemsInput = {
 }
 
 export type usersUncheckedCreateWithoutRoom_itemsInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
@@ -1329,18 +1306,17 @@ export type usersUpdateToOneWithWhereWithoutRoom_itemsInput = {
 }
 
 export type usersUpdateWithoutRoom_itemsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
@@ -1350,18 +1326,18 @@ export type usersUpdateWithoutRoom_itemsInput = {
 }
 
 export type usersUncheckedUpdateWithoutRoom_itemsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
@@ -1371,18 +1347,17 @@ export type usersUncheckedUpdateWithoutRoom_itemsInput = {
 }
 
 export type usersCreateWithoutRoom_membersInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
@@ -1392,18 +1367,18 @@ export type usersCreateWithoutRoom_membersInput = {
 }
 
 export type usersUncheckedCreateWithoutRoom_membersInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
@@ -1429,18 +1404,17 @@ export type usersUpdateToOneWithWhereWithoutRoom_membersInput = {
 }
 
 export type usersUpdateWithoutRoom_membersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
@@ -1450,18 +1424,18 @@ export type usersUpdateWithoutRoom_membersInput = {
 }
 
 export type usersUncheckedUpdateWithoutRoom_membersInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
@@ -1471,18 +1445,17 @@ export type usersUncheckedUpdateWithoutRoom_membersInput = {
 }
 
 export type usersCreateWithoutRoomsInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
@@ -1492,18 +1465,18 @@ export type usersCreateWithoutRoomsInput = {
 }
 
 export type usersUncheckedCreateWithoutRoomsInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
@@ -1529,18 +1502,17 @@ export type usersUpdateToOneWithWhereWithoutRoomsInput = {
 }
 
 export type usersUpdateWithoutRoomsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
@@ -1550,18 +1522,18 @@ export type usersUpdateWithoutRoomsInput = {
 }
 
 export type usersUncheckedUpdateWithoutRoomsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
@@ -1571,18 +1543,17 @@ export type usersUncheckedUpdateWithoutRoomsInput = {
 }
 
 export type usersCreateWithoutWatch_sessionsInput = {
-  user_id?: bigint | number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesCreateNestedManyWithoutUsersInput
@@ -1592,18 +1563,18 @@ export type usersCreateWithoutWatch_sessionsInput = {
 }
 
 export type usersUncheckedCreateWithoutWatch_sessionsInput = {
-  user_id?: bigint | number
+  user_id?: number
   username: string
   email: string
   password_hash: string
   display_name: string
   avatar_url?: string | null
   status_message?: string | null
-  account_status?: $Enums.users_account_status
   created_at?: Date | string
+  account_status?: $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedCreateNestedManyWithoutUsersInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_1TousersInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedCreateNestedManyWithoutUsers_friendships_user_id_2TousersInput
   room_favorites?: Prisma.room_favoritesUncheckedCreateNestedManyWithoutUsersInput
@@ -1629,18 +1600,17 @@ export type usersUpdateToOneWithWhereWithoutWatch_sessionsInput = {
 }
 
 export type usersUpdateWithoutWatch_sessionsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUpdateManyWithoutUsersNestedInput
@@ -1650,18 +1620,18 @@ export type usersUpdateWithoutWatch_sessionsInput = {
 }
 
 export type usersUncheckedUpdateWithoutWatch_sessionsInput = {
-  user_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  user_id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   display_name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status_message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account_status?: Prisma.Enumusers_account_statusFieldUpdateOperationsInput | $Enums.users_account_status
   chat_messages?: Prisma.chat_messagesUncheckedUpdateManyWithoutUsersNestedInput
-  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friend_requests_friend_requests_sender_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput
+  friend_requests_friend_requests_receiver_idTousers?: Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput
   friendships_friendships_user_id_1Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_1TousersNestedInput
   friendships_friendships_user_id_2Tousers?: Prisma.friendshipsUncheckedUpdateManyWithoutUsers_friendships_user_id_2TousersNestedInput
   room_favorites?: Prisma.room_favoritesUncheckedUpdateManyWithoutUsersNestedInput
@@ -1677,8 +1647,8 @@ export type usersUncheckedUpdateWithoutWatch_sessionsInput = {
 
 export type UsersCountOutputType = {
   chat_messages: number
-  friend_requests_friend_requests_receiver_idTousers: number
   friend_requests_friend_requests_sender_idTousers: number
+  friend_requests_friend_requests_receiver_idTousers: number
   friendships_friendships_user_id_1Tousers: number
   friendships_friendships_user_id_2Tousers: number
   room_favorites: number
@@ -1690,8 +1660,8 @@ export type UsersCountOutputType = {
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chat_messages?: boolean | UsersCountOutputTypeCountChat_messagesArgs
-  friend_requests_friend_requests_receiver_idTousers?: boolean | UsersCountOutputTypeCountFriend_requests_friend_requests_receiver_idTousersArgs
   friend_requests_friend_requests_sender_idTousers?: boolean | UsersCountOutputTypeCountFriend_requests_friend_requests_sender_idTousersArgs
+  friend_requests_friend_requests_receiver_idTousers?: boolean | UsersCountOutputTypeCountFriend_requests_friend_requests_receiver_idTousersArgs
   friendships_friendships_user_id_1Tousers?: boolean | UsersCountOutputTypeCountFriendships_friendships_user_id_1TousersArgs
   friendships_friendships_user_id_2Tousers?: boolean | UsersCountOutputTypeCountFriendships_friendships_user_id_2TousersArgs
   room_favorites?: boolean | UsersCountOutputTypeCountRoom_favoritesArgs
@@ -1721,14 +1691,14 @@ export type UsersCountOutputTypeCountChat_messagesArgs<ExtArgs extends runtime.T
 /**
  * UsersCountOutputType without action
  */
-export type UsersCountOutputTypeCountFriend_requests_friend_requests_receiver_idTousersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type UsersCountOutputTypeCountFriend_requests_friend_requests_sender_idTousersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.friend_requestsWhereInput
 }
 
 /**
  * UsersCountOutputType without action
  */
-export type UsersCountOutputTypeCountFriend_requests_friend_requests_sender_idTousersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type UsersCountOutputTypeCountFriend_requests_friend_requests_receiver_idTousersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.friend_requestsWhereInput
 }
 
@@ -1790,11 +1760,11 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   display_name?: boolean
   avatar_url?: boolean
   status_message?: boolean
-  account_status?: boolean
   created_at?: boolean
+  account_status?: boolean
   chat_messages?: boolean | Prisma.users$chat_messagesArgs<ExtArgs>
-  friend_requests_friend_requests_receiver_idTousers?: boolean | Prisma.users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs>
   friend_requests_friend_requests_sender_idTousers?: boolean | Prisma.users$friend_requests_friend_requests_sender_idTousersArgs<ExtArgs>
+  friend_requests_friend_requests_receiver_idTousers?: boolean | Prisma.users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs>
   friendships_friendships_user_id_1Tousers?: boolean | Prisma.users$friendships_friendships_user_id_1TousersArgs<ExtArgs>
   friendships_friendships_user_id_2Tousers?: boolean | Prisma.users$friendships_friendships_user_id_2TousersArgs<ExtArgs>
   room_favorites?: boolean | Prisma.users$room_favoritesArgs<ExtArgs>
@@ -1815,15 +1785,15 @@ export type usersSelectScalar = {
   display_name?: boolean
   avatar_url?: boolean
   status_message?: boolean
-  account_status?: boolean
   created_at?: boolean
+  account_status?: boolean
 }
 
-export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"user_id" | "username" | "email" | "password_hash" | "display_name" | "avatar_url" | "status_message" | "account_status" | "created_at", ExtArgs["result"]["users"]>
+export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"user_id" | "username" | "email" | "password_hash" | "display_name" | "avatar_url" | "status_message" | "created_at" | "account_status", ExtArgs["result"]["users"]>
 export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chat_messages?: boolean | Prisma.users$chat_messagesArgs<ExtArgs>
-  friend_requests_friend_requests_receiver_idTousers?: boolean | Prisma.users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs>
   friend_requests_friend_requests_sender_idTousers?: boolean | Prisma.users$friend_requests_friend_requests_sender_idTousersArgs<ExtArgs>
+  friend_requests_friend_requests_receiver_idTousers?: boolean | Prisma.users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs>
   friendships_friendships_user_id_1Tousers?: boolean | Prisma.users$friendships_friendships_user_id_1TousersArgs<ExtArgs>
   friendships_friendships_user_id_2Tousers?: boolean | Prisma.users$friendships_friendships_user_id_2TousersArgs<ExtArgs>
   room_favorites?: boolean | Prisma.users$room_favoritesArgs<ExtArgs>
@@ -1838,8 +1808,8 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "users"
   objects: {
     chat_messages: Prisma.$chat_messagesPayload<ExtArgs>[]
-    friend_requests_friend_requests_receiver_idTousers: Prisma.$friend_requestsPayload<ExtArgs>[]
     friend_requests_friend_requests_sender_idTousers: Prisma.$friend_requestsPayload<ExtArgs>[]
+    friend_requests_friend_requests_receiver_idTousers: Prisma.$friend_requestsPayload<ExtArgs>[]
     friendships_friendships_user_id_1Tousers: Prisma.$friendshipsPayload<ExtArgs>[]
     friendships_friendships_user_id_2Tousers: Prisma.$friendshipsPayload<ExtArgs>[]
     room_favorites: Prisma.$room_favoritesPayload<ExtArgs>[]
@@ -1849,15 +1819,15 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     watch_sessions: Prisma.$watch_sessionsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    user_id: bigint
+    user_id: number
     username: string
     email: string
     password_hash: string
     display_name: string
     avatar_url: string | null
     status_message: string | null
-    account_status: $Enums.users_account_status
     created_at: Date
+    account_status: $Enums.users_account_status
   }, ExtArgs["result"]["users"]>
   composites: {}
 }
@@ -2199,8 +2169,8 @@ readonly fields: usersFieldRefs;
 export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   chat_messages<T extends Prisma.users$chat_messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$chat_messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$chat_messagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  friend_requests_friend_requests_receiver_idTousers<T extends Prisma.users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$friend_requestsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   friend_requests_friend_requests_sender_idTousers<T extends Prisma.users$friend_requests_friend_requests_sender_idTousersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$friend_requests_friend_requests_sender_idTousersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$friend_requestsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  friend_requests_friend_requests_receiver_idTousers<T extends Prisma.users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$friend_requestsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   friendships_friendships_user_id_1Tousers<T extends Prisma.users$friendships_friendships_user_id_1TousersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$friendships_friendships_user_id_1TousersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$friendshipsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   friendships_friendships_user_id_2Tousers<T extends Prisma.users$friendships_friendships_user_id_2TousersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$friendships_friendships_user_id_2TousersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$friendshipsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   room_favorites<T extends Prisma.users$room_favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$room_favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$room_favoritesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2237,15 +2207,15 @@ export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the users model
  */
 export interface usersFieldRefs {
-  readonly user_id: Prisma.FieldRef<"users", 'BigInt'>
+  readonly user_id: Prisma.FieldRef<"users", 'Int'>
   readonly username: Prisma.FieldRef<"users", 'String'>
   readonly email: Prisma.FieldRef<"users", 'String'>
   readonly password_hash: Prisma.FieldRef<"users", 'String'>
   readonly display_name: Prisma.FieldRef<"users", 'String'>
   readonly avatar_url: Prisma.FieldRef<"users", 'String'>
   readonly status_message: Prisma.FieldRef<"users", 'String'>
-  readonly account_status: Prisma.FieldRef<"users", 'users_account_status'>
   readonly created_at: Prisma.FieldRef<"users", 'DateTime'>
+  readonly account_status: Prisma.FieldRef<"users", 'users_account_status'>
 }
     
 
@@ -2618,9 +2588,9 @@ export type users$chat_messagesArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * users.friend_requests_friend_requests_receiver_idTousers
+ * users.friend_requests_friend_requests_sender_idTousers
  */
-export type users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type users$friend_requests_friend_requests_sender_idTousersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the friend_requests
    */
@@ -2642,9 +2612,9 @@ export type users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs
 }
 
 /**
- * users.friend_requests_friend_requests_sender_idTousers
+ * users.friend_requests_friend_requests_receiver_idTousers
  */
-export type users$friend_requests_friend_requests_sender_idTousersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type users$friend_requests_friend_requests_receiver_idTousersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the friend_requests
    */

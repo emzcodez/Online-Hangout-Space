@@ -32,21 +32,23 @@ export type Furniture_catalogAvgAggregateOutputType = {
 }
 
 export type Furniture_catalogSumAggregateOutputType = {
-  furniture_id: bigint | null
+  furniture_id: number | null
   default_price: runtime.Decimal | null
 }
 
 export type Furniture_catalogMinAggregateOutputType = {
-  furniture_id: bigint | null
+  furniture_id: number | null
   item_name: string | null
-  item_type: string | null
+  item_type: $Enums.furniture_catalog_item_type | null
+  asset_url: string | null
   default_price: runtime.Decimal | null
 }
 
 export type Furniture_catalogMaxAggregateOutputType = {
-  furniture_id: bigint | null
+  furniture_id: number | null
   item_name: string | null
-  item_type: string | null
+  item_type: $Enums.furniture_catalog_item_type | null
+  asset_url: string | null
   default_price: runtime.Decimal | null
 }
 
@@ -54,6 +56,7 @@ export type Furniture_catalogCountAggregateOutputType = {
   furniture_id: number
   item_name: number
   item_type: number
+  asset_url: number
   default_price: number
   _all: number
 }
@@ -73,6 +76,7 @@ export type Furniture_catalogMinAggregateInputType = {
   furniture_id?: true
   item_name?: true
   item_type?: true
+  asset_url?: true
   default_price?: true
 }
 
@@ -80,6 +84,7 @@ export type Furniture_catalogMaxAggregateInputType = {
   furniture_id?: true
   item_name?: true
   item_type?: true
+  asset_url?: true
   default_price?: true
 }
 
@@ -87,6 +92,7 @@ export type Furniture_catalogCountAggregateInputType = {
   furniture_id?: true
   item_name?: true
   item_type?: true
+  asset_url?: true
   default_price?: true
   _all?: true
 }
@@ -178,9 +184,10 @@ export type furniture_catalogGroupByArgs<ExtArgs extends runtime.Types.Extension
 }
 
 export type Furniture_catalogGroupByOutputType = {
-  furniture_id: bigint
+  furniture_id: number
   item_name: string
-  item_type: string
+  item_type: $Enums.furniture_catalog_item_type
+  asset_url: string | null
   default_price: runtime.Decimal
   _count: Furniture_catalogCountAggregateOutputType | null
   _avg: Furniture_catalogAvgAggregateOutputType | null
@@ -208,9 +215,10 @@ export type furniture_catalogWhereInput = {
   AND?: Prisma.furniture_catalogWhereInput | Prisma.furniture_catalogWhereInput[]
   OR?: Prisma.furniture_catalogWhereInput[]
   NOT?: Prisma.furniture_catalogWhereInput | Prisma.furniture_catalogWhereInput[]
-  furniture_id?: Prisma.BigIntFilter<"furniture_catalog"> | bigint | number
+  furniture_id?: Prisma.IntFilter<"furniture_catalog"> | number
   item_name?: Prisma.StringFilter<"furniture_catalog"> | string
-  item_type?: Prisma.StringFilter<"furniture_catalog"> | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeFilter<"furniture_catalog"> | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.StringNullableFilter<"furniture_catalog"> | string | null
   default_price?: Prisma.DecimalFilter<"furniture_catalog"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   room_items?: Prisma.Room_itemsListRelationFilter
 }
@@ -219,18 +227,20 @@ export type furniture_catalogOrderByWithRelationInput = {
   furniture_id?: Prisma.SortOrder
   item_name?: Prisma.SortOrder
   item_type?: Prisma.SortOrder
+  asset_url?: Prisma.SortOrderInput | Prisma.SortOrder
   default_price?: Prisma.SortOrder
   room_items?: Prisma.room_itemsOrderByRelationAggregateInput
   _relevance?: Prisma.furniture_catalogOrderByRelevanceInput
 }
 
 export type furniture_catalogWhereUniqueInput = Prisma.AtLeast<{
-  furniture_id?: bigint | number
+  furniture_id?: number
   AND?: Prisma.furniture_catalogWhereInput | Prisma.furniture_catalogWhereInput[]
   OR?: Prisma.furniture_catalogWhereInput[]
   NOT?: Prisma.furniture_catalogWhereInput | Prisma.furniture_catalogWhereInput[]
   item_name?: Prisma.StringFilter<"furniture_catalog"> | string
-  item_type?: Prisma.StringFilter<"furniture_catalog"> | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeFilter<"furniture_catalog"> | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.StringNullableFilter<"furniture_catalog"> | string | null
   default_price?: Prisma.DecimalFilter<"furniture_catalog"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   room_items?: Prisma.Room_itemsListRelationFilter
 }, "furniture_id">
@@ -239,6 +249,7 @@ export type furniture_catalogOrderByWithAggregationInput = {
   furniture_id?: Prisma.SortOrder
   item_name?: Prisma.SortOrder
   item_type?: Prisma.SortOrder
+  asset_url?: Prisma.SortOrderInput | Prisma.SortOrder
   default_price?: Prisma.SortOrder
   _count?: Prisma.furniture_catalogCountOrderByAggregateInput
   _avg?: Prisma.furniture_catalogAvgOrderByAggregateInput
@@ -251,62 +262,67 @@ export type furniture_catalogScalarWhereWithAggregatesInput = {
   AND?: Prisma.furniture_catalogScalarWhereWithAggregatesInput | Prisma.furniture_catalogScalarWhereWithAggregatesInput[]
   OR?: Prisma.furniture_catalogScalarWhereWithAggregatesInput[]
   NOT?: Prisma.furniture_catalogScalarWhereWithAggregatesInput | Prisma.furniture_catalogScalarWhereWithAggregatesInput[]
-  furniture_id?: Prisma.BigIntWithAggregatesFilter<"furniture_catalog"> | bigint | number
+  furniture_id?: Prisma.IntWithAggregatesFilter<"furniture_catalog"> | number
   item_name?: Prisma.StringWithAggregatesFilter<"furniture_catalog"> | string
-  item_type?: Prisma.StringWithAggregatesFilter<"furniture_catalog"> | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeWithAggregatesFilter<"furniture_catalog"> | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.StringNullableWithAggregatesFilter<"furniture_catalog"> | string | null
   default_price?: Prisma.DecimalWithAggregatesFilter<"furniture_catalog"> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type furniture_catalogCreateInput = {
-  furniture_id?: bigint | number
   item_name: string
-  item_type: string
+  item_type: $Enums.furniture_catalog_item_type
+  asset_url?: string | null
   default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   room_items?: Prisma.room_itemsCreateNestedManyWithoutFurniture_catalogInput
 }
 
 export type furniture_catalogUncheckedCreateInput = {
-  furniture_id?: bigint | number
+  furniture_id?: number
   item_name: string
-  item_type: string
+  item_type: $Enums.furniture_catalog_item_type
+  asset_url?: string | null
   default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   room_items?: Prisma.room_itemsUncheckedCreateNestedManyWithoutFurniture_catalogInput
 }
 
 export type furniture_catalogUpdateInput = {
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   item_name?: Prisma.StringFieldUpdateOperationsInput | string
-  item_type?: Prisma.StringFieldUpdateOperationsInput | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeFieldUpdateOperationsInput | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   default_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   room_items?: Prisma.room_itemsUpdateManyWithoutFurniture_catalogNestedInput
 }
 
 export type furniture_catalogUncheckedUpdateInput = {
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
   item_name?: Prisma.StringFieldUpdateOperationsInput | string
-  item_type?: Prisma.StringFieldUpdateOperationsInput | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeFieldUpdateOperationsInput | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   default_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   room_items?: Prisma.room_itemsUncheckedUpdateManyWithoutFurniture_catalogNestedInput
 }
 
 export type furniture_catalogCreateManyInput = {
-  furniture_id?: bigint | number
+  furniture_id?: number
   item_name: string
-  item_type: string
+  item_type: $Enums.furniture_catalog_item_type
+  asset_url?: string | null
   default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type furniture_catalogUpdateManyMutationInput = {
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   item_name?: Prisma.StringFieldUpdateOperationsInput | string
-  item_type?: Prisma.StringFieldUpdateOperationsInput | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeFieldUpdateOperationsInput | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   default_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type furniture_catalogUncheckedUpdateManyInput = {
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
   item_name?: Prisma.StringFieldUpdateOperationsInput | string
-  item_type?: Prisma.StringFieldUpdateOperationsInput | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeFieldUpdateOperationsInput | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   default_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -320,6 +336,7 @@ export type furniture_catalogCountOrderByAggregateInput = {
   furniture_id?: Prisma.SortOrder
   item_name?: Prisma.SortOrder
   item_type?: Prisma.SortOrder
+  asset_url?: Prisma.SortOrder
   default_price?: Prisma.SortOrder
 }
 
@@ -332,6 +349,7 @@ export type furniture_catalogMaxOrderByAggregateInput = {
   furniture_id?: Prisma.SortOrder
   item_name?: Prisma.SortOrder
   item_type?: Prisma.SortOrder
+  asset_url?: Prisma.SortOrder
   default_price?: Prisma.SortOrder
 }
 
@@ -339,6 +357,7 @@ export type furniture_catalogMinOrderByAggregateInput = {
   furniture_id?: Prisma.SortOrder
   item_name?: Prisma.SortOrder
   item_type?: Prisma.SortOrder
+  asset_url?: Prisma.SortOrder
   default_price?: Prisma.SortOrder
 }
 
@@ -350,6 +369,14 @@ export type furniture_catalogSumOrderByAggregateInput = {
 export type Furniture_catalogScalarRelationFilter = {
   is?: Prisma.furniture_catalogWhereInput
   isNot?: Prisma.furniture_catalogWhereInput
+}
+
+export type Enumfurniture_catalog_item_typeFieldUpdateOperationsInput = {
+  set?: $Enums.furniture_catalog_item_type
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type DecimalFieldUpdateOperationsInput = {
@@ -375,16 +402,17 @@ export type furniture_catalogUpdateOneRequiredWithoutRoom_itemsNestedInput = {
 }
 
 export type furniture_catalogCreateWithoutRoom_itemsInput = {
-  furniture_id?: bigint | number
   item_name: string
-  item_type: string
+  item_type: $Enums.furniture_catalog_item_type
+  asset_url?: string | null
   default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type furniture_catalogUncheckedCreateWithoutRoom_itemsInput = {
-  furniture_id?: bigint | number
+  furniture_id?: number
   item_name: string
-  item_type: string
+  item_type: $Enums.furniture_catalog_item_type
+  asset_url?: string | null
   default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -405,16 +433,17 @@ export type furniture_catalogUpdateToOneWithWhereWithoutRoom_itemsInput = {
 }
 
 export type furniture_catalogUpdateWithoutRoom_itemsInput = {
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   item_name?: Prisma.StringFieldUpdateOperationsInput | string
-  item_type?: Prisma.StringFieldUpdateOperationsInput | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeFieldUpdateOperationsInput | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   default_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type furniture_catalogUncheckedUpdateWithoutRoom_itemsInput = {
-  furniture_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  furniture_id?: Prisma.IntFieldUpdateOperationsInput | number
   item_name?: Prisma.StringFieldUpdateOperationsInput | string
-  item_type?: Prisma.StringFieldUpdateOperationsInput | string
+  item_type?: Prisma.Enumfurniture_catalog_item_typeFieldUpdateOperationsInput | $Enums.furniture_catalog_item_type
+  asset_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   default_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -453,6 +482,7 @@ export type furniture_catalogSelect<ExtArgs extends runtime.Types.Extensions.Int
   furniture_id?: boolean
   item_name?: boolean
   item_type?: boolean
+  asset_url?: boolean
   default_price?: boolean
   room_items?: boolean | Prisma.furniture_catalog$room_itemsArgs<ExtArgs>
   _count?: boolean | Prisma.Furniture_catalogCountOutputTypeDefaultArgs<ExtArgs>
@@ -464,10 +494,11 @@ export type furniture_catalogSelectScalar = {
   furniture_id?: boolean
   item_name?: boolean
   item_type?: boolean
+  asset_url?: boolean
   default_price?: boolean
 }
 
-export type furniture_catalogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"furniture_id" | "item_name" | "item_type" | "default_price", ExtArgs["result"]["furniture_catalog"]>
+export type furniture_catalogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"furniture_id" | "item_name" | "item_type" | "asset_url" | "default_price", ExtArgs["result"]["furniture_catalog"]>
 export type furniture_catalogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   room_items?: boolean | Prisma.furniture_catalog$room_itemsArgs<ExtArgs>
   _count?: boolean | Prisma.Furniture_catalogCountOutputTypeDefaultArgs<ExtArgs>
@@ -479,9 +510,10 @@ export type $furniture_catalogPayload<ExtArgs extends runtime.Types.Extensions.I
     room_items: Prisma.$room_itemsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    furniture_id: bigint
+    furniture_id: number
     item_name: string
-    item_type: string
+    item_type: $Enums.furniture_catalog_item_type
+    asset_url: string | null
     default_price: runtime.Decimal
   }, ExtArgs["result"]["furniture_catalog"]>
   composites: {}
@@ -853,9 +885,10 @@ export interface Prisma__furniture_catalogClient<T, Null = never, ExtArgs extend
  * Fields of the furniture_catalog model
  */
 export interface furniture_catalogFieldRefs {
-  readonly furniture_id: Prisma.FieldRef<"furniture_catalog", 'BigInt'>
+  readonly furniture_id: Prisma.FieldRef<"furniture_catalog", 'Int'>
   readonly item_name: Prisma.FieldRef<"furniture_catalog", 'String'>
-  readonly item_type: Prisma.FieldRef<"furniture_catalog", 'String'>
+  readonly item_type: Prisma.FieldRef<"furniture_catalog", 'furniture_catalog_item_type'>
+  readonly asset_url: Prisma.FieldRef<"furniture_catalog", 'String'>
   readonly default_price: Prisma.FieldRef<"furniture_catalog", 'Decimal'>
 }
     

@@ -33,23 +33,27 @@ export type Friend_requestsAvgAggregateOutputType = {
 }
 
 export type Friend_requestsSumAggregateOutputType = {
-  request_id: bigint | null
-  sender_id: bigint | null
-  receiver_id: bigint | null
+  request_id: number | null
+  sender_id: number | null
+  receiver_id: number | null
 }
 
 export type Friend_requestsMinAggregateOutputType = {
-  request_id: bigint | null
-  sender_id: bigint | null
-  receiver_id: bigint | null
+  request_id: number | null
+  sender_id: number | null
+  receiver_id: number | null
   request_status: $Enums.friend_requests_request_status | null
+  sent_at: Date | null
+  responded_at: Date | null
 }
 
 export type Friend_requestsMaxAggregateOutputType = {
-  request_id: bigint | null
-  sender_id: bigint | null
-  receiver_id: bigint | null
+  request_id: number | null
+  sender_id: number | null
+  receiver_id: number | null
   request_status: $Enums.friend_requests_request_status | null
+  sent_at: Date | null
+  responded_at: Date | null
 }
 
 export type Friend_requestsCountAggregateOutputType = {
@@ -57,6 +61,8 @@ export type Friend_requestsCountAggregateOutputType = {
   sender_id: number
   receiver_id: number
   request_status: number
+  sent_at: number
+  responded_at: number
   _all: number
 }
 
@@ -78,6 +84,8 @@ export type Friend_requestsMinAggregateInputType = {
   sender_id?: true
   receiver_id?: true
   request_status?: true
+  sent_at?: true
+  responded_at?: true
 }
 
 export type Friend_requestsMaxAggregateInputType = {
@@ -85,6 +93,8 @@ export type Friend_requestsMaxAggregateInputType = {
   sender_id?: true
   receiver_id?: true
   request_status?: true
+  sent_at?: true
+  responded_at?: true
 }
 
 export type Friend_requestsCountAggregateInputType = {
@@ -92,6 +102,8 @@ export type Friend_requestsCountAggregateInputType = {
   sender_id?: true
   receiver_id?: true
   request_status?: true
+  sent_at?: true
+  responded_at?: true
   _all?: true
 }
 
@@ -182,10 +194,12 @@ export type friend_requestsGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 export type Friend_requestsGroupByOutputType = {
-  request_id: bigint
-  sender_id: bigint
-  receiver_id: bigint
+  request_id: number
+  sender_id: number
+  receiver_id: number
   request_status: $Enums.friend_requests_request_status
+  sent_at: Date
+  responded_at: Date | null
   _count: Friend_requestsCountAggregateOutputType | null
   _avg: Friend_requestsAvgAggregateOutputType | null
   _sum: Friend_requestsSumAggregateOutputType | null
@@ -212,12 +226,14 @@ export type friend_requestsWhereInput = {
   AND?: Prisma.friend_requestsWhereInput | Prisma.friend_requestsWhereInput[]
   OR?: Prisma.friend_requestsWhereInput[]
   NOT?: Prisma.friend_requestsWhereInput | Prisma.friend_requestsWhereInput[]
-  request_id?: Prisma.BigIntFilter<"friend_requests"> | bigint | number
-  sender_id?: Prisma.BigIntFilter<"friend_requests"> | bigint | number
-  receiver_id?: Prisma.BigIntFilter<"friend_requests"> | bigint | number
+  request_id?: Prisma.IntFilter<"friend_requests"> | number
+  sender_id?: Prisma.IntFilter<"friend_requests"> | number
+  receiver_id?: Prisma.IntFilter<"friend_requests"> | number
   request_status?: Prisma.Enumfriend_requests_request_statusFilter<"friend_requests"> | $Enums.friend_requests_request_status
-  users_friend_requests_receiver_idTousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  sent_at?: Prisma.DateTimeFilter<"friend_requests"> | Date | string
+  responded_at?: Prisma.DateTimeNullableFilter<"friend_requests"> | Date | string | null
   users_friend_requests_sender_idTousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  users_friend_requests_receiver_idTousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
 }
 
 export type friend_requestsOrderByWithRelationInput = {
@@ -225,27 +241,34 @@ export type friend_requestsOrderByWithRelationInput = {
   sender_id?: Prisma.SortOrder
   receiver_id?: Prisma.SortOrder
   request_status?: Prisma.SortOrder
-  users_friend_requests_receiver_idTousers?: Prisma.usersOrderByWithRelationInput
+  sent_at?: Prisma.SortOrder
+  responded_at?: Prisma.SortOrderInput | Prisma.SortOrder
   users_friend_requests_sender_idTousers?: Prisma.usersOrderByWithRelationInput
+  users_friend_requests_receiver_idTousers?: Prisma.usersOrderByWithRelationInput
 }
 
 export type friend_requestsWhereUniqueInput = Prisma.AtLeast<{
-  request_id?: bigint | number
+  request_id?: number
+  sender_id_receiver_id?: Prisma.friend_requestsSender_idReceiver_idCompoundUniqueInput
   AND?: Prisma.friend_requestsWhereInput | Prisma.friend_requestsWhereInput[]
   OR?: Prisma.friend_requestsWhereInput[]
   NOT?: Prisma.friend_requestsWhereInput | Prisma.friend_requestsWhereInput[]
-  sender_id?: Prisma.BigIntFilter<"friend_requests"> | bigint | number
-  receiver_id?: Prisma.BigIntFilter<"friend_requests"> | bigint | number
+  sender_id?: Prisma.IntFilter<"friend_requests"> | number
+  receiver_id?: Prisma.IntFilter<"friend_requests"> | number
   request_status?: Prisma.Enumfriend_requests_request_statusFilter<"friend_requests"> | $Enums.friend_requests_request_status
-  users_friend_requests_receiver_idTousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+  sent_at?: Prisma.DateTimeFilter<"friend_requests"> | Date | string
+  responded_at?: Prisma.DateTimeNullableFilter<"friend_requests"> | Date | string | null
   users_friend_requests_sender_idTousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
-}, "request_id">
+  users_friend_requests_receiver_idTousers?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
+}, "request_id" | "sender_id_receiver_id">
 
 export type friend_requestsOrderByWithAggregationInput = {
   request_id?: Prisma.SortOrder
   sender_id?: Prisma.SortOrder
   receiver_id?: Prisma.SortOrder
   request_status?: Prisma.SortOrder
+  sent_at?: Prisma.SortOrder
+  responded_at?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.friend_requestsCountOrderByAggregateInput
   _avg?: Prisma.friend_requestsAvgOrderByAggregateInput
   _max?: Prisma.friend_requestsMaxOrderByAggregateInput
@@ -257,57 +280,75 @@ export type friend_requestsScalarWhereWithAggregatesInput = {
   AND?: Prisma.friend_requestsScalarWhereWithAggregatesInput | Prisma.friend_requestsScalarWhereWithAggregatesInput[]
   OR?: Prisma.friend_requestsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.friend_requestsScalarWhereWithAggregatesInput | Prisma.friend_requestsScalarWhereWithAggregatesInput[]
-  request_id?: Prisma.BigIntWithAggregatesFilter<"friend_requests"> | bigint | number
-  sender_id?: Prisma.BigIntWithAggregatesFilter<"friend_requests"> | bigint | number
-  receiver_id?: Prisma.BigIntWithAggregatesFilter<"friend_requests"> | bigint | number
+  request_id?: Prisma.IntWithAggregatesFilter<"friend_requests"> | number
+  sender_id?: Prisma.IntWithAggregatesFilter<"friend_requests"> | number
+  receiver_id?: Prisma.IntWithAggregatesFilter<"friend_requests"> | number
   request_status?: Prisma.Enumfriend_requests_request_statusWithAggregatesFilter<"friend_requests"> | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeWithAggregatesFilter<"friend_requests"> | Date | string
+  responded_at?: Prisma.DateTimeNullableWithAggregatesFilter<"friend_requests"> | Date | string | null
 }
 
 export type friend_requestsCreateInput = {
-  request_id?: bigint | number
   request_status?: $Enums.friend_requests_request_status
-  users_friend_requests_receiver_idTousers: Prisma.usersCreateNestedOneWithoutFriend_requests_friend_requests_receiver_idTousersInput
+  sent_at?: Date | string
+  responded_at?: Date | string | null
   users_friend_requests_sender_idTousers: Prisma.usersCreateNestedOneWithoutFriend_requests_friend_requests_sender_idTousersInput
+  users_friend_requests_receiver_idTousers: Prisma.usersCreateNestedOneWithoutFriend_requests_friend_requests_receiver_idTousersInput
 }
 
 export type friend_requestsUncheckedCreateInput = {
-  request_id?: bigint | number
-  sender_id: bigint | number
-  receiver_id: bigint | number
+  request_id?: number
+  sender_id: number
+  receiver_id: number
   request_status?: $Enums.friend_requests_request_status
+  sent_at?: Date | string
+  responded_at?: Date | string | null
 }
 
 export type friend_requestsUpdateInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
-  users_friend_requests_receiver_idTousers?: Prisma.usersUpdateOneRequiredWithoutFriend_requests_friend_requests_receiver_idTousersNestedInput
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   users_friend_requests_sender_idTousers?: Prisma.usersUpdateOneRequiredWithoutFriend_requests_friend_requests_sender_idTousersNestedInput
+  users_friend_requests_receiver_idTousers?: Prisma.usersUpdateOneRequiredWithoutFriend_requests_friend_requests_receiver_idTousersNestedInput
 }
 
 export type friend_requestsUncheckedUpdateInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  sender_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  receiver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  request_id?: Prisma.IntFieldUpdateOperationsInput | number
+  sender_id?: Prisma.IntFieldUpdateOperationsInput | number
+  receiver_id?: Prisma.IntFieldUpdateOperationsInput | number
   request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type friend_requestsCreateManyInput = {
-  request_id?: bigint | number
-  sender_id: bigint | number
-  receiver_id: bigint | number
+  request_id?: number
+  sender_id: number
+  receiver_id: number
   request_status?: $Enums.friend_requests_request_status
+  sent_at?: Date | string
+  responded_at?: Date | string | null
 }
 
 export type friend_requestsUpdateManyMutationInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type friend_requestsUncheckedUpdateManyInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  sender_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  receiver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  request_id?: Prisma.IntFieldUpdateOperationsInput | number
+  sender_id?: Prisma.IntFieldUpdateOperationsInput | number
+  receiver_id?: Prisma.IntFieldUpdateOperationsInput | number
   request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type friend_requestsSender_idReceiver_idCompoundUniqueInput = {
+  sender_id: number
+  receiver_id: number
 }
 
 export type friend_requestsCountOrderByAggregateInput = {
@@ -315,6 +356,8 @@ export type friend_requestsCountOrderByAggregateInput = {
   sender_id?: Prisma.SortOrder
   receiver_id?: Prisma.SortOrder
   request_status?: Prisma.SortOrder
+  sent_at?: Prisma.SortOrder
+  responded_at?: Prisma.SortOrder
 }
 
 export type friend_requestsAvgOrderByAggregateInput = {
@@ -328,6 +371,8 @@ export type friend_requestsMaxOrderByAggregateInput = {
   sender_id?: Prisma.SortOrder
   receiver_id?: Prisma.SortOrder
   request_status?: Prisma.SortOrder
+  sent_at?: Prisma.SortOrder
+  responded_at?: Prisma.SortOrder
 }
 
 export type friend_requestsMinOrderByAggregateInput = {
@@ -335,6 +380,8 @@ export type friend_requestsMinOrderByAggregateInput = {
   sender_id?: Prisma.SortOrder
   receiver_id?: Prisma.SortOrder
   request_status?: Prisma.SortOrder
+  sent_at?: Prisma.SortOrder
+  responded_at?: Prisma.SortOrder
 }
 
 export type friend_requestsSumOrderByAggregateInput = {
@@ -357,11 +404,8 @@ export type Enumfriend_requests_request_statusFieldUpdateOperationsInput = {
   set?: $Enums.friend_requests_request_status
 }
 
-export type friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput = {
-  create?: Prisma.XOR<Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput> | Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput[] | Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput[]
-  connectOrCreate?: Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput[]
-  createMany?: Prisma.friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInputEnvelope
-  connect?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_idTousersInput = {
@@ -371,7 +415,7 @@ export type friend_requestsCreateNestedManyWithoutUsers_friend_requests_sender_i
   connect?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
 }
 
-export type friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput = {
+export type friend_requestsCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput = {
   create?: Prisma.XOR<Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput> | Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput[] | Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput[]
   connectOrCreate?: Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput[]
   createMany?: Prisma.friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInputEnvelope
@@ -385,18 +429,11 @@ export type friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests
   connect?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
 }
 
-export type friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput = {
+export type friend_requestsUncheckedCreateNestedManyWithoutUsers_friend_requests_receiver_idTousersInput = {
   create?: Prisma.XOR<Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput> | Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput[] | Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput[]
   connectOrCreate?: Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput[]
-  upsert?: Prisma.friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput[]
   createMany?: Prisma.friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInputEnvelope
-  set?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
-  disconnect?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
-  delete?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
   connect?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
-  update?: Prisma.friend_requestsUpdateWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsUpdateWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput[]
-  updateMany?: Prisma.friend_requestsUpdateManyWithWhereWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsUpdateManyWithWhereWithoutUsers_friend_requests_receiver_idTousersInput[]
-  deleteMany?: Prisma.friend_requestsScalarWhereInput | Prisma.friend_requestsScalarWhereInput[]
 }
 
 export type friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTousersNestedInput = {
@@ -413,7 +450,7 @@ export type friend_requestsUpdateManyWithoutUsers_friend_requests_sender_idTouse
   deleteMany?: Prisma.friend_requestsScalarWhereInput | Prisma.friend_requestsScalarWhereInput[]
 }
 
-export type friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput = {
+export type friend_requestsUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput = {
   create?: Prisma.XOR<Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput> | Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput[] | Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput[]
   connectOrCreate?: Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput[]
   upsert?: Prisma.friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput[]
@@ -441,38 +478,33 @@ export type friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sende
   deleteMany?: Prisma.friend_requestsScalarWhereInput | Prisma.friend_requestsScalarWhereInput[]
 }
 
-export type friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput = {
-  request_id?: bigint | number
-  request_status?: $Enums.friend_requests_request_status
-  users_friend_requests_sender_idTousers: Prisma.usersCreateNestedOneWithoutFriend_requests_friend_requests_sender_idTousersInput
-}
-
-export type friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput = {
-  request_id?: bigint | number
-  sender_id: bigint | number
-  request_status?: $Enums.friend_requests_request_status
-}
-
-export type friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput = {
-  where: Prisma.friend_requestsWhereUniqueInput
-  create: Prisma.XOR<Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput>
-}
-
-export type friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInputEnvelope = {
-  data: Prisma.friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInput[]
-  skipDuplicates?: boolean
+export type friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersNestedInput = {
+  create?: Prisma.XOR<Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput> | Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput[] | Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput[]
+  connectOrCreate?: Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput[]
+  upsert?: Prisma.friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput[]
+  createMany?: Prisma.friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInputEnvelope
+  set?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
+  disconnect?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
+  delete?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
+  connect?: Prisma.friend_requestsWhereUniqueInput | Prisma.friend_requestsWhereUniqueInput[]
+  update?: Prisma.friend_requestsUpdateWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsUpdateWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput[]
+  updateMany?: Prisma.friend_requestsUpdateManyWithWhereWithoutUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsUpdateManyWithWhereWithoutUsers_friend_requests_receiver_idTousersInput[]
+  deleteMany?: Prisma.friend_requestsScalarWhereInput | Prisma.friend_requestsScalarWhereInput[]
 }
 
 export type friend_requestsCreateWithoutUsers_friend_requests_sender_idTousersInput = {
-  request_id?: bigint | number
   request_status?: $Enums.friend_requests_request_status
+  sent_at?: Date | string
+  responded_at?: Date | string | null
   users_friend_requests_receiver_idTousers: Prisma.usersCreateNestedOneWithoutFriend_requests_friend_requests_receiver_idTousersInput
 }
 
 export type friend_requestsUncheckedCreateWithoutUsers_friend_requests_sender_idTousersInput = {
-  request_id?: bigint | number
-  receiver_id: bigint | number
+  request_id?: number
+  receiver_id: number
   request_status?: $Enums.friend_requests_request_status
+  sent_at?: Date | string
+  responded_at?: Date | string | null
 }
 
 export type friend_requestsCreateOrConnectWithoutUsers_friend_requests_sender_idTousersInput = {
@@ -485,30 +517,29 @@ export type friend_requestsCreateManyUsers_friend_requests_sender_idTousersInput
   skipDuplicates?: boolean
 }
 
-export type friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput = {
+export type friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput = {
+  request_status?: $Enums.friend_requests_request_status
+  sent_at?: Date | string
+  responded_at?: Date | string | null
+  users_friend_requests_sender_idTousers: Prisma.usersCreateNestedOneWithoutFriend_requests_friend_requests_sender_idTousersInput
+}
+
+export type friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput = {
+  request_id?: number
+  sender_id: number
+  request_status?: $Enums.friend_requests_request_status
+  sent_at?: Date | string
+  responded_at?: Date | string | null
+}
+
+export type friend_requestsCreateOrConnectWithoutUsers_friend_requests_receiver_idTousersInput = {
   where: Prisma.friend_requestsWhereUniqueInput
-  update: Prisma.XOR<Prisma.friend_requestsUpdateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedUpdateWithoutUsers_friend_requests_receiver_idTousersInput>
   create: Prisma.XOR<Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput>
 }
 
-export type friend_requestsUpdateWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput = {
-  where: Prisma.friend_requestsWhereUniqueInput
-  data: Prisma.XOR<Prisma.friend_requestsUpdateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedUpdateWithoutUsers_friend_requests_receiver_idTousersInput>
-}
-
-export type friend_requestsUpdateManyWithWhereWithoutUsers_friend_requests_receiver_idTousersInput = {
-  where: Prisma.friend_requestsScalarWhereInput
-  data: Prisma.XOR<Prisma.friend_requestsUpdateManyMutationInput, Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersInput>
-}
-
-export type friend_requestsScalarWhereInput = {
-  AND?: Prisma.friend_requestsScalarWhereInput | Prisma.friend_requestsScalarWhereInput[]
-  OR?: Prisma.friend_requestsScalarWhereInput[]
-  NOT?: Prisma.friend_requestsScalarWhereInput | Prisma.friend_requestsScalarWhereInput[]
-  request_id?: Prisma.BigIntFilter<"friend_requests"> | bigint | number
-  sender_id?: Prisma.BigIntFilter<"friend_requests"> | bigint | number
-  receiver_id?: Prisma.BigIntFilter<"friend_requests"> | bigint | number
-  request_status?: Prisma.Enumfriend_requests_request_statusFilter<"friend_requests"> | $Enums.friend_requests_request_status
+export type friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInputEnvelope = {
+  data: Prisma.friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInput | Prisma.friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInput[]
+  skipDuplicates?: boolean
 }
 
 export type friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_sender_idTousersInput = {
@@ -527,52 +558,94 @@ export type friend_requestsUpdateManyWithWhereWithoutUsers_friend_requests_sende
   data: Prisma.XOR<Prisma.friend_requestsUpdateManyMutationInput, Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersInput>
 }
 
-export type friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInput = {
-  request_id?: bigint | number
-  sender_id: bigint | number
-  request_status?: $Enums.friend_requests_request_status
+export type friend_requestsScalarWhereInput = {
+  AND?: Prisma.friend_requestsScalarWhereInput | Prisma.friend_requestsScalarWhereInput[]
+  OR?: Prisma.friend_requestsScalarWhereInput[]
+  NOT?: Prisma.friend_requestsScalarWhereInput | Prisma.friend_requestsScalarWhereInput[]
+  request_id?: Prisma.IntFilter<"friend_requests"> | number
+  sender_id?: Prisma.IntFilter<"friend_requests"> | number
+  receiver_id?: Prisma.IntFilter<"friend_requests"> | number
+  request_status?: Prisma.Enumfriend_requests_request_statusFilter<"friend_requests"> | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFilter<"friend_requests"> | Date | string
+  responded_at?: Prisma.DateTimeNullableFilter<"friend_requests"> | Date | string | null
+}
+
+export type friend_requestsUpsertWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput = {
+  where: Prisma.friend_requestsWhereUniqueInput
+  update: Prisma.XOR<Prisma.friend_requestsUpdateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedUpdateWithoutUsers_friend_requests_receiver_idTousersInput>
+  create: Prisma.XOR<Prisma.friend_requestsCreateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedCreateWithoutUsers_friend_requests_receiver_idTousersInput>
+}
+
+export type friend_requestsUpdateWithWhereUniqueWithoutUsers_friend_requests_receiver_idTousersInput = {
+  where: Prisma.friend_requestsWhereUniqueInput
+  data: Prisma.XOR<Prisma.friend_requestsUpdateWithoutUsers_friend_requests_receiver_idTousersInput, Prisma.friend_requestsUncheckedUpdateWithoutUsers_friend_requests_receiver_idTousersInput>
+}
+
+export type friend_requestsUpdateManyWithWhereWithoutUsers_friend_requests_receiver_idTousersInput = {
+  where: Prisma.friend_requestsScalarWhereInput
+  data: Prisma.XOR<Prisma.friend_requestsUpdateManyMutationInput, Prisma.friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersInput>
 }
 
 export type friend_requestsCreateManyUsers_friend_requests_sender_idTousersInput = {
-  request_id?: bigint | number
-  receiver_id: bigint | number
+  request_id?: number
+  receiver_id: number
   request_status?: $Enums.friend_requests_request_status
+  sent_at?: Date | string
+  responded_at?: Date | string | null
 }
 
-export type friend_requestsUpdateWithoutUsers_friend_requests_receiver_idTousersInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
-  users_friend_requests_sender_idTousers?: Prisma.usersUpdateOneRequiredWithoutFriend_requests_friend_requests_sender_idTousersNestedInput
-}
-
-export type friend_requestsUncheckedUpdateWithoutUsers_friend_requests_receiver_idTousersInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  sender_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
-}
-
-export type friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  sender_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+export type friend_requestsCreateManyUsers_friend_requests_receiver_idTousersInput = {
+  request_id?: number
+  sender_id: number
+  request_status?: $Enums.friend_requests_request_status
+  sent_at?: Date | string
+  responded_at?: Date | string | null
 }
 
 export type friend_requestsUpdateWithoutUsers_friend_requests_sender_idTousersInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   users_friend_requests_receiver_idTousers?: Prisma.usersUpdateOneRequiredWithoutFriend_requests_friend_requests_receiver_idTousersNestedInput
 }
 
 export type friend_requestsUncheckedUpdateWithoutUsers_friend_requests_sender_idTousersInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  receiver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  request_id?: Prisma.IntFieldUpdateOperationsInput | number
+  receiver_id?: Prisma.IntFieldUpdateOperationsInput | number
   request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_sender_idTousersInput = {
-  request_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  receiver_id?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  request_id?: Prisma.IntFieldUpdateOperationsInput | number
+  receiver_id?: Prisma.IntFieldUpdateOperationsInput | number
   request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type friend_requestsUpdateWithoutUsers_friend_requests_receiver_idTousersInput = {
+  request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  users_friend_requests_sender_idTousers?: Prisma.usersUpdateOneRequiredWithoutFriend_requests_friend_requests_sender_idTousersNestedInput
+}
+
+export type friend_requestsUncheckedUpdateWithoutUsers_friend_requests_receiver_idTousersInput = {
+  request_id?: Prisma.IntFieldUpdateOperationsInput | number
+  sender_id?: Prisma.IntFieldUpdateOperationsInput | number
+  request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type friend_requestsUncheckedUpdateManyWithoutUsers_friend_requests_receiver_idTousersInput = {
+  request_id?: Prisma.IntFieldUpdateOperationsInput | number
+  sender_id?: Prisma.IntFieldUpdateOperationsInput | number
+  request_status?: Prisma.Enumfriend_requests_request_statusFieldUpdateOperationsInput | $Enums.friend_requests_request_status
+  sent_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  responded_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -582,8 +655,10 @@ export type friend_requestsSelect<ExtArgs extends runtime.Types.Extensions.Inter
   sender_id?: boolean
   receiver_id?: boolean
   request_status?: boolean
-  users_friend_requests_receiver_idTousers?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  sent_at?: boolean
+  responded_at?: boolean
   users_friend_requests_sender_idTousers?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  users_friend_requests_receiver_idTousers?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["friend_requests"]>
 
 
@@ -593,25 +668,29 @@ export type friend_requestsSelectScalar = {
   sender_id?: boolean
   receiver_id?: boolean
   request_status?: boolean
+  sent_at?: boolean
+  responded_at?: boolean
 }
 
-export type friend_requestsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"request_id" | "sender_id" | "receiver_id" | "request_status", ExtArgs["result"]["friend_requests"]>
+export type friend_requestsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"request_id" | "sender_id" | "receiver_id" | "request_status" | "sent_at" | "responded_at", ExtArgs["result"]["friend_requests"]>
 export type friend_requestsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  users_friend_requests_receiver_idTousers?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   users_friend_requests_sender_idTousers?: boolean | Prisma.usersDefaultArgs<ExtArgs>
+  users_friend_requests_receiver_idTousers?: boolean | Prisma.usersDefaultArgs<ExtArgs>
 }
 
 export type $friend_requestsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "friend_requests"
   objects: {
-    users_friend_requests_receiver_idTousers: Prisma.$usersPayload<ExtArgs>
     users_friend_requests_sender_idTousers: Prisma.$usersPayload<ExtArgs>
+    users_friend_requests_receiver_idTousers: Prisma.$usersPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    request_id: bigint
-    sender_id: bigint
-    receiver_id: bigint
+    request_id: number
+    sender_id: number
+    receiver_id: number
     request_status: $Enums.friend_requests_request_status
+    sent_at: Date
+    responded_at: Date | null
   }, ExtArgs["result"]["friend_requests"]>
   composites: {}
 }
@@ -952,8 +1031,8 @@ readonly fields: friend_requestsFieldRefs;
  */
 export interface Prisma__friend_requestsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  users_friend_requests_receiver_idTousers<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   users_friend_requests_sender_idTousers<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  users_friend_requests_receiver_idTousers<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -983,10 +1062,12 @@ export interface Prisma__friend_requestsClient<T, Null = never, ExtArgs extends 
  * Fields of the friend_requests model
  */
 export interface friend_requestsFieldRefs {
-  readonly request_id: Prisma.FieldRef<"friend_requests", 'BigInt'>
-  readonly sender_id: Prisma.FieldRef<"friend_requests", 'BigInt'>
-  readonly receiver_id: Prisma.FieldRef<"friend_requests", 'BigInt'>
+  readonly request_id: Prisma.FieldRef<"friend_requests", 'Int'>
+  readonly sender_id: Prisma.FieldRef<"friend_requests", 'Int'>
+  readonly receiver_id: Prisma.FieldRef<"friend_requests", 'Int'>
   readonly request_status: Prisma.FieldRef<"friend_requests", 'friend_requests_request_status'>
+  readonly sent_at: Prisma.FieldRef<"friend_requests", 'DateTime'>
+  readonly responded_at: Prisma.FieldRef<"friend_requests", 'DateTime'>
 }
     
 

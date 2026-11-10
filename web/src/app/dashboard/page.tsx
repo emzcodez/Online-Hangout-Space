@@ -1,20 +1,17 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Home,
   Compass,
   Users,
   Bookmark,
-  Settings,
   Plus,
   Search,
   Bell,
   ChevronDown,
-  MessageCircle,
-  Video,
   ArrowUpRight,
   X,
   Lock,
@@ -22,7 +19,9 @@ import {
   Sparkles,
   Heart,
   Coffee,
+  LogOut,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type Room = {
   id: number;
@@ -31,49 +30,16 @@ type Room = {
   emoji: string;
   color: string;
   members: number;
-  category: string;
+  favoriteCount: number;
   isPrivate: boolean;
+  isMember: boolean;
+  isOwner: boolean;
 };
 
-const initialRooms: Room[] = [
-  {
-    id: 1,
-    name: "The Cozy Corner",
-    description: "A little place to relax and chat.",
-    emoji: "☕",
-    color: "from-orange-200 to-rose-200",
-    members: 4,
-    category: "Chill",
-    isPrivate: false,
-  },
-  {
-    id: 2,
-    name: "Movie Night",
-    description: "Popcorn, movies and good company.",
-    emoji: "🍿",
-    color: "from-violet-300 to-indigo-300",
-    members: 6,
-    category: "Watch Party",
-    isPrivate: false,
-  },
-  {
-    id: 3,
-    name: "The Garden",
-    description: "Flowers, sunshine and peaceful vibes.",
-    emoji: "🌷",
-    color: "from-emerald-200 to-teal-200",
-    members: 3,
-    category: "Chill",
-    isPrivate: true,
-  },
-];
-
-const friends = [
-  { name: "Maya", emoji: "👩🏻", status: "Watching videos", color: "bg-pink-100" },
-  { name: "Arjun", emoji: "🧑🏽", status: "In The Cozy Corner", color: "bg-orange-100" },
-  { name: "Priya", emoji: "👩🏾", status: "Listening to music", color: "bg-purple-100" },
-  { name: "Rohan", emoji: "🧑🏻", status: "Available to chat", color: "bg-blue-100" },
-];
+type Friend = { id: number; username: string; displayName: string; avatarUrl: string | null };
+type FriendRequest = { id: number; sender: Friend; receiver: Friend };
+type ChatMessage = { id: string; senderId: number; text: string; sentAt: string; sender: { displayName: string; username: string } };
+type ApiRoom = { id: number; name: string; description: string; isPrivate: boolean; memberCount: number; favoriteCount: number; isMember?: boolean; isOwner?: boolean };
 
 const activities = [
   { emoji: "💌", title: "Maya sent you a friend request", time: "10 minutes ago" },
@@ -81,49 +47,192 @@ const activities = [
   { emoji: "🌷", title: "Priya customized The Garden", time: "1 hour ago" },
 ];
 
+function mapRoom(room: ApiRoom): Room {
+  return {
+    id: room.id,
+    name: room.name,
+    description: room.description,
+    emoji: room.isPrivate ? "ðŸŒ™" : "â˜•",
+    color: room.isPrivate ? "from-violet-200 to-indigo-200" : "from-orange-200 to-rose-200",
+    members: room.memberCount,
+    favoriteCount: room.favoriteCount,
+    isPrivate: room.isPrivate,
+    isMember: room.isMember ?? false,
+    isOwner: room.isOwner ?? false,
+  };
+}
+
 export default function DashboardPage() {
-  const [rooms, setRooms] = useState(initialRooms);
+  const router = useRouter();
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [discoverRooms, setDiscoverRooms] = useState<Room[]>([]);
+  const [favorites, setFavorites] = useState<Room[]>([]);
+  const [friends, setFriends] = useState<Friend[]>([]);
+  const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
+  const [friendUsername, setFriendUsername] = useState("");
+  const [profile, setProfile] = useState<{ displayName: string; username: string } | null>(null);
   const [search, setSearch] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [roomName, setRoomName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("Chill");
   const [isPrivate, setIsPrivate] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [notice, setNotice] = useState("");
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [messageText, setMessageText] = useState("");
+  const [messageCursor, setMessageCursor] = useState<string | null>(null);
+  const [hasOlderMessages, setHasOlderMessages] = useState(false);
+
+  const refreshDashboard = useCallback(async () => {
+    try {
+      const [mineResponse, discoverResponse, favoritesResponse, friendsResponse, requestsResponse, profileResponse] = await Promise.all([
+        fetch("/api/rooms?scope=mine"),
+        fetch("/api/rooms?scope=discover"),
+        fetch("/api/favorites"),
+        fetch("/api/friends"),
+        fetch("/api/friends/requests?box=incoming"),
+        fetch("/api/auth/me"),
+      ]);
+      if (mineResponse.ok) setRooms(((await mineResponse.json()).rooms as ApiRoom[]).map(mapRoom));
+      if (discoverResponse.ok) setDiscoverRooms(((await discoverResponse.json()).rooms as ApiRoom[]).map(mapRoom));
+      if (favoritesResponse.ok) setFavorites(((await favoritesResponse.json()).favorites as ApiRoom[]).map(mapRoom));
+      if (friendsResponse.ok) setFriends((await friendsResponse.json()).friends as Friend[]);
+      if (requestsResponse.ok) setFriendRequests((await requestsResponse.json()).requests as FriendRequest[]);
+      if (profileResponse.ok) setProfile((await profileResponse.json()).user);
+    } catch {
+      setNotice("Could not load hangout data. Please try again.");
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => { void refreshDashboard(); }, 0);
+    return () => clearTimeout(timer);
+  }, [refreshDashboard]);
+
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      try {
+        const response = await fetch("/api/rooms?scope=discover&search=" + encodeURIComponent(search));
+        if (response.ok) setDiscoverRooms(((await response.json()).rooms as ApiRoom[]).map(mapRoom));
+      } catch {
+        setNotice("Room search is temporarily unavailable.");
+      }
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [search]);
 
   const filteredRooms = useMemo(() => {
-    return rooms.filter((room) => {
+    const myIds = new Set(rooms.map((room) => room.id));
+    const available = [...rooms, ...discoverRooms.filter((room) => !myIds.has(room.id))];
+    return available.filter((room) => {
       const matchesSearch = room.name.toLowerCase().includes(search.toLowerCase());
-      const matchesFilter =
-        selectedFilter === "All" || room.category === selectedFilter;
+      const matchesFilter = selectedFilter === "All" || (selectedFilter === "Private" ? room.isPrivate : !room.isPrivate);
       return matchesSearch && matchesFilter;
     });
-  }, [rooms, search, selectedFilter]);
+  }, [rooms, discoverRooms, search, selectedFilter]);
 
-  function createRoom(e: React.FormEvent<HTMLFormElement>) {
+  async function createRoom(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    const newRoom: Room = {
-      id: Date.now(),
-      name: roomName.trim(),
-      description: description.trim() || "A new space for friends.",
-      emoji: category === "Watch Party" ? "🍿" : category === "Gaming" ? "🎮" : "☕",
-      color: "from-purple-200 to-pink-200",
-      members: 1,
-      category,
-      isPrivate,
-    };
-
-    setRooms((previous) => [newRoom, ...previous]);
+    const response = await fetch("/api/rooms", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ roomName, description, isPrivate }),
+    });
+    const result = await response.json();
+    if (!response.ok) return setNotice(result.message ?? "Could not create this room.");
     setRoomName("");
     setDescription("");
-    setCategory("Chill");
     setIsPrivate(false);
     setModalOpen(false);
     setSelectedFilter("All");
     setSearch("");
     setNotice("Your new room has been created!");
+    await refreshDashboard();
+  }
+
+  async function openRoom(room: Room) {
+    const joinResponse = await fetch("/api/rooms/" + room.id + "/join", { method: "POST" });
+    const joinResult = await joinResponse.json();
+    if (!joinResponse.ok) return setNotice(joinResult.message ?? "Could not enter this room.");
+    const detailResponse = await fetch("/api/rooms/" + room.id);
+    if (!detailResponse.ok) return setNotice("Could not load this room.");
+    const detail = (await detailResponse.json()).room as ApiRoom;
+    const currentRoom = mapRoom({ ...detail, isMember: true, isOwner: room.isOwner });
+    setSelectedRoom(currentRoom);
+    setMessageText("");
+    const messagesResponse = await fetch("/api/rooms/" + room.id + "/messages?limit=50");
+    if (!messagesResponse.ok) return setNotice("Could not load room chat.");
+    const result = await messagesResponse.json();
+    setMessages(result.messages as ChatMessage[]);
+    setMessageCursor(result.page.nextCursor as string | null);
+    setHasOlderMessages(Boolean(result.page.hasMore));
+    await refreshDashboard();
+  }
+
+  async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!selectedRoom || !messageText.trim()) return;
+    const response = await fetch("/api/rooms/" + selectedRoom.id + "/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messageText }),
+    });
+    const result = await response.json();
+    if (!response.ok) return setNotice(result.message ?? "Could not send message.");
+    setMessages((current) => [...current, result.message as ChatMessage]);
+    setMessageText("");
+  }
+
+  async function loadOlderMessages() {
+    if (!selectedRoom || !messageCursor) return;
+    const response = await fetch("/api/rooms/" + selectedRoom.id + "/messages?limit=50&before=" + messageCursor);
+    if (!response.ok) return;
+    const result = await response.json();
+    const olderMessages = result.messages as ChatMessage[];
+    setMessages((current) => [...olderMessages, ...current]);
+    setMessageCursor(result.page.nextCursor as string | null);
+    setHasOlderMessages(Boolean(result.page.hasMore));
+  }
+
+  async function toggleFavorite(room: Room) {
+    const isFavorite = favorites.some((favorite) => favorite.id === room.id);
+    const response = await fetch(isFavorite ? "/api/favorites?roomId=" + room.id : "/api/favorites", {
+      method: isFavorite ? "DELETE" : "POST",
+      headers: isFavorite ? undefined : { "Content-Type": "application/json" },
+      body: isFavorite ? undefined : JSON.stringify({ roomId: room.id }),
+    });
+    const result = await response.json();
+    if (!response.ok) return setNotice(result.message ?? "Could not update saved rooms.");
+    await refreshDashboard();
+  }
+
+  async function sendFriendRequest(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const response = await fetch("/api/friends/requests", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: friendUsername.replace(/^@/, "") }),
+    });
+    const result = await response.json();
+    if (!response.ok) return setNotice(result.message ?? "Could not send friend request.");
+    setFriendUsername("");
+    setNotice("Friend request sent.");
+    await refreshDashboard();
+  }
+
+  async function respondToRequest(requestId: number, action: "accept" | "reject") {
+    const response = await fetch("/api/friends/requests/" + requestId + "/" + action, { method: "POST" });
+    const result = await response.json();
+    if (!response.ok) return setNotice(result.message ?? "Could not update friend request.");
+    await refreshDashboard();
+  }
+
+  async function removeFriend(friendId: number) {
+    const response = await fetch("/api/friends?userId=" + friendId, { method: "DELETE" });
+    const result = await response.json();
+    if (!response.ok) return setNotice(result.message ?? "Could not remove friend.");
+    await refreshDashboard();
   }
 
   return (
@@ -180,9 +289,16 @@ export default function DashboardPage() {
             </button>
           </div>
 
-          <a href="#settings" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-[#81788f] hover:bg-purple-50">
-            <Settings size={19} /> Settings
-          </a>
+          <button
+            onClick={async () => {
+              await fetch("/api/auth/logout", { method: "POST" });
+              router.replace("/");
+              router.refresh();
+            }}
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-[#81788f] hover:bg-purple-50"
+          >
+            <LogOut size={19} /> Log out
+          </button>
 
           <Link href="/" className="mt-2 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-[#81788f] hover:bg-purple-50">
             <ArrowUpRight size={19} /> Back to website
@@ -211,8 +327,8 @@ export default function DashboardPage() {
                 🧑🏻
               </div>
               <div className="hidden sm:block">
-                <p className="text-sm font-bold">Your Profile</p>
-                <p className="text-xs text-[#968aa5]">@yourusername</p>
+                <p className="text-sm font-bold">{profile?.displayName ?? "Your Profile"}</p>
+                <p className="text-xs text-[#968aa5]">@{profile?.username ?? "user"}</p>
               </div>
               <ChevronDown size={16} className="text-[#968aa5]" />
             </div>
@@ -255,9 +371,9 @@ export default function DashboardPage() {
           <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {[
               { label: "My Rooms", value: rooms.length, icon: Coffee, color: "bg-purple-100 text-purple-600" },
-              { label: "Friends Online", value: "4", icon: Users, color: "bg-pink-100 text-pink-600" },
-              { label: "Saved Rooms", value: "3", icon: Bookmark, color: "bg-orange-100 text-orange-600" },
-              { label: "Watch Parties", value: "2", icon: Video, color: "bg-blue-100 text-blue-600" },
+              { label: "Friends", value: friends.length, icon: Users, color: "bg-pink-100 text-pink-600" },
+              { label: "Saved Rooms", value: favorites.length, icon: Bookmark, color: "bg-orange-100 text-orange-600" },
+              { label: "Public Rooms", value: discoverRooms.length, icon: Globe, color: "bg-blue-100 text-blue-600" },
             ].map((stat) => (
               <div key={stat.label} className="rounded-3xl border border-purple-100 bg-white p-5 shadow-sm">
                 <div className={`mb-4 flex h-10 w-10 items-center justify-center rounded-xl ${stat.color}`}>
@@ -294,7 +410,7 @@ export default function DashboardPage() {
                       {room.emoji}
                     </span>
                     <span className="absolute left-4 top-4 rounded-full bg-white/80 px-3 py-1 text-[10px] font-black tracking-wider text-[#7655c9]">
-                      {room.category.toUpperCase()}
+                      {room.isPrivate ? "PRIVATE ROOM" : "PUBLIC ROOM"}
                     </span>
                     <span className="absolute right-4 top-4 rounded-full bg-white/80 p-2 text-[#7655c9]">
                       {room.isPrivate ? <Lock size={14} /> : <Globe size={14} />}
@@ -305,21 +421,32 @@ export default function DashboardPage() {
                     <h3 className="text-lg font-black">{room.name}</h3>
                     <p className="mt-1 truncate text-xs text-[#968aa5]">{room.description}</p>
                     <div className="mt-5 flex items-center justify-between">
-                      <span className="text-xs text-[#81788f]">
-                        <Users className="mr-1 inline" size={14} />
-                        {room.members} members
-                      </span>
-                      <button
-                        onClick={() => setNotice(`${room.name} is a preview. Room joining will be connected next.`)}
-                        className="rounded-full bg-[#eee7ff] px-4 py-2 text-xs font-bold text-[#7655c9] transition hover:bg-[#7655c9] hover:text-white"
-                      >
-                        Enter room →
-                      </button>
+                      <span className="text-xs text-[#81788f]"><Users className="mr-1 inline" size={14} />{room.members} members</span>
+                      <div className="flex items-center gap-2">
+                        <button aria-label={favorites.some((favorite) => favorite.id === room.id) ? "Remove saved room" : "Save room"} onClick={() => void toggleFavorite(room)} className="rounded-full bg-[#f5f0ff] p-2 text-[#7655c9]"><Bookmark size={15} fill={favorites.some((favorite) => favorite.id === room.id) ? "currentColor" : "none"} /></button>
+                        {!room.isOwner && <button onClick={async () => { const response = await fetch("/api/rooms/" + room.id + "/leave", { method: "POST" }); const result = await response.json(); setNotice(response.ok ? "You left the room." : result.message); await refreshDashboard(); }} className="rounded-full border border-purple-100 px-3 py-2 text-xs font-bold text-[#81788f]">Leave</button>}
+                        <button onClick={() => void openRoom(room)} className="rounded-full bg-[#eee7ff] px-4 py-2 text-xs font-bold text-[#7655c9] transition hover:bg-[#7655c9] hover:text-white">Enter room</button>
+                      </div>
+
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+          </section>
+
+          <section id="saved">
+            <div className="mb-5">
+              <p className="text-xs font-black tracking-[0.2em] text-[#9271d4]">BOOKMARKED</p>
+              <h2 className="mt-2 text-2xl font-black">Saved rooms</h2>
+            </div>
+            {favorites.length ? <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {favorites.map((room) => <div key={room.id} className="flex items-center gap-3 rounded-2xl border border-purple-100 bg-white p-4">
+                <Bookmark size={18} className="text-[#7655c9]" />
+                <button onClick={() => void openRoom(room)} className="min-w-0 flex-1 truncate text-left text-sm font-bold">{room.name}</button>
+                <button aria-label="Remove saved room" onClick={() => void toggleFavorite(room)} className="rounded-full p-2 text-[#968aa5] hover:bg-purple-50"><X size={15} /></button>
+              </div>)}
+            </div> : <p className="rounded-2xl border border-dashed border-purple-200 bg-white p-6 text-sm text-[#968aa5]">Rooms you save will appear here.</p>}
           </section>
 
           {/* Friends and Activity */}
@@ -328,42 +455,43 @@ export default function DashboardPage() {
             <div className="rounded-3xl border border-purple-100 bg-white p-6 shadow-sm">
               <div className="mb-6 flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-black">Your people 💗</h2>
-                  <p className="mt-1 text-xs text-[#968aa5]">Friends who are around.</p>
+                  <h2 className="text-xl font-black">Your people</h2>
+                  <p className="mt-1 text-xs text-[#968aa5]">Friends and incoming requests.</p>
                 </div>
-                <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">
-                  4 online
-                </span>
+                <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">{friends.length} friends</span>
               </div>
 
-              <div className="space-y-5">
+              <form onSubmit={sendFriendRequest} className="mb-6 flex gap-2">
+                <input value={friendUsername} onChange={(event) => setFriendUsername(event.target.value)} placeholder="@username" maxLength={40} className="min-w-0 flex-1 rounded-xl border border-purple-100 px-3 py-2 text-sm outline-none focus:border-[#9271d4]" />
+                <button type="submit" disabled={!friendUsername.trim()} className="rounded-xl bg-[#7655c9] px-4 py-2 text-xs font-bold text-white disabled:opacity-50">Add friend</button>
+              </form>
+
+              {friendRequests.length > 0 && (
+                <div className="mb-6 space-y-3">
+                  <p className="text-xs font-bold text-[#81788f]">Incoming requests ({friendRequests.length})</p>
+                  {friendRequests.map((item) => (
+                    <div key={item.id} className="flex items-center gap-3 rounded-2xl bg-[#faf8ff] p-3">
+                      <span className="min-w-0 flex-1 truncate text-sm font-semibold">{item.sender.displayName} <span className="text-xs font-normal text-[#968aa5]">@{item.sender.username}</span></span>
+                      <button onClick={() => void respondToRequest(item.id, "accept")} className="rounded-lg bg-[#7655c9] px-3 py-2 text-xs font-bold text-white">Accept</button>
+                      <button onClick={() => void respondToRequest(item.id, "reject")} className="rounded-lg border border-purple-100 px-3 py-2 text-xs font-bold text-[#81788f]">Reject</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="space-y-4">
                 {friends.map((friend) => (
-                  <div key={friend.name} className="flex items-center gap-4">
-                    <div className={`relative flex h-12 w-12 items-center justify-center rounded-2xl text-2xl ${friend.color}`}>
-                      {friend.emoji}
-                      <span className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-400" />
-                    </div>
+                  <div key={friend.id} className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-lg font-bold text-[#7655c9]">{friend.displayName.slice(0, 1).toUpperCase()}</div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-bold">{friend.name}</p>
-                      <p className="truncate text-xs text-[#968aa5]">{friend.status}</p>
+                      <p className="truncate text-sm font-bold">{friend.displayName}</p>
+                      <p className="truncate text-xs text-[#968aa5]">@{friend.username}</p>
                     </div>
-                    <button
-                      aria-label={`Message ${friend.name}`}
-                      onClick={() => setNotice(`Chat with ${friend.name} will be available soon!`)}
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f1ebff] text-[#7655c9] hover:bg-[#7655c9] hover:text-white"
-                    >
-                      <MessageCircle size={17} />
-                    </button>
+                    <button aria-label={"Remove " + friend.displayName} onClick={() => void removeFriend(friend.id)} className="rounded-full p-2 text-[#968aa5] hover:bg-red-50 hover:text-red-500"><X size={16} /></button>
                   </div>
                 ))}
+                {friends.length === 0 && friendRequests.length === 0 && <p className="py-4 text-center text-sm text-[#968aa5]">No friends or pending requests yet.</p>}
               </div>
-
-              <button
-                onClick={() => setNotice("Friends management will be connected soon!")}
-                className="mt-7 w-full rounded-2xl border border-purple-100 py-3 text-sm font-bold text-[#7655c9] hover:bg-purple-50"
-              >
-                View all friends →
-              </button>
             </div>
 
             <div className="rounded-3xl border border-purple-100 bg-white p-6 shadow-sm">
@@ -413,7 +541,7 @@ export default function DashboardPage() {
                   className="w-full bg-transparent text-sm outline-none placeholder:text-[#b2a8be]"
                 />
               </div>
-              {["All", "Chill", "Watch Party", "Gaming"].map((filter) => (
+              {["All", "Public", "Private"].map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
@@ -438,14 +566,12 @@ export default function DashboardPage() {
                     <div className="min-w-0 flex-1">
                       <h3 className="truncate font-bold">{room.name}</h3>
                       <p className="mt-1 text-xs text-[#968aa5]">{room.members} members</p>
-                      <p className="mt-1 text-[10px] font-bold text-[#9271d4]">{room.category}</p>
+                      <p className="mt-1 text-[10px] font-bold text-[#9271d4]">{room.isPrivate ? "Private" : "Public"}</p>
                     </div>
-                    <button
-                      onClick={() => setNotice(`Joining ${room.name} will be connected to the backend soon.`)}
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eee7ff] text-[#7655c9] hover:bg-[#7655c9] hover:text-white"
-                    >
-                      <ArrowUpRight size={18} />
-                    </button>
+                    <div className="flex shrink-0 items-center gap-2">
+                      <button aria-label={favorites.some((favorite) => favorite.id === room.id) ? "Remove saved room" : "Save room"} onClick={() => void toggleFavorite(room)} className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f0ff] text-[#7655c9]"><Bookmark size={16} fill={favorites.some((favorite) => favorite.id === room.id) ? "currentColor" : "none"} /></button>
+                      <button onClick={() => void openRoom(room)} className="flex h-9 w-9 items-center justify-center rounded-full bg-[#eee7ff] text-[#7655c9] hover:bg-[#7655c9] hover:text-white"><ArrowUpRight size={18} /></button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -453,7 +579,7 @@ export default function DashboardPage() {
               <div className="rounded-3xl border border-dashed border-purple-200 bg-white p-10 text-center">
                 <div className="text-4xl">🔎</div>
                 <p className="mt-3 font-bold">No rooms found</p>
-                <p className="mt-1 text-sm text-[#968aa5]">Try a different search or category.</p>
+                <p className="mt-1 text-sm text-[#968aa5]">Try a different search or room privacy filter.</p>
               </div>
             )}
           </section>
@@ -463,6 +589,29 @@ export default function DashboardPage() {
           </footer>
         </div>
       </section>
+
+      {selectedRoom && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#211832]/50 p-4 backdrop-blur-sm" onClick={() => setSelectedRoom(null)}>
+          <div role="dialog" aria-modal="true" aria-labelledby="room-chat-title" className="flex max-h-[85vh] w-full max-w-2xl flex-col rounded-[2rem] bg-white p-6 shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            <div className="mb-4 flex items-center justify-between">
+              <div><h2 id="room-chat-title" className="text-xl font-black">{selectedRoom.name}</h2><p className="text-xs text-[#968aa5]">{selectedRoom.members} members</p></div>
+              <button onClick={() => setSelectedRoom(null)} aria-label="Close room chat" className="rounded-full p-2 text-[#968aa5] hover:bg-purple-50"><X size={20} /></button>
+            </div>
+            {hasOlderMessages && <button onClick={() => void loadOlderMessages()} className="mb-3 self-center text-xs font-bold text-[#7655c9]">Load older messages</button>}
+            <div className="min-h-48 flex-1 space-y-3 overflow-y-auto rounded-2xl bg-[#faf8ff] p-4">
+              {messages.map((message) => <div key={message.id} className="rounded-xl bg-white p-3 shadow-sm">
+                <div className="flex items-baseline justify-between gap-3"><span className="text-xs font-bold">{message.sender.displayName}</span><time className="text-[10px] text-[#a49aaf]">{new Date(message.sentAt).toLocaleString()}</time></div>
+                <p className="mt-1 whitespace-pre-wrap break-words text-sm">{message.text}</p>
+              </div>)}
+              {!messages.length && <p className="py-12 text-center text-sm text-[#968aa5]">No messages yet. Start the conversation.</p>}
+            </div>
+            <form onSubmit={sendMessage} className="mt-4 flex gap-2">
+              <input value={messageText} onChange={(event) => setMessageText(event.target.value)} maxLength={2000} placeholder="Write a message..." className="min-w-0 flex-1 rounded-xl border border-purple-100 px-4 py-3 text-sm outline-none focus:border-[#9271d4]" />
+              <button type="submit" disabled={!messageText.trim()} className="rounded-xl bg-[#7655c9] px-5 py-3 text-sm font-bold text-white disabled:opacity-50">Send</button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Create Room Modal */}
       {modalOpen && (
@@ -499,7 +648,7 @@ export default function DashboardPage() {
                 <label className="mb-2 block text-sm font-bold">Room name</label>
                 <input
                   required
-                  maxLength={40}
+                  maxLength={100}
                   value={roomName}
                   onChange={(e) => setRoomName(e.target.value)}
                   placeholder="e.g. The Midnight Lounge"
@@ -512,24 +661,11 @@ export default function DashboardPage() {
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  maxLength={120}
+                  maxLength={255}
                   placeholder="What is this room all about?"
                   rows={3}
                   className="w-full resize-none rounded-2xl border border-purple-100 bg-[#fcfaff] px-4 py-3.5 text-sm outline-none focus:border-[#9271d4] focus:ring-4 focus:ring-purple-100"
                 />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-bold">Room category</label>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full rounded-2xl border border-purple-100 bg-[#fcfaff] px-4 py-3.5 text-sm outline-none focus:border-[#9271d4]"
-                >
-                  <option value="Chill">☕ Chill & Chat</option>
-                  <option value="Watch Party">🍿 Watch Party</option>
-                  <option value="Gaming">🎮 Gaming</option>
-                </select>
               </div>
 
               <label className="flex cursor-pointer items-center gap-3 rounded-2xl bg-[#faf8ff] p-4">
@@ -541,7 +677,7 @@ export default function DashboardPage() {
                 />
                 <div className="flex-1">
                   <p className="text-sm font-bold">Private room</p>
-                  <p className="mt-1 text-xs text-[#968aa5]">Only invited friends can access it.</p>
+                  <p className="mt-1 text-xs text-[#968aa5]">Only room members can access it.</p>
                 </div>
                 <Lock size={19} className="text-[#9271d4]" />
               </label>
