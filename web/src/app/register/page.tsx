@@ -4,39 +4,47 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, Eye, EyeOff, Sparkles } from "lucide-react";
-
-const schema = z.object({
-  displayName: z.string().min(2, "Name must have at least 2 characters"),
-  username: z.string()
-    .min(3, "Username must have at least 3 characters")
-    .regex(/^[a-zA-Z0-9_]+$/, "Use only letters, numbers and underscores"),
-  email: z.string().email("Enter a valid email address"),
-  password: z.string().min(8, "Password must have at least 8 characters"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
-
-type FormData = z.infer<typeof schema>;
+import { registrationSchema, type RegistrationInput } from "@/lib/validation";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  } = useForm<RegistrationInput>({
+    resolver: zodResolver(registrationSchema),
   });
 
-  const onSubmit = async (data: FormData) => {
-    console.log("Registration form validated:", data.email);
-    alert("Registration UI is ready! Account creation will be connected next.");
+  const onSubmit = async (data: RegistrationInput) => {
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        if (result.fieldErrors) {
+          for (const [field, messages] of Object.entries(result.fieldErrors)) {
+            if (Array.isArray(messages) && messages[0]) {
+              setError(field as keyof RegistrationInput, { message: String(messages[0]) });
+            }
+          }
+        }
+        setError("root.server", { message: result.message ?? "Registration failed." });
+        return;
+      }
+      router.push("/dashboard");
+    } catch {
+      setError("root.server", { message: "Could not reach the server. Please try again." });
+    }
   };
 
   return (
@@ -85,6 +93,7 @@ export default function RegisterPage() {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {errors.root?.server && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-600">{errors.root.server.message}</p>}
             <div>
               <label className="mb-2 block text-sm font-bold text-[#403451]">Display name</label>
               <input

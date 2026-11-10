@@ -4,31 +4,40 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, Eye, EyeOff, Heart, Sparkles } from "lucide-react";
-
-const schema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
-
-type FormData = z.infer<typeof schema>;
+import { loginSchema, type LoginInput } from "@/lib/validation";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  } = useForm<LoginInput>({
+    resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: FormData) => {
-    console.log("Login form validated:", data.email);
-    alert("Login UI is ready! Authentication will be connected next.");
+  const onSubmit = async (data: LoginInput) => {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        setError("root.server", { message: result.message ?? "Email or password is incorrect." });
+        return;
+      }
+      router.push("/dashboard");
+    } catch {
+      setError("root.server", { message: "Could not reach the server. Please try again." });
+    }
   };
 
   return (
@@ -82,6 +91,7 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            {errors.root?.server && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-600">{errors.root.server.message}</p>}
             <div>
               <label className="mb-2 block text-sm font-bold text-[#403451]">
                 Email address
