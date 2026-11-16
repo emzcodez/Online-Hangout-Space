@@ -1,3 +1,4 @@
+import { addRoomActivity } from "@/lib/mongo-events";
 import { requireApiUser, requireSameOrigin } from "@/lib/api";
 import { prisma } from "@/lib/prisma";
 import { roomIdSchema } from "@/lib/validation";
@@ -26,6 +27,10 @@ export async function POST(request: Request, { params }: Context) {
     if (!existing) return Response.json({ message: "This private room is invitation-only." }, { status: 403 });
   }
 
+  const wasMember = await prisma.room_members.findUnique({
+    where: { room_id_user_id: { room_id: room.room_id, user_id: auth.user.user_id } },
+    select: { room_id: true },
+  });
   await prisma.room_members.upsert({
     where: { room_id_user_id: { room_id: room.room_id, user_id: auth.user.user_id } },
     update: {},
@@ -35,6 +40,13 @@ export async function POST(request: Request, { params }: Context) {
       member_role: room.owner_id === auth.user.user_id ? "owner" : "member",
     },
   });
+  if (!wasMember) {
+    const roomDetails = await prisma.rooms.findUnique({ where: { room_id: room.room_id }, select: { room_name: true } });
+    if (roomDetails) await addRoomActivity({
+      roomId: room.room_id, roomName: roomDetails.room_name, actor: auth.user,
+      action: "member_joined", description: `${auth.user.display_name} joined ${roomDetails.room_name}`,
+    });
+  }
   const memberCount = await prisma.room_members.count({ where: { room_id: room.room_id } });
   return Response.json({ joined: true, memberCount });
 }

@@ -1,3 +1,4 @@
+import { addNotification } from "@/lib/mongo-events";
 import { Prisma } from "@/generated/prisma/client";
 import { requireApiUser, requireSameOrigin, isResponse, readJson } from "@/lib/api";
 import { prisma } from "@/lib/prisma";
@@ -100,6 +101,12 @@ export async function POST(request: Request) {
       data: { request_status: "pending", sent_at: new Date(), responded_at: null },
       select: { request_id: true, sent_at: true },
     });
+    await addNotification({
+      userId: receiver.user_id, actorId: auth.user.user_id, type: "friend_request",
+      title: "New friend request",
+      message: `${auth.user.display_name} sent you a friend request.`,
+      link: "/dashboard#friends",
+    });
     return Response.json({ request: { id: reopened.request_id, sentAt: reopened.sent_at } }, { status: 201 });
   }
   if (previousOutgoing) return Response.json({ message: "This friend request cannot be sent again." }, { status: 409 });
@@ -108,6 +115,12 @@ export async function POST(request: Request) {
     const created = await prisma.friend_requests.create({
       data: { sender_id: auth.user.user_id, receiver_id: receiver.user_id },
       select: { request_id: true, sent_at: true },
+    });
+    await addNotification({
+      userId: receiver.user_id, actorId: auth.user.user_id, type: "friend_request",
+      title: "New friend request",
+      message: `${auth.user.display_name} sent you a friend request.`,
+      link: "/dashboard#friends",
     });
     return Response.json({ request: { id: created.request_id, sentAt: created.sent_at } }, { status: 201 });
   } catch (error) {

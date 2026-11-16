@@ -40,6 +40,8 @@ type Friend = { id: number; username: string; displayName: string; avatarUrl: st
 type FriendRequest = { id: number; sender: Friend; receiver: Friend };
 type ChatMessage = { id: string; senderId: number; text: string; sentAt: string; sender: { displayName: string; username: string } };
 type ApiRoom = { id: number; name: string; description: string; isPrivate: boolean; memberCount: number; favoriteCount: number; isMember?: boolean; isOwner?: boolean };
+type NoticeItem = { _id: string; title: string; message: string; read: boolean; createdAt: string };
+type ActivityItem = { _id: string; roomName: string; displayName: string; action: string; description: string; createdAt: string };
 
 const activities = [
   { emoji: "💌", title: "Maya sent you a friend request", time: "10 minutes ago" },
@@ -83,16 +85,21 @@ export default function DashboardPage() {
   const [messageText, setMessageText] = useState("");
   const [messageCursor, setMessageCursor] = useState<string | null>(null);
   const [hasOlderMessages, setHasOlderMessages] = useState(false);
+  const [notifications, setNotifications] = useState<NoticeItem[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [activitiesFeed, setActivitiesFeed] = useState<ActivityItem[]>([]);
 
   const refreshDashboard = useCallback(async () => {
     try {
-      const [mineResponse, discoverResponse, favoritesResponse, friendsResponse, requestsResponse, profileResponse] = await Promise.all([
+      const [mineResponse, discoverResponse, favoritesResponse, friendsResponse, requestsResponse, profileResponse, notificationsResponse, activityResponse] = await Promise.all([
         fetch("/api/rooms?scope=mine"),
         fetch("/api/rooms?scope=discover"),
         fetch("/api/favorites"),
         fetch("/api/friends"),
         fetch("/api/friends/requests?box=incoming"),
         fetch("/api/auth/me"),
+        fetch("/api/notifications"),
+        fetch("/api/rooms/activity"),
       ]);
       if (mineResponse.ok) setRooms(((await mineResponse.json()).rooms as ApiRoom[]).map(mapRoom));
       if (discoverResponse.ok) setDiscoverRooms(((await discoverResponse.json()).rooms as ApiRoom[]).map(mapRoom));
@@ -100,6 +107,12 @@ export default function DashboardPage() {
       if (friendsResponse.ok) setFriends((await friendsResponse.json()).friends as Friend[]);
       if (requestsResponse.ok) setFriendRequests((await requestsResponse.json()).requests as FriendRequest[]);
       if (profileResponse.ok) setProfile((await profileResponse.json()).user);
+      if (notificationsResponse.ok) {
+        const data = await notificationsResponse.json();
+        setNotifications(data.notifications as NoticeItem[]);
+        setUnreadCount(data.unreadCount as number);
+      }
+      if (activityResponse.ok) setActivitiesFeed((await activityResponse.json()).activities as ActivityItem[]);
     } catch {
       setNotice("Could not load hangout data. Please try again.");
     }
@@ -317,9 +330,9 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex items-center gap-3 sm:gap-5">
-            <button aria-label="Notifications" className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f5f0ff] text-[#7655c9]">
+            <button aria-label={`Notifications, ${unreadCount} unread`} onClick={() => document.getElementById("notifications-panel")?.scrollIntoView({ behavior: "smooth" })} className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f5f0ff] text-[#7655c9]">
               <Bell size={19} />
-              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-pink-400" />
+              {unreadCount > 0 && <span className="absolute -right-1 -top-1 rounded-full bg-pink-500 px-1.5 py-0.5 text-[10px] font-bold text-white">{unreadCount}</span>}
             </button>
 
             <div className="flex items-center gap-2">
@@ -336,6 +349,24 @@ export default function DashboardPage() {
         </header>
 
         <div className="mx-auto max-w-7xl space-y-10 px-5 py-9 sm:px-8 lg:px-10">
+
+          <section className="grid gap-6 lg:grid-cols-2">
+            <div id="notifications-panel" className="rounded-3xl border border-purple-100 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center justify-between">
+                <div><h2 className="text-lg font-black">Notifications</h2><p className="text-xs text-[#968aa5]">{unreadCount} unread</p></div>
+                <button onClick={async () => { const r = await fetch("/api/notifications", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ markAllRead: true }) }); if (r.ok) { setNotifications((items) => items.map((item) => ({ ...item, read: true }))); setUnreadCount(0); } }} className="text-xs font-bold text-[#7655c9] hover:underline">Mark all read</button>
+              </div>
+              <div className="max-h-64 space-y-3 overflow-y-auto">
+                {notifications.length === 0 ? <p className="text-sm text-[#968aa5]">You are all caught up. New friend requests and updates will appear here.</p> : notifications.map((item) => <div key={item._id} className={`rounded-2xl p-3 ${item.read ? "bg-[#faf8ff]" : "bg-[#f0eaff]"}`}><p className="text-sm font-bold">{item.title}</p><p className="mt-1 text-xs text-[#71677f]">{item.message}</p><p className="mt-2 text-[10px] text-[#a49aaf]">{new Date(item.createdAt).toLocaleString()}</p></div>)}
+              </div>
+            </div>
+            <div className="rounded-3xl border border-purple-100 bg-white p-6 shadow-sm">
+              <h2 className="mb-1 text-lg font-black">Room activity</h2><p className="mb-4 text-xs text-[#968aa5]">Recent activity in rooms you have joined</p>
+              <div className="max-h-64 space-y-3 overflow-y-auto">
+                {activitiesFeed.length === 0 ? <p className="text-sm text-[#968aa5]">Room activity will appear here as people create rooms, join and chat.</p> : activitiesFeed.map((item) => <div key={item._id} className="rounded-2xl bg-[#faf8ff] p-3"><p className="text-sm font-semibold">{item.description}</p><p className="mt-1 text-[10px] text-[#a49aaf]">{item.roomName} · {new Date(item.createdAt).toLocaleString()}</p></div>)}
+              </div>
+            </div>
+          </section>
 
           {/* Welcome */}
           <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-[#7655c9] via-[#9571d3] to-[#c18bc8] p-7 text-white shadow-xl shadow-purple-100 sm:p-10">
@@ -593,9 +624,12 @@ export default function DashboardPage() {
       {selectedRoom && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#211832]/50 p-4 backdrop-blur-sm" onClick={() => setSelectedRoom(null)}>
           <div role="dialog" aria-modal="true" aria-labelledby="room-chat-title" className="flex max-h-[85vh] w-full max-w-2xl flex-col rounded-[2rem] bg-white p-6 shadow-2xl" onClick={(event) => event.stopPropagation()}>
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-between gap-3">
               <div><h2 id="room-chat-title" className="text-xl font-black">{selectedRoom.name}</h2><p className="text-xs text-[#968aa5]">{selectedRoom.members} members</p></div>
-              <button onClick={() => setSelectedRoom(null)} aria-label="Close room chat" className="rounded-full p-2 text-[#968aa5] hover:bg-purple-50"><X size={20} /></button>
+              <div className="flex items-center gap-2">
+                <button onClick={() => router.push(`/dashboard/rooms/${selectedRoom.id}/customize`)} className="rounded-xl bg-[#eee7ff] px-3 py-2 text-xs font-bold text-[#7655c9] transition hover:bg-[#e3d8ff]">✨ Customize room</button>
+                <button onClick={() => setSelectedRoom(null)} aria-label="Close room chat" className="rounded-full p-2 text-[#968aa5] hover:bg-purple-50"><X size={20} /></button>
+              </div>
             </div>
             {hasOlderMessages && <button onClick={() => void loadOlderMessages()} className="mb-3 self-center text-xs font-bold text-[#7655c9]">Load older messages</button>}
             <div className="min-h-48 flex-1 space-y-3 overflow-y-auto rounded-2xl bg-[#faf8ff] p-4">

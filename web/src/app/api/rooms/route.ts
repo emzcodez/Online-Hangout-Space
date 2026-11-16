@@ -1,3 +1,4 @@
+import { addRoomActivity } from "@/lib/mongo-events";
 import { Prisma } from "@/generated/prisma/client";
 import { isResponse, readJson, requireApiUser, requireSameOrigin } from "@/lib/api";
 import { prisma } from "@/lib/prisma";
@@ -84,6 +85,10 @@ export async function POST(request: Request) {
       return created;
     });
 
+    await addRoomActivity({
+      roomId: room.room_id, roomName: room.room_name, actor: auth.user,
+      action: "room_created", description: `${auth.user.display_name} created ${room.room_name}`,
+    });
     return Response.json({
       room: {
         id: room.room_id,

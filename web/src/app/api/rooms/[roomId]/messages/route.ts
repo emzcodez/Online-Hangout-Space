@@ -1,3 +1,4 @@
+import { addRoomActivity } from "@/lib/mongo-events";
 import { requireApiUser, requireSameOrigin, isResponse, readJson } from "@/lib/api";
 import { prisma } from "@/lib/prisma";
 import { roomAccess } from "@/lib/rooms";
@@ -78,6 +79,11 @@ export async function POST(request: Request, { params }: Context) {
       message_text: parsed.data.messageText,
     },
     select: { message_id: true, message_text: true, sent_at: true },
+  });
+  const roomDetails = await prisma.rooms.findUnique({ where: { room_id: parsedRoomId.data }, select: { room_name: true } });
+  if (roomDetails) await addRoomActivity({
+    roomId: parsedRoomId.data, roomName: roomDetails.room_name, actor: auth.user,
+    action: "message_sent", description: `${auth.user.display_name} sent a message in ${roomDetails.room_name}`,
   });
   return Response.json({ message: {
     id: message.message_id.toString(),
